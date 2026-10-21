@@ -55,13 +55,13 @@
   --vtla: var(--blue);
   --taco: var(--white);
   --accent: var(--green);
-  --switch-accent: var(--green);
 
   --font-sans: "NVIDIA Sans", "Inter", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   --wrap: min(1320px, calc(100% - 64px));
   --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
   --header-h: 68px;
 
   color-scheme: dark;
@@ -567,15 +567,43 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 
 /* ---------- deck ---------- */
 .deck {
+  --deck-accent: var(--green);
   position: relative;
   margin-top: 24px;
   padding: clamp(24px, 3.6vw, 54px);
   background: rgba(238, 244, 234, 0.025);
   border: 1px solid var(--line);
   clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+  transition: height 0.55s var(--ease-soft);
 }
+.deck::before {
+  content: "";
+  position: absolute;
+  top: -28%;
+  right: -12%;
+  z-index: 0;
+  width: 70%;
+  height: 58%;
+  background-color: var(--deck-accent);
+  filter: blur(90px);
+  opacity: 0.055;
+  pointer-events: none;
+  transition: background-color 0.7s ease;
+}
+.deck.is-switching { overflow: hidden; }
 
-.panel { position: relative; }
+.panel {
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.26s ease, filter 0.26s ease, transform 0.26s ease;
+}
+.panel.is-leaving {
+  opacity: 0;
+  filter: blur(9px);
+  transform: translateY(-10px) scale(0.996);
+  pointer-events: none;
+}
+.panel.is-entering { animation: panel-enter 0.62s var(--ease-soft) both; }
 .panel:focus { outline: none; }
 .panel-head {
   position: relative;
@@ -1014,46 +1042,6 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
 .footer-links a:hover { color: var(--green); }
 
-/* ---------- wipe transition ---------- */
-.wipe {
-  position: fixed;
-  inset: 0;
-  z-index: 300;
-  overflow: hidden;
-  pointer-events: none;
-  visibility: hidden;
-}
-.wipe.is-running { visibility: visible; }
-.wipe-slab {
-  position: absolute;
-  top: -25%;
-  bottom: -25%;
-  left: -35%;
-  width: 170%;
-  transform: translateX(-132%) skewX(-14deg);
-  will-change: transform;
-}
-.wipe-slab--accent { background: var(--switch-accent); }
-.wipe-slab--paper { background: var(--paper); }
-.wipe.is-running .wipe-slab--accent { animation: sweep 0.68s var(--ease-snap) both; }
-.wipe.is-running .wipe-slab--paper { animation: sweep 0.68s var(--ease-snap) 0.06s both; }
-.wipe-word {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  font-size: clamp(3.6rem, 13vw, 11rem);
-  font-weight: 700;
-  font-style: italic;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-  color: var(--ink);
-  opacity: 0;
-  transform: skewX(-8deg);
-}
-.wipe.is-running .wipe-word { animation: word-flash 0.46s 0.13s both; }
-
 /* ---------- lightbox ---------- */
 .lightbox {
   border: 0;
@@ -1125,21 +1113,6 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .toast.is-show { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---------- entry animations ---------- */
-.panel.is-entering .panel-head { animation: slam 0.58s var(--ease-snap) both; }
-.panel.is-entering .panel-copy > *,
-.panel.is-entering .panel-media > *,
-.panel.is-entering .panel-grid > * { animation: rise 0.6s var(--ease-snap) both; }
-.panel.is-entering .panel-copy > *:nth-child(1) { animation-delay: 0.04s; }
-.panel.is-entering .panel-copy > *:nth-child(2) { animation-delay: 0.08s; }
-.panel.is-entering .panel-copy > *:nth-child(3) { animation-delay: 0.12s; }
-.panel.is-entering .panel-copy > *:nth-child(4) { animation-delay: 0.16s; }
-.panel.is-entering .panel-media > *:nth-child(1) { animation-delay: 0.1s; }
-.panel.is-entering .panel-media > *:nth-child(2) { animation-delay: 0.16s; }
-.panel.is-entering .wide-figure,
-.panel.is-entering .sub-block,
-.panel.is-entering .evidence-grid,
-.panel.is-entering .pipeline { animation: rise 0.65s var(--ease-snap) 0.18s both; }
-
 .reveal { opacity: 1; transform: none; }
 .js-ready .reveal {
   opacity: 0;
@@ -1164,35 +1137,19 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: none; }
 }
-@keyframes slam {
-  from { opacity: 0; transform: translateX(-26px) skewX(-2deg); }
-  to { opacity: 1; transform: none; }
+@keyframes panel-enter {
+  from { opacity: 0; filter: blur(12px); transform: translateY(18px) scale(1.004); }
+  to { opacity: 1; filter: blur(0); transform: none; }
 }
 @keyframes ticker {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.25; }
-}
-@keyframes sweep {
-  0% { transform: translateX(-132%) skewX(-14deg); }
-  44%, 56% { transform: translateX(0) skewX(-14deg); }
-  100% { transform: translateX(132%) skewX(-14deg); }
-}
-@keyframes word-flash {
-  0% { opacity: 0; transform: skewX(-8deg) scale(0.94); }
-  22% { opacity: 1; }
-  70% { opacity: 1; }
-  100% { opacity: 0; transform: skewX(-8deg) scale(1.03); }
 }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1180px) {
   .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr); }
   .tab-name { font-size: clamp(1.25rem, 2.2vw, 1.9rem); }
-  .panel-head { grid-template-columns: 110px minmax(0, 1fr); }
 }
 
 @media (max-width: 980px) {
@@ -1323,14 +1280,10 @@ main, .masthead, .footer { position: relative; z-index: 1; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .wipe { display: none !important; }
   .reveal { opacity: 1; transform: none; }
-  .panel.is-entering .panel-head,
-  .panel.is-entering .panel-copy > *,
-  .panel.is-entering .panel-media > *,
-  .panel.is-entering .wide-figure,
-  .panel.is-entering .sub-block,
-  .panel.is-entering .evidence-grid,
-  .panel.is-entering .pipeline { animation: none !important; }
+  .deck { transition: none !important; }
+  .panel { transition: none !important; }
+  .panel.is-entering { animation: none !important; }
+  .panel.is-leaving { opacity: 1; filter: none; transform: none; }
   .ticker-track { animation: none !important; }
 }

@@ -7,8 +7,7 @@
   const panels = new Map(
     tabs.map((tab) => [tab.dataset.tab, document.getElementById(tab.getAttribute("aria-controls"))])
   );
-  const wipe = document.getElementById("wipe");
-  const wipeWord = document.getElementById("wipe-word");
+  const deck = document.getElementById("deck");
   const readout = document.getElementById("tab-readout");
   const toast = document.getElementById("toast");
   const masthead = document.getElementById("masthead");
@@ -22,17 +21,8 @@
     vtla: "var(--blue)",
     taco: "var(--white)",
   };
-  const WIPE_WORDS = {
-    tacumi: "TACUMI",
-    tabero: "TABERO",
-    vtla: "VTLA",
-    taco: "TACO",
-  };
-
   let activeKey = "tacumi";
   let switching = false;
-  let swapTimer = 0;
-  let wipeTimer = 0;
 
   /* ---------------- header ---------------- */
   const onScroll = () => {
@@ -67,17 +57,25 @@
     });
   }
 
+  function setDeckAccent(key) {
+    if (deck) deck.style.setProperty("--deck-accent", ACCENTS[key] || "var(--green)");
+  }
+
   function swapPanel(key) {
+    if (deck) {
+      deck.style.height = "";
+      deck.classList.remove("is-switching");
+    }
+    setDeckAccent(key);
     panels.forEach((panel, panelKey) => {
       const isNext = panelKey === key;
       panel.hidden = !isNext;
       panel.classList.toggle("is-active", isNext);
-      panel.classList.remove("is-entering");
+      panel.classList.remove("is-entering", "is-leaving");
       if (isNext) {
-        // Force a reflow so the stagger animation restarts on every switch.
         void panel.offsetWidth;
         panel.classList.add("is-entering");
-        window.setTimeout(() => panel.classList.remove("is-entering"), 900);
+        window.setTimeout(() => panel.classList.remove("is-entering"), 700);
       }
     });
     setTabState(key);
@@ -85,35 +83,74 @@
     syncVideos();
   }
 
+  function immersiveSwap(key) {
+    return new Promise((resolve) => {
+      const oldPanel = panels.get(activeKey);
+      const newPanel = panels.get(key);
+      switching = true;
+      setTabState(key);
+      setDeckAccent(key);
+
+      let oldHeight = 0;
+      if (deck) {
+        oldHeight = deck.offsetHeight;
+        deck.style.transition = "none";
+        deck.style.height = `${oldHeight}px`;
+        void deck.offsetHeight;
+        deck.classList.add("is-switching");
+      }
+
+      oldPanel.classList.add("is-leaving");
+
+      window.setTimeout(() => {
+        oldPanel.hidden = true;
+        oldPanel.classList.remove("is-active", "is-leaving");
+        newPanel.hidden = false;
+        newPanel.classList.add("is-active");
+        activeKey = key;
+
+        if (deck) {
+          deck.style.height = "auto";
+          const newHeight = deck.offsetHeight;
+          deck.style.height = `${oldHeight}px`;
+          void deck.offsetHeight;
+          deck.style.transition = "";
+          window.requestAnimationFrame(() => {
+            deck.style.height = `${newHeight}px`;
+          });
+        }
+
+        newPanel.classList.add("is-entering");
+        syncVideos();
+
+        window.setTimeout(() => {
+          if (deck) {
+            deck.style.height = "";
+            deck.classList.remove("is-switching");
+          }
+          newPanel.classList.remove("is-entering");
+          switching = false;
+          resolve();
+        }, 700);
+      }, 260);
+    });
+  }
+
   function activate(key, options = {}) {
     const { animate = true, updateHash = true } = options;
-    if (!panels.has(key)) return;
-    if (key === activeKey && !panels.get(key).hidden) return;
-    if (switching) return;
+    if (!panels.has(key)) return Promise.resolve();
+    if (key === activeKey && !panels.get(key).hidden) return Promise.resolve();
+    if (switching) return Promise.resolve();
 
     if (updateHash && window.location.hash !== `#${key}`) {
       history.replaceState(null, "", `#${key}`);
     }
 
-    if (!animate || reduceMotion.matches || !wipe) {
+    if (!animate || reduceMotion.matches) {
       swapPanel(key);
-      return;
+      return Promise.resolve();
     }
-
-    switching = true;
-    document.documentElement.style.setProperty("--switch-accent", ACCENTS[key] || "var(--green)");
-    if (wipeWord) wipeWord.textContent = WIPE_WORDS[key] || key.toUpperCase();
-    wipe.classList.remove("is-running");
-    void wipe.offsetWidth;
-    wipe.classList.add("is-running");
-
-    window.clearTimeout(swapTimer);
-    window.clearTimeout(wipeTimer);
-    swapTimer = window.setTimeout(() => swapPanel(key), 300);
-    wipeTimer = window.setTimeout(() => {
-      wipe.classList.remove("is-running");
-      switching = false;
-    }, 780);
+    return immersiveSwap(key);
   }
 
   tabs.forEach((tab) => {
@@ -142,9 +179,9 @@
         const el = target && document.querySelector(target);
         if (el) el.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
       };
+      if (switching) return;
       if (key !== activeKey) {
-        activate(key);
-        window.setTimeout(scrollToTarget, reduceMotion.matches ? 60 : 820);
+        activate(key).then(scrollToTarget);
       } else {
         scrollToTarget();
       }
