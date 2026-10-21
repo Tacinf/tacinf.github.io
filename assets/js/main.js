@@ -279,6 +279,7 @@
       for (let index = 0; index < FRAME_COUNT; index += 1) {
         const image = new Image();
         image.decoding = "async";
+        image.fetchPriority = "low";
         image.src = frameSrc(index);
         loaded.push(image);
       }
@@ -355,6 +356,14 @@
       if (!keyboard && lastPointerType === "mouse") return;
       setExplodeTarget(progress > 0.5 ? 0 : 1);
     });
+
+    // The sequence is small (about 220 KB); warm it during idle time so the
+    // first hover does not have to wait for the remaining frames.
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(preloadExplode, { timeout: 1800 });
+    } else {
+      window.setTimeout(preloadExplode, 900);
+    }
 
     if ("IntersectionObserver" in window) {
       const preloadObserver = new IntersectionObserver(
