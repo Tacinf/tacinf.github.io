@@ -148,12 +148,6 @@ def build_cutouts() -> None:
         cut = crop_alpha(cut, pad=12)
         save_webp_alpha(cut, IMG_OUT / out_name, max_side)
 
-    # Green-duotone tactile gripper for the small hero card.
-    im = Image.open(PAPER / "exp_sup" / "tacumi_gripper_usd.png")
-    cut = key_background(im, (245, 247, 248), tol=9, feather=2)
-    cut = crop_alpha(cut, pad=12)
-    cut = duotone(cut, (6, 18, 9), (222, 255, 186))
-    save_webp_alpha(cut, IMG_OUT / "hero-gripper.webp", 1000)
 
 
 def build_images() -> None:
