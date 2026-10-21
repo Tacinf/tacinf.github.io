@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Build web-ready image assets for the Tacinf project page.
+"""Build the web assets for the Tacinf project page.
 
-Reads figures from the paper repository, rasterizes the vector PDFs, and
-writes resized WebP files into assets/img. Re-run after the paper figures
-change:
+Reads figures, photographs, videos and fonts from the paper repository, then
+writes optimized WebP images, MP4 clips and WOFF2 fonts into the site.
 
     python3 tools/build_assets.py
+
+The script is idempotent: every output is rebuilt from its source.
 """
 
 from __future__ import annotations
@@ -15,21 +16,27 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from PIL import Image
+import numpy as np
+
+from PIL import Image, ImageDraw, ImageFont
 
 SITE = Path(__file__).resolve().parent.parent
 PAPER = Path.home() / "docs" / "Tacinf-NVTech"
-OUT = SITE / "assets" / "img"
+IMG_OUT = SITE / "assets" / "img"
+VID_OUT = SITE / "assets" / "video"
+FONT_OUT = SITE / "assets" / "fonts"
 PDF_OUT = SITE / "assets" / "pdf"
+
+PDF_DPI = 220
 
 # (output name, source path, max width, source kind)
 IMAGES = [
     ("teaser", "figs/fig01_overview/tacinf_main.png", 2000, "image"),
-    ("tabero", "figs/fig02_sim_platform/mul_task_new.png", 1400, "image"),
+    ("tabero-sim", "figs/fig02_sim_platform/mul_task_new.png", 1500, "image"),
     ("force-decomposition", "figs/fig03_force_decomposition/force_decomposition.png", 2000, "image"),
     ("vtla-system", "figs/fig04_model_control/vtla_system.pdf", 1600, "pdf"),
     ("force-loop", "figs/fig04_model_control/force_feedback_loop.pdf", 1400, "pdf"),
-    ("tacumi", "figs/fig05_tacumi_interface/tacumi_interface_photo.pdf", 1600, "pdf"),
+    ("tacumi-compare", "figs/Gripper_URDF/gripper_compare_green.png", 1700, "image"),
     ("taco-loop", "figs/fig06_taco_data_loop/taco_data_loop.pdf", 1600, "pdf"),
     ("force-distribution", "figs/fig07_force_distribute/rgb_marker_new.png", 1200, "image"),
     ("ablation", "figs/fig08_tactile_ablation/tactile_ablation.png", 2000, "image"),
@@ -38,57 +45,118 @@ IMAGES = [
     ("controller-gentle", "figs/fig10_force_feedback/gentle_first151.png", 1200, "image"),
     ("controller-no-ff", "figs/fig10_force_feedback/gentle_woff_first151.png", 1200, "image"),
     ("controller-no-adm", "figs/fig10_force_feedback/gentle_woall_first151.png", 1200, "image"),
-    ("real2sim", "figs/fig12_real2sim_deploy/tacumi_real2sim_deployment_views.jpg", 1400, "image"),
+    ("real-task-progress", "figs/fig11_real_task_expansion/real_task_progress.png", 1960, "image"),
+    ("real2sim-views", "figs/fig12_real2sim_deploy/tacumi_real2sim_deployment_views.jpg", 1400, "image"),
+    ("tacumi-hardware", "exp_sup/gripper.jpg", 1600, "image"),
 ]
 
-# Vector figures rasterized at this resolution before downscaling.
-PDF_DPI = 220
+# Videos: (output, source, start seconds, duration seconds, max width, crf)
+VIDEOS = [
+    ("tacumi-streams", "exp_sup/tacumi_real_multimodal_observation_stream.mp4", 1.0, 12.0, 720, 31),
+    ("tacumi-sync", "exp_sup/tacumi_real_sensor_timestamp_alignment.mp4", 1.0, 10.0, 900, 31),
+    ("tacumi-multiview", "exp_sup/tacumi_real_multiview_tactile_stream.mp4", 0.5, 8.0, 640, 31),
+    ("tabero-marker", "exp_sup/tacumi_sim_marker_field_manipulation.mp4", 0.2, 8.0, 720, 30),
+    ("taco-real2sim", "exp_sup/real2sim.mp4", 0.0, 5.8, 1000, 30),
+]
+
+FONTS = [
+    ("nvidia-sans-regular.woff2", "NVIDIASans_Rg.ttf"),
+    ("nvidia-sans-medium.woff2", "NVIDIASans_Md.ttf"),
+    ("nvidia-sans-bold.woff2", "NVIDIASans_Bd.ttf"),
+    ("nvidia-sans-bolditalic.woff2", "NVIDIASans_BdIt.ttf"),
+]
+
+
+def run(cmd: list[str], **kwargs) -> None:
+    subprocess.run(cmd, check=True, **kwargs)
 
 
 def render_pdf(src: Path, dst: Path) -> None:
-    subprocess.run(
-        ["pdftoppm", "-png", "-r", str(PDF_DPI), "-singlefile", str(src), str(dst)],
-        check=True,
-    )
-    # pdftoppm appends .png
+    run(["pdftoppm", "-png", "-r", str(PDF_DPI), "-singlefile", str(src), str(dst)],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     produced = dst.with_suffix(".png")
     if produced != dst and produced.exists():
         produced.replace(dst)
 
 
-def flatten(im: Image.Image) -> Image.Image:
-    """Composite transparent images onto white so WebP has no dark fringes."""
+def flatten(im: Image.Image, background=(255, 255, 255)) -> Image.Image:
     if im.mode in ("RGBA", "LA", "P"):
         im = im.convert("RGBA")
-        bg = Image.new("RGB", im.size, (255, 255, 255))
+        bg = Image.new("RGB", im.size, background)
         bg.paste(im, mask=im.getchannel("A"))
         return bg
     return im.convert("RGB")
 
 
-def save_webp(im: Image.Image, path: Path, max_width: int) -> None:
+def save_webp(im: Image.Image, path: Path, max_width: int, quality: int = 82) -> None:
     im = flatten(im)
     if im.width > max_width:
         height = round(im.height * max_width / im.width)
         im = im.resize((max_width, height), Image.LANCZOS)
-    im.save(path, "WEBP", quality=82, method=6)
+    im.save(path, "WEBP", quality=quality, method=6)
 
 
-def make_og(teaser: Path, path: Path) -> None:
-    """1200x630 social card: the teaser centred on the page background."""
-    im = flatten(Image.open(teaser))
-    canvas = Image.new("RGB", (1200, 630), (251, 251, 247))
-    scale = min((1200 - 96) / im.width, (630 - 96) / im.height)
-    w, h = round(im.width * scale), round(im.height * scale)
-    im = im.resize((w, h), Image.LANCZOS)
-    canvas.paste(im, ((1200 - w) // 2, (630 - h) // 2))
-    canvas.save(path, "JPEG", quality=88, optimize=True)
+def save_webp_alpha(im: Image.Image, path: Path, max_side: int, quality: int = 90) -> None:
+    im = im.convert("RGBA")
+    if max(im.size) > max_side:
+        scale = max_side / max(im.size)
+        im = im.resize((round(im.width * scale), round(im.height * scale)), Image.LANCZOS)
+    im.save(path, "WEBP", quality=quality, method=6, lossless=False)
 
 
-def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    PDF_OUT.mkdir(parents=True, exist_ok=True)
+def key_background(im: Image.Image, bg: tuple[int, int, int], tol: float, feather: float = 3.0) -> Image.Image:
+    """Remove a flat studio background, keeping soft anti-aliased edges."""
+    rgba = im.convert("RGBA")
+    arr = np.asarray(rgba).astype(np.int16)
+    dist = np.sqrt(((arr[..., :3] - np.array(bg)) ** 2).sum(-1))
+    alpha = np.clip((dist - tol) / max(1.0, feather), 0.0, 1.0)
+    out = arr.copy()
+    out[..., 3] = (alpha * 255).astype(np.uint8)
+    return Image.fromarray(out.astype(np.uint8), "RGBA")
 
+
+def crop_alpha(im: Image.Image, pad: int = 16) -> Image.Image:
+    bbox = im.getchannel("A").getbbox()
+    if not bbox:
+        return im
+    l, t, r, b = bbox
+    return im.crop((max(0, l - pad), max(0, t - pad),
+                    min(im.width, r + pad), min(im.height, b + pad)))
+
+
+def duotone(im: Image.Image, dark: tuple[int, int, int], light: tuple[int, int, int]) -> Image.Image:
+    """Map luminance onto a two-colour ramp inside the alpha channel."""
+    rgba = np.asarray(im.convert("RGBA")).astype(np.float32)
+    lum = (0.2126 * rgba[..., 0] + 0.7152 * rgba[..., 1] + 0.0722 * rgba[..., 2]) / 255.0
+    lum = np.clip(lum, 0, 1)[..., None]
+    d = np.array(dark, dtype=np.float32)
+    l = np.array(light, dtype=np.float32)
+    rgb = d + (l - d) * lum
+    out = np.dstack([rgb, rgba[..., 3]]).astype(np.uint8)
+    return Image.fromarray(out, "RGBA")
+
+
+def build_cutouts() -> None:
+    """Transparent, high-contrast renders used as the hero composition."""
+    green_panels = PAPER / "figs" / "Gripper_URDF" / "panels_green"
+    for src_name, out_name, max_side in [
+        ("arm.png", "hero-arm.webp", 1300),
+        ("handheld.png", "hero-handheld.webp", 1200),
+    ]:
+        im = Image.open(green_panels / src_name).convert("RGBA")
+        cut = key_background(im, (191, 204, 194), tol=15, feather=3)
+        cut = crop_alpha(cut, pad=12)
+        save_webp_alpha(cut, IMG_OUT / out_name, max_side)
+
+    # Green-duotone tactile gripper for the small hero card.
+    im = Image.open(PAPER / "exp_sup" / "tacumi_gripper_usd.png")
+    cut = key_background(im, (245, 247, 248), tol=9, feather=2)
+    cut = crop_alpha(cut, pad=12)
+    cut = duotone(cut, (6, 18, 9), (222, 255, 186))
+    save_webp_alpha(cut, IMG_OUT / "hero-gripper.webp", 1000)
+
+
+def build_images() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmpdir = Path(tmp)
         for name, rel, max_width, kind in IMAGES:
@@ -101,20 +169,119 @@ def main() -> None:
                 im = Image.open(rendered)
             else:
                 im = Image.open(src)
-            dst = OUT / f"{name}.webp"
+            dst = IMG_OUT / f"{name}.webp"
             save_webp(im, dst, max_width)
-            print(f"{dst.name:28s} {im.width:4d}x{im.height:<4d} -> "
+            print(f"{dst.name:30s} {im.width:4d}x{im.height:<4d} -> "
                   f"{Image.open(dst).width:4d}x{Image.open(dst).height:<4d} "
                   f"{dst.stat().st_size / 1024:6.1f} KB")
+    build_cutouts()
 
-    make_og(OUT / "teaser.webp", OUT / "og.jpg")
-    print(f"og.jpg                      1200x630  {(OUT / 'og.jpg').stat().st_size / 1024:.1f} KB")
 
+def build_videos() -> None:
+    VID_OUT.mkdir(parents=True, exist_ok=True)
+    for name, rel, start, duration, max_width, crf in VIDEOS:
+        src = PAPER / rel
+        if not src.exists():
+            raise SystemExit(f"missing video: {src}")
+        dst = VID_OUT / f"{name}.mp4"
+        vf = f"scale='min({max_width},iw)':-2,fps=20"
+        run([
+            "ffmpeg", "-loglevel", "error", "-y",
+            "-ss", str(start), "-t", str(duration), "-i", str(src),
+            "-vf", vf,
+            "-c:v", "libx264", "-profile:v", "main", "-pix_fmt", "yuv420p",
+            "-crf", str(crf), "-preset", "slow", "-movflags", "+faststart",
+            "-an", str(dst),
+        ])
+        poster = IMG_OUT / f"poster-{name}.webp"
+        run([
+            "ffmpeg", "-loglevel", "error", "-y",
+            "-ss", str(start + min(0.8, duration / 4)), "-i", str(src),
+            "-frames:v", "1", "-vf", f"scale='min({max_width},iw)':-2",
+            str(poster.with_suffix(".png")),
+        ])
+        save_webp(Image.open(poster.with_suffix(".png")), poster, max_width, quality=80)
+        poster.with_suffix(".png").unlink(missing_ok=True)
+        print(f"{dst.name:30s} {dst.stat().st_size / 1024:8.1f} KB  "
+              f"poster {poster.stat().st_size / 1024:6.1f} KB")
+
+
+def build_fonts() -> None:
+    FONT_OUT.mkdir(parents=True, exist_ok=True)
+    unicodes = ("U+0020-007E,U+00A0-00FF,U+0370-03FF,"
+                "U+2000-206F,U+2190-21FF,U+2200-22FF,U+25A0-25FF")
+    for out_name, src_name in FONTS:
+        src = PAPER / "NVIDIA-Sans-Font-TTF" / src_name
+        if not src.exists():
+            raise SystemExit(f"missing font: {src}")
+        dst = FONT_OUT / out_name
+        run([
+            "pyftsubset", str(src),
+            f"--unicodes={unicodes}",
+            "--flavor=woff2",
+            f"--output-file={dst}",
+            "--layout-features=*",
+            "--no-hinting",
+        ])
+        print(f"{dst.name:32s} {dst.stat().st_size / 1024:6.1f} KB")
+
+
+def make_og() -> None:
+    """1200x630 social card in the page's black / acid-green language."""
+    W, H = 1200, 630
+    canvas = Image.new("RGB", (W, H), (6, 8, 6))
+    draw = ImageDraw.Draw(canvas)
+
+    # Diagonal green field on the left.
+    draw.polygon([(0, 0), (430, 0), (330, H), (0, H)], fill=(12, 22, 13))
+    for x in range(-200, 500, 34):
+        draw.line([(x, H), (x + 230, 0)], fill=(17, 34, 19), width=2)
+
+    # Halftone corner.
+    for y in range(0, H, 18):
+        for x in range(0, 460, 18):
+            if (x + y) % 36 == 0:
+                draw.ellipse([x, y, x + 4, y + 4], fill=(34, 66, 36))
+
+    arm = Image.open(IMG_OUT / "hero-arm.webp").convert("RGBA")
+    scale = min((H - 80) / arm.height, 460 / arm.width)
+    arm = arm.resize((round(arm.width * scale), round(arm.height * scale)), Image.LANCZOS)
+    canvas.paste(arm, (900 - arm.width // 2, (H - arm.height) // 2 + 10), arm)
+
+    font_display = ImageFont.truetype(str(PAPER / "NVIDIA-Sans-Font-TTF" / "NVIDIASans_Bd.ttf"), 112)
+    font_sub = ImageFont.truetype(str(PAPER / "NVIDIA-Sans-Font-TTF" / "NVIDIASans_Md.ttf"), 31)
+    font_mono = ImageFont.truetype(str(PAPER / "NVIDIA-Sans-Font-TTF" / "NVIDIASans_Rg.ttf"), 19)
+
+    draw.text((58, 78), "TACINF", font=font_display, fill=(238, 255, 230))
+    draw.rectangle([62, 210, 246, 218], fill=(163, 255, 60))
+    draw.text((62, 242), "A UNIFIED TACTILE", font=font_sub, fill=(163, 255, 60))
+    draw.text((62, 281), "INFRASTRUCTURE FOR", font=font_sub, fill=(238, 255, 230))
+    draw.text((62, 320), "ROBOT MANIPULATION", font=font_sub, fill=(238, 255, 230))
+    draw.text((62, 410), "TACUMI  /  TABERO  /  VTLA  /  TACO", font=font_mono, fill=(143, 166, 144))
+    draw.text((62, 442), "NVIDIA  ×  HKUST (GZ)  ×  CAMBRIDGE  ·  2026",
+              font=font_mono, fill=(143, 166, 144))
+    draw.text((62, H - 56), "tacinf.github.io", font=font_mono, fill=(238, 255, 230))
+
+    canvas.save(IMG_OUT / "og.jpg", "JPEG", quality=90, optimize=True)
+    print(f"og.jpg                         1200x630  {(IMG_OUT / 'og.jpg').stat().st_size / 1024:.1f} KB")
+
+
+def copy_paper() -> None:
+    PDF_OUT.mkdir(parents=True, exist_ok=True)
     paper_pdf = PAPER / "Tacinf_NVTech.pdf"
     if paper_pdf.exists():
         shutil.copy2(paper_pdf, PDF_OUT / "Tacinf_NVTech.pdf")
         print(f"copied paper PDF -> assets/pdf/Tacinf_NVTech.pdf "
               f"({(PDF_OUT / 'Tacinf_NVTech.pdf').stat().st_size / 1e6:.1f} MB)")
+
+
+def main() -> None:
+    IMG_OUT.mkdir(parents=True, exist_ok=True)
+    build_images()
+    build_videos()
+    build_fonts()
+    make_og()
+    copy_paper()
 
 
 if __name__ == "__main__":

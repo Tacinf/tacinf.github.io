@@ -3,30 +3,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page not found — Tacinf</title>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <style>
-    :root { color-scheme: light dark; }
-    body {
-      margin: 0; min-height: 100vh; display: grid; place-items: center;
-      background: #fbfbf7; color: #141915;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    }
-    main { padding: 32px; text-align: center; max-width: 520px; }
-    p { color: #5c665d; line-height: 1.6; }
-    a { color: #3f6614; font-weight: 600; }
-    @media (prefers-color-scheme: dark) {
-      body { background: #0f1310; color: #edf1ea; }
-      p { color: #a6b0a7; }
-      a { color: #b7e37e; }
-    }
-  </style>
+  <title>404 — Tacinf</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#060806">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <main>
-    <h1>Page not found</h1>
-    <p>The page you are looking for does not exist. Return to the Tacinf project page.</p>
-    <p><a href="/">tacinf.github.io</a></p>
+  <div class="page-grid" aria-hidden="true"></div>
+  <header class="masthead is-scrolled">
+    <a class="brand" href="/" aria-label="Tacinf home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M0 46 46 0h18L18 64H0z" fill="currentColor"/>
+        <path d="M19 16h30v8H38v26h-9V24H19z" fill="#060806"/>
+      </svg>
+      <span class="brand-word">TACINF</span>
+    </a>
+    <nav class="utility" aria-label="Paper and citation">
+      <a class="util" href="assets/pdf/Tacinf_NVTech.pdf" target="_blank" rel="noopener">Paper <span class="util-arrow">↗</span></a>
+      <a class="util" href="/">Home <span class="util-arrow">↖</span></a>
+    </nav>
+  </header>
+
+  <main class="error-page" id="main">
+    <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Signal lost / 404</p>
+    <h1 class="error-title">404<span aria-hidden="true">.</span></h1>
+    <p class="error-lede">This page is outside the task loop.</p>
+    <p class="error-copy">The address may have moved, or the tactile loop closed without it. Return to the four modules and pick up the thread.</p>
+    <div class="error-actions">
+      <a class="btn btn-solid" href="/">Back to Tacinf <span aria-hidden="true">←</span></a>
+      <a class="btn btn-ghost" href="assets/pdf/Tacinf_NVTech.pdf" target="_blank" rel="noopener">Read the paper <span aria-hidden="true">↗</span></a>
+    </div>
   </main>
 </body>
 </html>
