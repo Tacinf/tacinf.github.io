@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tacinf: A Unified Tactile Infrastructure for Robot Manipulation</title>
+  <meta name="description" content="Tacinf is a unified tactile infrastructure for robot manipulation: simulation, force-aware VLA policies, handheld data collection, and task-aligned sim-to-real evaluation in one task loop.">
+  <meta name="author" content="Qiwei Wu, Xiangyu Chen, Xin Xiang, Rui Zhang, Yihang Kang, Weiran Chen, Zikang Xie, Tao Wang, Xiangzheng Wang, Tianyi Bi, Zhiyan Zhang, Xianpeng Wang, Mingqian Zhou, Yangfan Li, Tao Li, Weihua Zhang, Renjing Xu, Junjie Lai">
+  <meta name="theme-color" content="#fbfbf7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1310" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://tacinf.github.io/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Tacinf: A Unified Tactile Infrastructure for Robot Manipulation">
+  <meta property="og:description" content="Simulation, force-aware VLA policies, handheld data collection, and task-aligned sim-to-real evaluation in one task loop.">
+  <meta property="og:url" content="https://tacinf.github.io/">
+  <meta property="og:image" content="https://tacinf.github.io/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tacinf: A Unified Tactile Infrastructure for Robot Manipulation">
+  <meta name="twitter:description" content="Simulation, force-aware VLA policies, handheld data collection, and task-aligned sim-to-real evaluation in one task loop.">
+  <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Tacinf: A Unified Tactile Infrastructure for Robot Manipulation",
+    "abstract": "Contact-rich manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. Tacinf is a modular tactile vision-language-action infrastructure that integrates synchronized trajectory replay and tactile simulation, policy learning, handheld collection with a shared deployment gripper, and task-aligned simulation-to-real evaluation.",
+    "author": [
+      {"@type": "Person", "name": "Qiwei Wu"},
+      {"@type": "Person", "name": "Xiangyu Chen"},
+      {"@type": "Person", "name": "Xin Xiang"},
+      {"@type": "Person", "name": "Rui Zhang"},
+      {"@type": "Person", "name": "Yihang Kang"},
+      {"@type": "Person", "name": "Weiran Chen"},
+      {"@type": "Person", "name": "Zikang Xie"},
+      {"@type": "Person", "name": "Tao Wang"},
+      {"@type": "Person", "name": "Xiangzheng Wang"},
+      {"@type": "Person", "name": "Tianyi Bi"},
+      {"@type": "Person", "name": "Zhiyan Zhang"},
+      {"@type": "Person", "name": "Xianpeng Wang"},
+      {"@type": "Person", "name": "Mingqian Zhou"},
+      {"@type": "Person", "name": "Yangfan Li"},
+      {"@type": "Person", "name": "Tao Li"},
+      {"@type": "Person", "name": "Weihua Zhang"},
+      {"@type": "Person", "name": "Renjing Xu"},
+      {"@type": "Person", "name": "Junjie Lai"}
+    ],
+    "datePublished": "2026",
+    "url": "https://tacinf.github.io/"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar" id="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top" aria-label="Tacinf home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="3" y="7" width="6" height="18" rx="2" fill="currentColor" opacity=".22"/>
+          <rect x="23" y="7" width="6" height="18" rx="2" fill="currentColor" opacity=".22"/>
+          <path d="M9.5 16h13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="m18.5 12.2 3.8 3.8-3.8 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Tacinf</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a class="nav-abstract" href="#abstract">Abstract</a>
+        <a class="nav-system" href="#system">System</a>
+        <a href="#results">Results</a>
+        <a class="nav-data" href="#data">Data</a>
+        <a href="#bibtex">BibTeX</a>
+        <a class="nav-paper" href="assets/pdf/Tacinf_NVTech.pdf">Paper</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero wrap" id="top">
+      <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Technical Report · 2026</p>
+      <h1>Tacinf: A Unified Tactile Infrastructure for Robot Manipulation</h1>
+      <p class="subtitle">Simulation, force-aware VLA policies, handheld data collection, and task-aligned sim-to-real evaluation — in one task loop.</p>
+
+      <p class="authors">
+        <span class="author">Qiwei Wu<sup>1,2,*,‡</sup></span>
+        <span class="author">Xiangyu Chen<sup>2,*</sup></span>
+        <span class="author">Xin Xiang<sup>2,*</sup></span>
+        <span class="author">Rui Zhang<sup>1</sup></span>
+        <span class="author">Yihang Kang<sup>2</sup></span>
+        <span class="author">Weiran Chen<sup>2</sup></span>
+        <span class="author">Zikang Xie<sup>2</sup></span>
+        <span class="author">Tao Wang<sup>2</sup></span>
+        <span class="author">Xiangzheng Wang<sup>2</sup></span>
+        <span class="author">Tianyi Bi<sup>2</sup></span>
+        <span class="author">Zhiyan Zhang<sup>2</sup></span>
+        <span class="author">Xianpeng Wang<sup>2</sup></span>
+        <span class="author">Mingqian Zhou<sup>3</sup></span>
+        <span class="author">Yangfan Li<sup>2</sup></span>
+        <span class="author">Tao Li<sup>1</sup></span>
+        <span class="author">Weihua Zhang<sup>1</sup></span>
+        <span class="author">Renjing Xu<sup>2,†</sup></span>
+        <span class="author">Junjie Lai<sup>1,†</sup></span>
+      </p>
+
+      <p class="affiliations">
+        <span><sup>1</sup>NVIDIA</span>
+        <span><sup>2</sup>HKUST (GZ)</span>
+        <span><sup>3</sup>University of Cambridge</span>
+      </p>
+      <p class="author-notes"><sup>*</sup>Equal contribution · <sup>‡</sup>Project leader · <sup>†</sup>Corresponding authors</p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="assets/pdf/Tacinf_NVTech.pdf">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.75h6.2L15 6.55v10.7H5z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M11 2.9v3.8h3.7M7.4 11h5.2M7.4 13.6h5.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Paper (PDF)
+        </a>
+        <button class="btn" type="button" data-copy-bib>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V4.2c0-.7.5-1.2 1.2-1.2h7.6c.7 0 1.2.5 1.2 1.2v9.6c0 .7-.5 1.2-1.2 1.2H13M4.2 6.8h7.6c.7 0 1.2.5 1.2 1.2v7.8c0 .7-.5 1.2-1.2 1.2H4.2c-.7 0-1.2-.5-1.2-1.2V8c0-.7.5-1.2 1.2-1.2z" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+          <span>Copy BibTeX</span>
+        </button>
+        <a class="btn" href="#results">Key results</a>
+      </div>
+
+      <figure class="figure teaser card">
+        <button class="zoom" type="button" data-full="assets/img/teaser.webp" data-caption="Tacinf in one task loop: collection, force-aware policy learning, and zero-shot sim-to-real deployment.">
+          <img src="assets/img/teaser.webp" width="2000" height="901" alt="Tacinf task loop: Tacumi data collection on the left, a tactile VTLA policy and scalable task suite in the centre, and zero-shot Sim2Real deployment on the right.">
+        </button>
+        <figcaption>
+          <strong>Tacinf in one task loop.</strong> A shared three-object task is replayed by Tacinf–Tabero, mapped by Tacinf–VTLA from vision, language, and touch to force-aware actions, executed through the shared Tacinf–Tacumi tactile gripper, and aligned by Tacinf–Taco for simulation-only adaptation and zero-shot Sim2Real deployment.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ============================ ABSTRACT ============================ -->
+    <section class="section wrap" id="abstract">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>Abstract</h2>
+      </div>
+
+      <div class="abstract-grid">
+        <p class="lede">
+          Contact-rich manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. We present <strong>Tacinf</strong>, a modular tactile vision–language–action infrastructure for this setting. It enables policies to predict robot actions and fingertip-force outputs from task language, vision, and touch; an optional language-conditioned force level can be provided when explicit force regulation is required, while ordinary task instructions need no force adverbs. Tacinf integrates synchronized trajectory replay and tactile simulation (Tabero), policy learning (VTLA), handheld collection with a shared deployment gripper (Tacumi), and task-aligned simulation-to-real evaluation (Taco).
+        </p>
+        <aside class="aside-card">
+          <p class="aside-label">At a glance</p>
+          <ul class="check-list">
+            <li>First zero-shot transfer of a foundation model fine-tuned on tactile simulation data only to real-robot tasks.</li>
+            <li>Eight paired policy variants reach Pearson <strong>r = 0.845</strong> between simulated and real combined task-and-force scores.</li>
+            <li>Teleoperation, simulation, and Tacumi data share one contract for mixed-data scaling.</li>
+          </ul>
+        </aside>
+      </div>
+
+      <p class="abstract-tail">
+        We validate each component — the simulation data, benchmark, controller, and Tacumi — and report reliable multi-source data validation for tactile foundation models. The result is infrastructure for contact-rich tactile foundation models, not a single policy checkpoint.
+      </p>
+
+      <div class="contributions">
+        <article class="contrib card">
+          <span class="contrib-num">A</span>
+          <h3>A modular tactile interface</h3>
+          <p>Policies adapt their actions from appropriate task language, vision, and touch, with an optional language-conditioned force level when explicit regulation is needed.</p>
+        </article>
+        <article class="contrib card">
+          <span class="contrib-num">B</span>
+          <h3>Evaluation that transfers</h3>
+          <p>A simulation evaluation protocol and real-robot alignment procedure test whether tactile foundation models are measured the same way in both domains.</p>
+        </article>
+        <article class="contrib card">
+          <span class="contrib-num">C</span>
+          <h3>One data contract</h3>
+          <p>A shared-gripper UMI interface unifies real teleoperation, simulation, and handheld trajectories, so complementary sources can be mixed at scale.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================ SYSTEM ============================ -->
+    <section class="section wrap" id="system">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>One task loop, four components</h2>
+      </div>
+      <p class="section-intro">
+        Tacinf is system-level infrastructure. Each component owns one part of the loop and exposes a stable interface to the others — tasks and force labels from simulation, a policy that predicts force as well as pose, hardware that collects and deploys with the same gripper, and an evaluation path that pairs simulation with the real robot.
+      </p>
+
+      <div class="components">
+        <article class="component card">
+          <div class="component-media">
+            <img src="assets/img/tabero.webp" width="1294" height="440" loading="lazy" alt="Grid of simulated manipulation scenes with varied camera views and object layouts.">
+          </div>
+          <div class="component-body">
+            <p class="component-kicker">Simulation benchmark</p>
+            <h3>Tacinf–Tabero</h3>
+            <p>Reproducible language-conditioned tactile tasks in Isaac Lab. Open-source MuJoCo trajectories are reconstructed and replayed, then augmented with tactile images, marker fields, and 6-D contact force at 20&nbsp;Hz.</p>
+            <ul class="tags">
+              <li>Isaac Lab</li><li>Taxim + FOTS</li><li>Force-level labels</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="component card">
+          <div class="component-media">
+            <img src="assets/img/vtla-system.webp" width="1600" height="776" loading="lazy" alt="VTLA architecture: vision, tactile image, marker field, 6-D force, and robot state encoded into a shared backbone with an action expert predicting force and position chunks.">
+          </div>
+          <div class="component-body">
+            <p class="component-kicker">Policy learning</p>
+            <h3>Tacinf–VTLA</h3>
+            <p>A modular framework that equips foundation VLA models with touch. Three adapters — marker field, tactile image, and 6-D force — feed a shared backbone that predicts pose and fingertip-force setpoints, tracked by a force-aware controller.</p>
+            <ul class="tags">
+              <li>OpenPI / π<sub>0</sub></li><li>Flow matching</li><li>Force supervision</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="component card">
+          <div class="component-media">
+            <img src="assets/img/tacumi.webp" width="1559" height="560" loading="lazy" alt="The handheld Tacumi device and its structural render, showing the shared camera, motor, and tactile sensor with the VR tracker.">
+          </div>
+          <div class="component-body">
+            <p class="component-kicker">Hardware</p>
+            <h3>Tacinf–Tacumi</h3>
+            <p>A handheld UMI device with a force-feedback master, a QDD-driven parallel gripper, and Xense tactile fingertips. The same gripper and sensor assembly mounts on the robot for deployment.</p>
+            <ul class="tags">
+              <li>Shared gripper</li><li>Torque feedback</li><li>VR tracker</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="component card">
+          <div class="component-media">
+            <img src="assets/img/taco-loop.webp" width="1559" height="535" loading="lazy" alt="Three data sources — teleoperation, simulation replay, and Tacumi demonstrations — feeding joint policy training.">
+          </div>
+          <div class="component-body">
+            <p class="component-kicker">Sim-to-real</p>
+            <h3>Tacinf–Taco</h3>
+            <p>Task-aligned scene and embodiment reconstruction, multi-source co-training, and paired Sim / Sim2Real evaluation. Simulation replay augments real seeds; Tacumi adds spatial variation; one policy is trained across all three.</p>
+            <ul class="tags">
+              <li>3D Gaussian Splatting</li><li>Real2Sim</li><li>Paired evaluation</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <div class="pipeline" role="list" aria-label="The Tacinf task loop">
+        <div class="pipeline-step" role="listitem">
+          <span class="pipeline-num">01</span>
+          <h3>Collect</h3>
+          <p>Teleoperation and Tacumi demonstrations with synchronized touch.</p>
+        </div>
+        <div class="pipeline-step" role="listitem">
+          <span class="pipeline-num">02</span>
+          <h3>Replay</h3>
+          <p>Tabero reconstructs the task and generates force-level variation.</p>
+        </div>
+        <div class="pipeline-step" role="listitem">
+          <span class="pipeline-num">03</span>
+          <h3>Train</h3>
+          <p>VTLA learns pose and fingertip force from mixed sources.</p>
+        </div>
+        <div class="pipeline-step" role="listitem">
+          <span class="pipeline-num">04</span>
+          <h3>Evaluate</h3>
+          <p>Taco pairs the aligned simulator with the physical robot.</p>
+        </div>
+      </div>
+      <p class="pipeline-note">Deployment returns new contact data to collection — the loop closes across iterations, not just within a trial.</p>
+
+      <figure class="figure wide-figure">
+        <button class="zoom" type="button" data-full="assets/img/force-decomposition.webp" data-caption="Fingertip-force decomposition across tactile skills.">
+          <img src="assets/img/force-decomposition.webp" width="2000" height="666" loading="lazy" alt="Four panels showing how fingertip contact decomposes into grip and applied forces for gentle grasping, blackboard wiping, card swiping, and knob turning.">
+        </button>
+        <figcaption>
+          <strong>Force, made explicit.</strong> Fingertip contact splits into an internal grip channel and the applied TCP wrench. The two-contact mapping exposes the normal, lateral, tangential, and torsional loads that different tactile skills require.
+        </figcaption>
+      </figure>
+
+      <figure class="figure wide-figure">
+        <button class="zoom" type="button" data-full="assets/img/force-loop.webp" data-caption="The two-loop force and position controller.">
+          <img src="assets/img/force-loop.webp" width="1400" height="679" loading="lazy" alt="Two-loop controller diagram: the policy predicts pose and force targets, and a closed-loop controller tracks them.">
+        </button>
+        <figcaption>
+          <strong>A force-aware controller, not a force-aware prompt.</strong> The policy predicts pose and six fingertip-force components; the low-level loop corrects pose through the applied wrench and aperture through grip-force feedback.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ============================ RESULTS ============================ -->
+    <section class="section wrap" id="results">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Results</h2>
+      </div>
+      <p class="section-intro">
+        Evaluation covers 18 Tabero task conditions and 9 Taco task conditions, with over 10k simulated and 2k real-robot evaluations across roughly a dozen tactile foundation models. Each component is validated separately before the policy-level transfer claim.
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <strong>0.845</strong>
+          <span>Pearson <em>r</em> between simulated and real combined task-and-force scores, across eight policy variants.</span>
+        </div>
+        <div class="stat">
+          <strong>0.195</strong>
+          <span>Mean Maximum Rank Violation for the combined score. Success alone gives MMRV 0.060.</span>
+        </div>
+        <div class="stat">
+          <strong>96.7%</strong>
+          <span>Mean zero-shot Sim2Real success for Field+FS (π<sub>0.5</sub>, no state), with no real-robot task demonstrations.</span>
+        </div>
+        <div class="stat">
+          <strong>27</strong>
+          <span>Task conditions across Tabero and Taco, plus over 10k simulated and 2k real evaluations.</span>
+        </div>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-copy">
+          <h3>Simulation preserves the policy ordering</h3>
+          <p>
+            Across eight policy variants spanning two VLA backbones and several tactile configurations, the combined task-and-force score gives <strong>r = 0.845</strong> and <strong>MMRV = 0.195</strong>. Using success rate alone gives r = 0.726 and MMRV = 0.060, so the harder claim — that simulation preserves both task competence and force-level ordering — is the one that holds.
+          </p>
+          <p class="fine">
+            The combined score averages each domain's min–max-normalized mean success rate and force separation Δ. Literature values from PolaRiS use different task suites and protocols and are contextual references, not directly comparable results.
+          </p>
+        </div>
+        <figure class="figure feature-figure">
+          <button class="zoom" type="button" data-full="assets/img/agreement.webp" data-caption="Cross-domain agreement of simulated evaluations.">
+            <img src="assets/img/agreement.webp" width="1600" height="453" loading="lazy" alt="Bar charts: Tacinf simulation–real Pearson correlation 0.845 and MMRV 0.195 for the combined score, compared with success-only and literature values.">
+          </button>
+          <figcaption>
+            <strong>Cross-domain agreement.</strong> (a) Pearson correlation between simulated and real-robot scores, higher is better. (b) Mean Maximum Rank Violation, lower is better.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="table-card card">
+        <div class="table-head">
+          <h3>Zero-shot Sim2Real force-level transfer</h3>
+          <p>Policies receive task-specific adaptation on simulated data only, then run on the physical robot without real-robot task demonstrations, fine-tuning, or test-time adaptation. Mean SR averages the firm and gentle conditions; Δ = F&nbsp;AG − G&nbsp;AG.</p>
+        </div>
+        <p class="table-hint">Scroll horizontally to see all columns →</p>
+        <div class="table-scroll">
+          <table class="table-wide">
+            <caption class="sr-only">Selected zero-shot Sim2Real results. Sim Δ/10 is a display-only rescaling of the raw simulated separation.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Policy</th>
+                <th scope="col" class="num">Sim2Real mean SR (%) ↑</th>
+                <th scope="col" class="num">Sim2Real Δ (N) ↑</th>
+                <th scope="col" class="num">Sim mean SR (%) ↑</th>
+                <th scope="col" class="num">Sim Δ/10 ↑</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>None (π<sub>0.5</sub>)</td>
+                <td class="num">0</td>
+                <td class="num">0</td>
+                <td class="num">0</td>
+                <td class="num">0</td>
+              </tr>
+              <tr>
+                <td>Force E+FS (π<sub>0</sub>)</td>
+                <td class="num">94.17</td>
+                <td class="num">2.305</td>
+                <td class="num">34.70</td>
+                <td class="num best">1.857</td>
+              </tr>
+              <tr>
+                <td>Field+FS (π<sub>0</sub>)</td>
+                <td class="num">95.00</td>
+                <td class="num">0.615</td>
+                <td class="num">57.00</td>
+                <td class="num">1.633</td>
+              </tr>
+              <tr>
+                <td>Field+FS (π<sub>0.5</sub>, state)</td>
+                <td class="num">82.20</td>
+                <td class="num best">2.396</td>
+                <td class="num">71.35</td>
+                <td class="num">1.649</td>
+              </tr>
+              <tr>
+                <td>Field+FS (π<sub>0.5</sub>, no state)</td>
+                <td class="num best">96.67</td>
+                <td class="num">1.459</td>
+                <td class="num best">96.67</td>
+                <td class="num">1.656</td>
+              </tr>
+              <tr>
+                <td>Img+FS (π<sub>0.5</sub>, no state, H=1)</td>
+                <td class="num">84.44</td>
+                <td class="num">1.114</td>
+                <td class="num">95.65</td>
+                <td class="num">1.539</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">The Sim column reports the raw simulated force separation divided by 10 for display only; it is not a force recalibration. Vision-only variants with no tactile input or supervision receive a score of zero under this protocol. Full table in the paper.</p>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-copy">
+          <h3>Force supervision is the enabling ingredient</h3>
+          <p>
+            The baseline without tactile input and without force supervision fails completely. Every variant that predicts the six-dimensional fingertip-force target gains force modulation; every variant without it stays near zero under the gentle condition. Force supervision alone, with no tactile stream, already reaches 0.82 firm and 0.45 gentle.
+          </p>
+          <p>
+            Touch realizes its value through supervision: with the force loss enabled, the marker-field adapter gives the best firm–gentle trade-off at <strong>0.86 firm / 0.52 gentle</strong>, against 0.82 / 0.45 for supervision alone. The supervision target is the decomposed contact force; the marker field observes precisely the shear and moment components that separate grip from applied interaction.
+          </p>
+        </div>
+        <figure class="figure feature-figure">
+          <button class="zoom" type="button" data-full="assets/img/ablation.webp" data-caption="Ablation study on tactile modalities.">
+            <img src="assets/img/ablation.webp" width="2000" height="789" loading="lazy" alt="Bar chart comparing success rate and average grip force for tactile input and force-supervision variants under firm and gentle commands.">
+          </button>
+          <figcaption>
+            <strong>Tactile modalities, separated.</strong> (a) Success rate under firm and gentle force; a shorter firm–gentle gap is better. (b) Average grip force; a longer separation is better. Solid dots mark firm, hollow dots gentle.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="controller-block">
+        <div class="block-head">
+          <h3>The controller does the force tracking</h3>
+          <p>
+            Four gripper-controller ablations on a Tabero object task: full force, reduced force, reduced force without the feedforward term, and reduced force without admittance. The predicted force is blue and the measured force red. Both feedforward and admittance are needed for accurate tracking; the same controller is exercised on the real robot in the paper.
+          </p>
+        </div>
+        <div class="controller-grid">
+          <figure class="figure card">
+            <button class="zoom" type="button" data-full="assets/img/controller-firm.webp" data-caption="100% force with hybrid control.">
+              <img src="assets/img/controller-firm.webp" width="1200" height="671" loading="lazy" alt="Force tracking plot at 100% force with hybrid control.">
+            </button>
+            <figcaption><strong>(a) 100% force.</strong> Full hybrid control.</figcaption>
+          </figure>
+          <figure class="figure card">
+            <button class="zoom" type="button" data-full="assets/img/controller-gentle.webp" data-caption="25% force with hybrid control.">
+              <img src="assets/img/controller-gentle.webp" width="1200" height="672" loading="lazy" alt="Force tracking plot at 25% force with hybrid control.">
+            </button>
+            <figcaption><strong>(b) 25% force.</strong> Full hybrid control.</figcaption>
+          </figure>
+          <figure class="figure card">
+            <button class="zoom" type="button" data-full="assets/img/controller-no-ff.webp" data-caption="25% force without the feedforward term.">
+              <img src="assets/img/controller-no-ff.webp" width="1200" height="672" loading="lazy" alt="Force tracking plot at 25% force without the feedforward term.">
+            </button>
+            <figcaption><strong>(c) 25%, no feedforward.</strong> The tracking degrades without the feedforward term.</figcaption>
+          </figure>
+          <figure class="figure card">
+            <button class="zoom" type="button" data-full="assets/img/controller-no-adm.webp" data-caption="25% force without admittance control.">
+              <img src="assets/img/controller-no-adm.webp" width="1200" height="672" loading="lazy" alt="Force tracking plot at 25% force without admittance control.">
+            </button>
+            <figcaption><strong>(d) 25%, no admittance.</strong> Removing the admittance component also degrades tracking.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <details class="more card">
+        <summary>
+          <span>Additional results: data replay and force-level datasets</span>
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="more-body">
+          <div class="more-copy">
+            <h4>Cross-platform replay preserves task success</h4>
+            <p>
+              Replaying LIBERO's MuJoCo data in Isaac Lab closely matches the original success distribution (average 0.85 → 0.76). Replacing the parallel jaw with a tactile gripper changes the force regime; success drops as the commanded force is reduced, which is why force regulation is part of the task definition rather than an afterthought.
+            </p>
+          </div>
+          <p class="table-hint">Scroll horizontally to see all columns →</p>
+          <div class="table-scroll">
+            <table class="table-wide">
+              <caption>Task success rates for four LIBERO subtasks. MuJoCo is the original data; Isaac is our replay with the same robot; T-100, T-25, and T-10 use the tactile gripper at 100%, 25%, and 10% force scaling.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Task</th>
+                  <th scope="col" class="num">MuJoCo</th>
+                  <th scope="col" class="num">Isaac</th>
+                  <th scope="col" class="num">T-100</th>
+                  <th scope="col" class="num">T-25</th>
+                  <th scope="col" class="num">T-10</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Spatial</td><td class="num">0.86</td><td class="num">0.83</td><td class="num">0.42</td><td class="num">0.24</td><td class="num">0.07</td></tr>
+                <tr><td>Object</td><td class="num">0.91</td><td class="num">0.77</td><td class="num">0.84</td><td class="num">0.87</td><td class="num">0.73</td></tr>
+                <tr><td>Goal</td><td class="num">0.76</td><td class="num">0.78</td><td class="num">0.55</td><td class="num">0.44</td><td class="num">0.30</td></tr>
+                <tr><td>LIBERO-10</td><td class="num">0.86</td><td class="num">0.66</td><td class="num">0.60</td><td class="num">0.47</td><td class="num">0.32</td></tr>
+                <tr class="sum"><td>Average</td><td class="num">0.85</td><td class="num">0.76</td><td class="num">0.60</td><td class="num">0.50</td><td class="num">0.36</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="more-copy">
+            <h4>Continuous force targets make the difference</h4>
+            <p>
+              Datasets A, B, and C isolate force level and command type: continuous control at 25%, continuous control at 10%, and binary open/close at 10%. The binary variant does not modulate force at all (AG 35.8 N firm vs. 34.6 N gentle), while the continuous 10% dataset produces a large firm–gentle separation (AG 32.4 N vs. 3.7 N). Force modulation appears only when the policy is given a continuous force target to predict.
+            </p>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <caption>Training results on the three datasets. Each cell gives firm / gentle; gentle is 25% for A, 10% for B, and 10% with binary gripper commands for C.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Metric</th>
+                  <th scope="col" class="num">A 100% / 25%</th>
+                  <th scope="col" class="num">B 100% / 10%</th>
+                  <th scope="col" class="num">C 100% / 10%</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Success rate</td><td class="num">0.87 / 0.79</td><td class="num">0.86 / 0.52</td><td class="num">0.86 / 0.87</td></tr>
+                <tr><td>Average grip force (N)</td><td class="num">31.3 / 8.5</td><td class="num">32.4 / 3.7</td><td class="num">35.8 / 34.6</td></tr>
+                <tr><td>Max transient grip force (N)</td><td class="num">61.3 / 19.9</td><td class="num">62.7 / 11.4</td><td class="num">65.7 / 65.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- ============================ DATA ============================ -->
+    <section class="section wrap" id="data">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2>From touch to data</h2>
+      </div>
+      <p class="section-intro">
+        Force is not a label bolted onto images. Tabero generates it from contact and replays the same task at ordered force levels; Taco aligns the real workspace and embodiment to the simulator, then checks the channels the policy actually consumes.
+      </p>
+
+      <div class="data-grid">
+        <figure class="figure card data-figure">
+          <button class="zoom" type="button" data-full="assets/img/force-distribution.webp" data-caption="Tactile observations at different force magnitudes.">
+            <img src="assets/img/force-distribution.webp" width="1192" height="1042" loading="lazy" alt="Tactile images, marker overlays, and third-person and wrist camera views at different force magnitudes.">
+          </button>
+          <figcaption>
+            <strong>One task, ordered force levels.</strong> Tactile RGB and marker-overlay images for two object types at 100%, 25%, and 10% force. The marker field responds to normal expansion, shear, and planar torsion — the physical signal the policy receives alongside force labels.
+          </figcaption>
+        </figure>
+
+        <div class="data-copy">
+          <h3>Force-level language, grounded in measurement</h3>
+          <p>
+            The same trajectory is replayed with different gripper controller gains, producing ordered force conditions at 100%, 25%, and 10%. Language is attached to the measured distribution — “firmly” and “tightly” at the high end, “gently” and “softly” at the low end — while tasks whose nature demands force, such as blackboard wiping, need no adverb.
+          </p>
+          <p>
+            This is an ordered scale, not a binary distinction. Out-of-domain adverbs reserved for testing fall between the two extremes rather than collapsing onto either one, so the language condition specifies a position on a continuous force axis.
+          </p>
+
+          <figure class="figure card data-small">
+            <button class="zoom" type="button" data-full="assets/img/real2sim.webp" data-caption="The same task in reality and in the aligned simulator.">
+              <img src="assets/img/real2sim.webp" width="1280" height="960" loading="lazy" alt="Four views of the same task: real third-person, simulated third-person, real wrist, and simulated wrist.">
+            </button>
+            <figcaption>
+              <strong>Real and aligned simulation, side by side.</strong> Third-person (top) and wrist (bottom) views of the same scene. Taco matches contact onset, contact-patch persistence, force scale, marker response, and action replay — policy-relevant consistency, not pixel-level digital-twin fidelity.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="table-card card">
+        <div class="table-head">
+          <h3>Sim–real data consistency</h3>
+          <p>Three firm-force tasks, measured on the channels the policy consumes. Visual consistency is CLIP similarity; tactile consistency is SSIM and MAE; action consistency is action-label MAE.</p>
+        </div>
+        <p class="table-hint">Scroll horizontally to see all columns →</p>
+        <div class="table-scroll">
+          <table class="table-wide">
+            <caption class="sr-only">Simulation–real data consistency across visual, tactile, and action channels for three firm-force tasks.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Task</th>
+                <th scope="col" class="num">Third-person CLIP ↑</th>
+                <th scope="col" class="num">Wrist CLIP ↑</th>
+                <th scope="col" class="num">Tactile SSIM ↑</th>
+                <th scope="col" class="num">Tactile MAE ↓</th>
+                <th scope="col" class="num">Action MAE ↓</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Firm Task 1</td><td class="num">0.781</td><td class="num">0.770</td><td class="num">0.941</td><td class="num">0.0160</td><td class="num">0.0708</td></tr>
+              <tr><td>Firm Task 2</td><td class="num">0.785</td><td class="num">0.754</td><td class="num">0.931</td><td class="num">0.0182</td><td class="num">0.0685</td></tr>
+              <tr><td>Firm Task 3</td><td class="num">0.794</td><td class="num">0.766</td><td class="num">0.932</td><td class="num">0.0196</td><td class="num">0.0733</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">All three channels align on every task: CLIP above 0.75, tactile SSIM above 0.93, action MAE below 0.074. This supports using replayed simulation data in place of real demonstrations on these tasks.</p>
+      </div>
+
+      <p class="ongoing">
+        <strong>Ongoing.</strong> Real-robot task expansion (blackboard wiping, card swiping, knob turning) and real–simulation–UMI co-training are specified in the paper; their numerical results are not claimed in this version.
+      </p>
+    </section>
+
+    <!-- ============================ BIBTEX ============================ -->
+    <section class="section wrap" id="bibtex">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2>BibTeX</h2>
+      </div>
+      <div class="bib-card card">
+        <div class="bib-head">
+          <p>If you find Tacinf useful, please cite the technical report. Update the entry with an arXiv ID or venue once available.</p>
+          <button class="btn btn-small" type="button" data-copy-bib>
+            <span>Copy</span>
+          </button>
+        </div>
+        <pre id="bibtex-code"><code>@misc{wu2026tacinf,
+  title        = {Tacinf: A Unified Tactile Infrastructure for Robot Manipulation},
+  author       = {Wu, Qiwei and Chen, Xiangyu and Xiang, Xin and Zhang, Rui and
+                  Kang, Yihang and Chen, Weiran and Xie, Zikang and Wang, Tao and
+                  Wang, Xiangzheng and Bi, Tianyi and Zhang, Zhiyan and Wang, Xianpeng and
+                  Zhou, Mingqian and Li, Yangfan and Li, Tao and Zhang, Weihua and
+                  Xu, Renjing and Lai, Junjie},
+  year         = {2026},
+  note         = {Technical report},
+  url          = {https://tacinf.github.io}
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p>© 2026 Tacinf authors · NVIDIA · HKUST (GZ) · University of Cambridge</p>
+      <p class="footer-links">
+        <a href="assets/pdf/Tacinf_NVTech.pdf">Paper</a>
+        <span aria-hidden="true">·</span>
+        <a href="#top">Back to top</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <dialog class="lightbox" id="lightbox" aria-label="Figure viewer">
+    <button class="lightbox-close" type="button" aria-label="Close figure viewer">&times;</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous figure">&#8249;</button>
+    <img id="lightbox-img" alt="">
+    <p id="lightbox-caption"></p>
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next figure">&#8250;</button>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
