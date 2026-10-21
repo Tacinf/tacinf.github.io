@@ -41,6 +41,23 @@ This rebuilds:
 - Self-hosted NVIDIA Sans WOFF2 subsets in `assets/fonts/`
 - The paper PDF in `assets/pdf/`
 
+### Interactive exploded view
+
+The Tacumi panel includes a hover / tap exploded view of the handheld UMI.
+Its 16 frames live in `assets/img/explode/` and are rendered from the paper's
+USD asset:
+
+```bash
+bash tools/render_explode_umi.sh
+```
+
+This requires the `isaac5` conda environment and the paper repository at
+`~/docs/Tacinf-NVTech` (override with `TACINF_PAPER=/path/to/Tacinf-NVTech`).
+`tools/render_kit_preview_fixed.py` is the paper's headless Kit renderer with a
+`--camera-usd` option, so every frame of the sequence shares the fully exploded
+framing. Keep `FRAME_COUNT` in `assets/js/main.js` in sync if you change the
+number of frames.
+
 ## Publish to GitHub Pages
 
 The target URL is <https://tacinf.github.io>, served from the public repository

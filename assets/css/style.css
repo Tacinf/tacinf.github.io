@@ -104,6 +104,7 @@ mark {
 /* With JS, the tab deck shows one panel at a time. Without JS, every panel
    stays visible and the page degrades to a long document. */
 .js .panel:not(.is-active) { display: none !important; }
+html:not(.js) .masthead { background: var(--ink); border-bottom-color: var(--line); }
 html:not(.js) .switcher { display: none; }
 html:not(.js) .deck { margin-top: 0; }
 
@@ -842,6 +843,116 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .wide-figure.media--photo .zoom::before { content: none; }
 .wide-figure.media--photo img { filter: grayscale(0.35) contrast(1.04); }
 
+/* ---------- interactive exploded view ---------- */
+.explode-figure {
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  border: 1px solid var(--line);
+  background: #bfccc2;
+  overflow: hidden;
+}
+.explode-stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #bfccc2;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  appearance: none;
+  -webkit-appearance: none;
+  overflow: hidden;
+}
+.explode-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(6, 8, 6, 0) 55%, rgba(6, 8, 6, 0.24) 100%);
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+}
+.explode-stage:hover::after,
+.explode-stage:focus-visible::after { opacity: 0.8; }
+.explode-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1400 / 788;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.explode-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  color: var(--ink);
+}
+.explode-state,
+.explode-hint {
+  position: absolute;
+  top: 14px;
+  padding: 5px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.explode-state { left: 16px; background: rgba(238, 244, 234, 0.84); }
+.explode-hint {
+  right: 16px;
+  background: rgba(6, 8, 6, 0.78);
+  color: var(--green);
+  transition: opacity 0.3s ease;
+}
+.explode-stage[aria-pressed="true"] .explode-hint { opacity: 0; }
+.explode-meter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  height: 3px;
+  background: rgba(6, 8, 6, 0.22);
+}
+.explode-meter i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.08s linear;
+}
+.explode-figure figcaption {
+  padding: 12px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--ink);
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+.explode-figure figcaption strong { color: var(--paper); }
+.explode-static {
+  display: inline-block;
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--paper);
+  border-bottom: 1px solid var(--green);
+  padding-bottom: 2px;
+}
+.explode-static:hover { color: var(--green); }
+
 /* ---------- pipeline ---------- */
 .pipeline {
   display: grid;
@@ -1206,6 +1317,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   .media-row { grid-template-columns: 1fr; }
   .media-row--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .media-row--three .video-card figcaption span:first-child { display: none; }
+  .explode-frame { aspect-ratio: 4 / 3; object-fit: cover; }
   .controller-grid { grid-template-columns: 1fr; }
   .pipeline { grid-template-columns: 1fr; }
   .abstract, .cite { padding-block: 76px; }

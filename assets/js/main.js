@@ -250,6 +250,130 @@
     }
   });
 
+  /* ---------------- interactive exploded view ---------------- */
+  const explodeStage = document.getElementById("umi-explode-stage");
+  if (explodeStage) {
+    const explodeFrame = document.getElementById("umi-explode-frame");
+    const explodeState = document.getElementById("umi-explode-state");
+    const explodeHint = document.getElementById("umi-explode-hint");
+    const explodeMeter = document.getElementById("umi-explode-meter");
+    const FRAME_COUNT = 16;
+    const FADE_MS = 1500;
+    const RETURN_MS = 1100;
+    const frameSrc = (index) =>
+      `assets/img/explode/umi-${String(index).padStart(2, "0")}.webp`;
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const loaded = [];
+    let progress = 0;
+    let target = 0;
+    let raf = 0;
+    let lastTime = 0;
+    let lastIndex = 0;
+    let lastPressed = false;
+    let lastPointerType = "mouse";
+
+    if (explodeHint) explodeHint.textContent = canHover ? "HOVER TO EXPLODE" : "TAP TO EXPLODE";
+
+    function preloadExplode() {
+      if (loaded.length) return;
+      for (let index = 0; index < FRAME_COUNT; index += 1) {
+        const image = new Image();
+        image.decoding = "async";
+        image.src = frameSrc(index);
+        loaded.push(image);
+      }
+    }
+
+    function paintExplode() {
+      const index = Math.round(progress * (FRAME_COUNT - 1));
+      if (index !== lastIndex) {
+        explodeFrame.src = frameSrc(index);
+        lastIndex = index;
+      }
+      if (explodeMeter) explodeMeter.style.transform = `scaleX(${progress})`;
+      const pressed = progress >= 0.995;
+      if (pressed !== lastPressed) {
+        explodeStage.setAttribute("aria-pressed", String(pressed));
+        explodeStage.setAttribute(
+          "aria-label",
+          pressed
+            ? "Tacumi handheld UMI, exploded view. Press to assemble."
+            : "Tacumi handheld UMI, assembled view. Hover, tap, or press Enter to explode."
+        );
+        explodeFrame.alt = pressed
+          ? "Exploded Tacumi handheld UMI: camera, tactile sensors, motor, rails, and fingers separated along the assembly axes."
+          : "Assembled Tacumi handheld UMI. The interactive view separates its camera, tactile sensors, motor, rails, and fingers.";
+        lastPressed = pressed;
+      }
+      if (explodeState) {
+        explodeState.textContent =
+          progress <= 0.005 ? "ASSEMBLED" : pressed ? "EXPLODED" : "EXPLODING";
+      }
+    }
+
+    function explodeTick(now) {
+      const dt = Math.min(64, now - lastTime);
+      lastTime = now;
+      const duration = target > progress ? FADE_MS : RETURN_MS;
+      const step = dt / duration;
+      progress = target > progress
+        ? Math.min(target, progress + step)
+        : Math.max(target, progress - step);
+      paintExplode();
+      if (progress !== target) {
+        raf = window.requestAnimationFrame(explodeTick);
+      } else {
+        raf = 0;
+      }
+    }
+
+    function setExplodeTarget(value) {
+      preloadExplode();
+      target = value;
+      if (reduceMotion.matches) {
+        progress = value;
+        paintExplode();
+        return;
+      }
+      if (!raf) {
+        lastTime = performance.now();
+        raf = window.requestAnimationFrame(explodeTick);
+      }
+    }
+
+    explodeStage.addEventListener("pointerdown", (event) => {
+      lastPointerType = event.pointerType || "mouse";
+    });
+    explodeStage.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse") setExplodeTarget(1);
+    });
+    explodeStage.addEventListener("pointerleave", (event) => {
+      if (event.pointerType === "mouse") setExplodeTarget(0);
+    });
+    explodeStage.addEventListener("click", (event) => {
+      const keyboard = event.detail === 0;
+      if (!keyboard && lastPointerType === "mouse") return;
+      setExplodeTarget(progress > 0.5 ? 0 : 1);
+    });
+
+    if ("IntersectionObserver" in window) {
+      const preloadObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            preloadExplode();
+            preloadObserver.disconnect();
+          }
+        },
+        { rootMargin: "600px" }
+      );
+      preloadObserver.observe(explodeStage);
+    } else {
+      preloadExplode();
+    }
+
+    paintExplode();
+  }
+
   /* ---------------- lightbox ---------------- */
   let zoomList = [];
   let zoomIndex = 0;

@@ -26,7 +26,7 @@
 
   <link rel="stylesheet" href="assets/css/style.css">
   <script>document.documentElement.classList.add("js");</script>
-  <noscript><style>[data-copy-bib]{display:none}.readout-hint{display:none}</style></noscript>
+  <noscript><style>[data-copy-bib]{display:none}.readout-hint{display:none}.explode-hint{display:none}</style></noscript>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -241,11 +241,20 @@
             </div>
           </div>
 
-          <figure class="wide-figure media--paper">
-            <button class="zoom" type="button" data-full="assets/img/tacumi-compare.webp" data-caption="One scale: arm-mounted gripper, handheld device, and exploded assembly. Camera, tactile sensor, and motor are shared; the VR tracker is handheld-only.">
-              <img src="assets/img/tacumi-compare.webp" width="1700" height="974" loading="lazy" alt="Three renders at one scale: the arm-mounted gripper, the handheld Tacumi device, and its exploded assembly with camera, VR tracker, motor, and tactile sensor labels.">
+          <figure class="explode-figure" id="umi-explode">
+            <button class="explode-stage" id="umi-explode-stage" type="button" aria-pressed="false" aria-label="Tacumi handheld UMI, assembled view. Hover, tap, or press Enter to explode the assembly.">
+              <img class="explode-frame" id="umi-explode-frame" src="assets/img/explode/umi-00.webp" width="1400" height="788" loading="lazy" alt="Assembled Tacumi handheld UMI. The interactive view separates its camera, tactile sensors, motor, rails, and fingers.">
+              <span class="explode-ui" aria-hidden="true">
+                <span class="explode-state" id="umi-explode-state">ASSEMBLED</span>
+                <span class="explode-hint" id="umi-explode-hint">HOVER TO EXPLODE</span>
+                <span class="explode-meter"><i id="umi-explode-meter"></i></span>
+              </span>
             </button>
-            <figcaption><strong>One scale, one assembly.</strong> Camera, tactile sensor, and QDD motor are shared. The VR tracker appears on the handheld side only.</figcaption>
+            <figcaption>
+              <strong>Take the shared gripper apart.</strong>
+              Hover, tap, or press Enter to pull the camera, tactile sensors, motor, rails, and fingers along the assembly axes.
+              <a class="explode-static" href="assets/img/tacumi-compare.webp" target="_blank" rel="noopener">Static comparison ↗</a>
+            </figcaption>
           </figure>
         </article>
 
