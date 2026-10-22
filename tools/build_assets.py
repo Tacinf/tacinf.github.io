@@ -36,7 +36,6 @@ IMAGES = [
     ("force-decomposition", "figs/fig03_force_decomposition/force_decomposition.png", 2000, "image"),
     ("vtla-system", "figs/fig04_model_control/vtla_system.pdf", 1600, "pdf"),
     ("force-loop", "figs/fig04_model_control/force_feedback_loop.pdf", 1400, "pdf"),
-    ("tacumi-compare", "figs/Gripper_URDF/gripper_compare_green.png", 1700, "image"),
     ("taco-loop", "figs/fig06_taco_data_loop/taco_data_loop.pdf", 1600, "pdf"),
     ("force-distribution", "figs/fig07_force_distribute/rgb_marker_new.png", 1200, "image"),
     ("ablation", "figs/fig08_tactile_ablation/tactile_ablation.png", 2000, "image"),
@@ -46,7 +45,6 @@ IMAGES = [
     ("controller-no-ff", "figs/fig10_force_feedback/gentle_woff_first151.png", 1200, "image"),
     ("controller-no-adm", "figs/fig10_force_feedback/gentle_woall_first151.png", 1200, "image"),
     ("real-task-progress", "figs/fig11_real_task_expansion/real_task_progress.png", 1960, "image"),
-    ("real2sim-views", "figs/fig12_real2sim_deploy/tacumi_real2sim_deployment_views.jpg", 1400, "image"),
     ("tacumi-hardware", "exp_sup/gripper.jpg", 1600, "image"),
 ]
 

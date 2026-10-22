@@ -1,4 +1,4 @@
-/* TACINF — interactive GLB viewers (Taco scene and Tacumi UMI). */
+/* TACINF — interactive Tacumi UMI viewer (assembled + exploded GLBs). */
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -10,92 +10,6 @@ loader.setMeshoptDecoder(MeshoptDecoder);
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-/* Object positions from gentle_grasp.json task 6; orientations set to the
-   upright Figure-12 layout (Coca-Cola, cookie and Vitasoy standing). */
-const TACO_OBJECTS = [
-  {
-    url: "assets/models/object-vitasoy.glb",
-    position: [-0.033, 0.156, 0.779],
-    rotation: [0, 0, Math.PI / 2],
-    scale: [0.07, 0.056, 0.056],
-  },
-  {
-    url: "assets/models/object-coca.glb",
-    position: [0.0135, -0.08, 0.778],
-    rotation: [-Math.PI / 2, 0, 0],
-    scale: [0.06, 0.0704, 0.06],
-  },
-  {
-    url: "assets/models/object-cookie.glb",
-    position: [0.092, 0.035, 0.791],
-    rotation: [Math.PI / 2, 0, -3.541592653589793],
-    scale: [0.07, 0.0822, 0.07],
-  },
-  {
-    url: "assets/models/object-basket.glb",
-    position: [0.05, -0.262, 0.761],
-    rotation: [0, 0, -Math.PI],
-    scale: [0.16, 0.16, 0.108],
-  },
-];
-
-/* Realworld agentview camera, converted from USD Z-up to three.js Y-up:
-   (x, y, z)_usd -> (x, z, -y)_three.  fov is the 640x480 vertical FOV. */
-const TACO_CAMERA = {
-  eye: [0.7586131746834771, 1.6503500240372423, 0],
-  target: [0.0973145992, 1.11632363, 0],
-  fov: 43.5,
-};
-
-function makeButtonHandler(stage, controls, camera, initialEye, initialTarget) {
-  const spherical = new THREE.Spherical();
-  const offset = new THREE.Vector3();
-
-  const rotate = (dTheta, dPhi) => {
-    offset.copy(camera.position).sub(controls.target);
-    spherical.setFromVector3(offset);
-    spherical.theta += dTheta;
-    spherical.phi = THREE.MathUtils.clamp(spherical.phi + dPhi, 0.08, controls.maxPolarAngle);
-    offset.setFromSpherical(spherical);
-    camera.position.copy(controls.target).add(offset);
-    controls.update();
-  };
-
-  const zoom = (factor) => {
-    offset.copy(camera.position).sub(controls.target);
-    const next = offset.length() * factor;
-    if (next < controls.minDistance || next > controls.maxDistance) return;
-    offset.setLength(next);
-    camera.position.copy(controls.target).add(offset);
-    controls.update();
-  };
-
-  stage.addEventListener("keydown", (event) => {
-    const key = event.key;
-    if (key === "ArrowLeft") { event.preventDefault(); rotate(-0.08, 0); }
-    else if (key === "ArrowRight") { event.preventDefault(); rotate(0.08, 0); }
-    else if (key === "ArrowUp") { event.preventDefault(); rotate(0, -0.06); }
-    else if (key === "ArrowDown") { event.preventDefault(); rotate(0, 0.06); }
-    else if (key === "+" || key === "=") { event.preventDefault(); zoom(0.9); }
-    else if (key === "-" || key === "_") { event.preventDefault(); zoom(1.1); }
-    else if (key.toLowerCase() === "r") {
-      event.preventDefault();
-      camera.position.copy(initialEye);
-      controls.target.copy(initialTarget);
-      controls.update();
-    }
-  });
-
-  const reset = stage.querySelector(".model-reset");
-  if (reset) {
-    reset.addEventListener("click", () => {
-      camera.position.copy(initialEye);
-      controls.target.copy(initialTarget);
-      controls.update();
-    });
-  }
-}
 
 function setup(stage, options) {
   let renderer;
@@ -140,17 +54,6 @@ function setup(stage, options) {
   scene.add(hemi);
   const key = new THREE.DirectionalLight(0xffffff, 2.6);
   key.position.set(1.6, 3.4, 2.0);
-  if (options.shadows) {
-    key.castShadow = true;
-    key.shadow.mapSize.set(1024, 1024);
-    key.shadow.camera.left = -1.6;
-    key.shadow.camera.right = 1.6;
-    key.shadow.camera.top = 1.6;
-    key.shadow.camera.bottom = -1.6;
-    key.shadow.camera.near = 0.1;
-    key.shadow.camera.far = 8;
-    key.shadow.bias = -0.0004;
-  }
   scene.add(key);
   const fill = new THREE.DirectionalLight(0xffffff, 0.6);
   fill.position.set(-2.2, 1.4, -1.2);
@@ -170,9 +73,10 @@ function setup(stage, options) {
 
   let running = false;
   let raf = 0;
-  const animate = () => {
+  const animate = (now) => {
     if (!running) { raf = 0; return; }
     raf = requestAnimationFrame(animate);
+    if (typeof options.onFrame === "function") options.onFrame(now);
     controls.update();
     renderer.render(scene, camera);
   };
@@ -192,7 +96,49 @@ function setup(stage, options) {
     else visibility.takeRecords();
   });
 
+  renderer.domElement.addEventListener("pointerdown", () => {
+    if (typeof options.onInteract === "function") options.onInteract();
+  });
+
   return { renderer, scene, camera, controls, start, stop };
+}
+
+function makeButtonHandler(stage, controls, camera, resetView) {
+  const spherical = new THREE.Spherical();
+  const offset = new THREE.Vector3();
+
+  const rotate = (dTheta, dPhi) => {
+    offset.copy(camera.position).sub(controls.target);
+    spherical.setFromVector3(offset);
+    spherical.theta += dTheta;
+    spherical.phi = THREE.MathUtils.clamp(spherical.phi + dPhi, 0.08, controls.maxPolarAngle);
+    offset.setFromSpherical(spherical);
+    camera.position.copy(controls.target).add(offset);
+    controls.update();
+  };
+
+  const zoom = (factor) => {
+    offset.copy(camera.position).sub(controls.target);
+    const next = offset.length() * factor;
+    if (next < controls.minDistance || next > controls.maxDistance) return;
+    offset.setLength(next);
+    camera.position.copy(controls.target).add(offset);
+    controls.update();
+  };
+
+  stage.addEventListener("keydown", (event) => {
+    const key = event.key;
+    if (key === "ArrowLeft") { event.preventDefault(); rotate(-0.08, 0); }
+    else if (key === "ArrowRight") { event.preventDefault(); rotate(0.08, 0); }
+    else if (key === "ArrowUp") { event.preventDefault(); rotate(0, -0.06); }
+    else if (key === "ArrowDown") { event.preventDefault(); rotate(0, 0.06); }
+    else if (key === "+" || key === "=") { event.preventDefault(); zoom(0.9); }
+    else if (key === "-" || key === "_") { event.preventDefault(); zoom(1.1); }
+    else if (key.toLowerCase() === "r") { event.preventDefault(); resetView(); }
+  });
+
+  const reset = stage.querySelector(".model-reset");
+  if (reset) reset.addEventListener("click", resetView);
 }
 
 function setLoading(stage, text) {
@@ -208,120 +154,124 @@ function markFailed(stage) {
   setLoading(stage, "3D view unavailable — showing the reference image.");
 }
 
-async function initTaco(stage) {
-  const view = setup(stage, {
-    fov: TACO_CAMERA.fov,
-    near: 0.01,
-    far: 20,
-    eye: TACO_CAMERA.eye,
-    target: TACO_CAMERA.target,
-    minDistance: 0.28,
-    maxDistance: 4.5,
-    maxPolarAngle: Math.PI / 2 - 0.02,
-    autoRotate: false,
-    shadows: true,
-  });
-  if (!view) { markFailed(stage); return; }
-  const { scene } = view;
-  makeButtonHandler(stage, view.controls, view.camera, view.camera.position.clone(), view.controls.target.clone());
-
-  try {
-    const root = new THREE.Group();
-    root.rotation.x = -Math.PI / 2; // USD Z-up -> three.js Y-up
-    scene.add(root);
-
-    const tableMaterial = new THREE.MeshStandardMaterial({
-      color: 0xf2f2f0,
-      roughness: 0.62,
-      metalness: 0.0,
-    });
-    const table = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.6, 0.018), tableMaterial);
-    table.position.set(0, 0, 0.700);
-    table.receiveShadow = true;
-    root.add(table);
-
-    const [robot, ...objects] = await Promise.all([
-      loader.loadAsync("assets/models/taco-robot.glb"),
-      ...TACO_OBJECTS.map((object) => loader.loadAsync(object.url)),
-    ]);
-
-    const robotGroup = new THREE.Group();
-    robotGroup.position.set(-0.5, 0, 0.728);
-    robotGroup.add(robot.scene);
-    root.add(robotGroup);
-
-    TACO_OBJECTS.forEach((object, index) => {
-      const group = new THREE.Group();
-      group.position.fromArray(object.position);
-      group.rotation.set(object.rotation[0], object.rotation[1], object.rotation[2], "XYZ");
-      group.scale.fromArray(object.scale);
-      // The object GLBs were exported Y-up (a -90 deg X root rotation);
-      // undo that so the task-6 poses are applied in the asset's Z-up frame.
-      const upFix = new THREE.Group();
-      upFix.rotation.x = Math.PI / 2;
-      upFix.add(objects[index].scene);
-      group.add(upFix);
-      root.add(group);
-    });
-
-    root.traverse((child) => {
-      if (!child.isMesh) return;
-      child.castShadow = true;
-      child.receiveShadow = true;
-      if (child.material) child.material.envMapIntensity = 0.7;
-    });
-
-    markLoaded(stage);
-    view.start();
-  } catch (error) {
-    markFailed(stage);
-  }
-}
-
 async function initUmi(stage) {
+  let tween = null;
+
   const view = setup(stage, {
-    fov: 34,
+    fov: 33,
     near: 0.001,
     far: 10,
     eye: [0.32, 0.16, 0.42],
     target: [0, 0, 0],
-    minDistance: 0.25,
+    minDistance: 0.08,
     maxDistance: 2.4,
     maxPolarAngle: Math.PI * 0.94,
     autoRotate: true,
-    autoRotateSpeed: 0.8,
+    autoRotateSpeed: 0.75,
     shadows: false,
+    onInteract: () => { tween = null; },
+    onFrame: (now) => {
+      if (!tween) return;
+      const t = Math.min(1, (now - tween.start) / tween.duration);
+      const e = 1 - Math.pow(1 - t, 3);
+      view.camera.position.lerpVectors(tween.fromPos, tween.toPos, e);
+      view.controls.target.lerpVectors(tween.fromTarget, tween.toTarget, e);
+      if (t >= 1) tween = null;
+    },
   });
   if (!view) { markFailed(stage); return; }
+
   const { scene, camera, controls } = view;
 
   try {
-    const gltf = await loader.loadAsync("assets/models/tacumi-umi.glb");
-    const model = new THREE.Group();
-    model.rotation.x = -Math.PI / 2; // USD Z-up -> three.js Y-up
-    model.add(gltf.scene);
-    scene.add(model);
+    const [assembledGltf, explodedGltf] = await Promise.all([
+      loader.loadAsync("assets/models/tacumi-umi.glb"),
+      loader.loadAsync("assets/models/tacumi-umi-exploded.glb"),
+    ]);
 
-    const bounds = new THREE.Box3().setFromObject(model);
-    const size = bounds.getSize(new THREE.Vector3());
-    const center = bounds.getCenter(new THREE.Vector3());
-    model.position.sub(center);
+    const assembled = assembledGltf.scene;
+    const exploded = explodedGltf.scene;
+    scene.add(assembled, exploded);
 
-    const maxDimension = Math.max(size.x, size.y, size.z);
-    const distance = maxDimension * 2.2;
-    const direction = new THREE.Vector3(0.9, 0.45, 1.2).normalize();
-    camera.position.copy(direction.multiplyScalar(distance));
-    controls.target.set(0, 0, 0);
-    controls.minDistance = maxDimension * 0.85;
-    controls.maxDistance = maxDimension * 6.5;
+    exploded.visible = true;
+    assembled.visible = true;
+    const boxA = new THREE.Box3().setFromObject(assembled);
+    const boxE = new THREE.Box3().setFromObject(exploded);
+    exploded.visible = false;
+
+    const sizeA = boxA.getSize(new THREE.Vector3());
+    const sizeE = boxE.getSize(new THREE.Vector3());
+    const centerA = boxA.getCenter(new THREE.Vector3());
+    const centerE = boxE.getCenter(new THREE.Vector3());
+    const maxA = Math.max(sizeA.x, sizeA.y, sizeA.z);
+    const maxE = Math.max(sizeE.x, sizeE.y, sizeE.z);
+    const fits = {
+      assembled: { target: centerA.clone(), distance: maxA * 2.1 },
+      exploded: { target: centerE.clone(), distance: maxE * 2.1 },
+    };
+
+    const initialDirection = new THREE.Vector3(0.9, 0.45, 1.2).normalize();
+    camera.position.copy(fits.assembled.target).addScaledVector(initialDirection, fits.assembled.distance);
+    controls.target.copy(fits.assembled.target);
+    controls.minDistance = Math.min(maxA, maxE) * 0.75;
+    controls.maxDistance = Math.max(maxA, maxE) * 6;
     controls.update();
+    const initialPos = camera.position.clone();
+    const initialTarget = controls.target.clone();
 
-    makeButtonHandler(stage, controls, camera, camera.position.clone(), controls.target.clone());
-
-    model.traverse((child) => {
-      if (!child.isMesh) return;
-      if (child.material) child.material.envMapIntensity = 0.8;
+    [assembled, exploded].forEach((model) => {
+      model.traverse((child) => {
+        if (!child.isMesh) return;
+        if (child.material) child.material.envMapIntensity = 0.8;
+      });
     });
+
+    const toggle = stage.querySelector("#umi-explode-toggle");
+    let explodedState = false;
+
+    const flyTo = (fit, direction) => {
+      tween = {
+        fromPos: camera.position.clone(),
+        fromTarget: controls.target.clone(),
+        toPos: fit.target.clone().addScaledVector(direction, fit.distance),
+        toTarget: fit.target.clone(),
+        start: performance.now(),
+        duration: 650,
+      };
+    };
+
+    const applyState = (next, { animate = true, reset = false } = {}) => {
+      explodedState = next;
+      assembled.visible = !next;
+      exploded.visible = next;
+      if (toggle) {
+        toggle.setAttribute("aria-pressed", String(next));
+        toggle.textContent = next ? "Assembled view" : "Exploded view";
+      }
+      if (reset) {
+        tween = null;
+        camera.position.copy(initialPos);
+        controls.target.copy(initialTarget);
+        controls.update();
+        return;
+      }
+      const fit = next ? fits.exploded : fits.assembled;
+      const direction = camera.position.clone().sub(controls.target).normalize();
+      if (!animate || reducedMotion.matches) {
+        tween = null;
+        controls.target.copy(fit.target);
+        camera.position.copy(fit.target).addScaledVector(direction, fit.distance);
+        controls.update();
+      } else {
+        flyTo(fit, direction);
+      }
+    };
+
+    if (toggle) {
+      toggle.addEventListener("click", () => applyState(!explodedState));
+    }
+    const resetView = () => applyState(false, { animate: false, reset: true });
+    makeButtonHandler(stage, controls, camera, resetView);
 
     markLoaded(stage);
     view.start();
@@ -349,7 +299,5 @@ document.querySelectorAll(".model-hint").forEach((hint) => {
   hint.textContent = hintText;
 });
 
-const tacoStage = document.getElementById("taco-viewer-stage");
-if (tacoStage) whenNear(tacoStage, initTaco);
 const umiStage = document.getElementById("umi-viewer-stage");
 if (umiStage) whenNear(umiStage, initUmi);

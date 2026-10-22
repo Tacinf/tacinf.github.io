@@ -41,52 +41,36 @@ This rebuilds:
 - Self-hosted NVIDIA Sans WOFF2 subsets in `assets/fonts/`
 - The paper PDF in `assets/pdf/`
 
-### 3D models
+### 3D model
 
-`assets/models/` holds the WebGL assets:
+`assets/models/` holds the UMI viewer assets:
 
 | File | Source | Notes |
 |---|---|---|
-| `taco-robot.glb` | xArm7 + Tacumi URDF visuals | posed at the Figure-12 IK pregrasp above the cookie; built by `python3 tools/build_taco_robot.py` |
-| `object-vitasoy.glb`, `object-coca.glb`, `object-cookie.glb`, `object-basket.glb` | Tabero_X realworld USD objects | optimized to low-poly meshes with 512 px WebP textures |
-| `tacumi-umi.glb` | `handheld_umi.usd` | meshopt-compressed |
+| `tacumi-umi.glb` | `handheld_umi_aligned.usd` | assembled, meshopt-compressed |
+| `tacumi-umi-exploded.glb` | `handheld_umi_exploded.usd` | exploded, meshopt-compressed |
 
-The Taco viewer places the robot at the realworld environment default base
-(`-0.5, 0, 0.728`), the gripper above the cookie as in Figure 12, the objects at
-the task-6 positions, and uses the 1.2 × 1.6 m realworld tabletop. The initial camera
-is the realworld `agentview_cam` pose. These values live in
-`assets/js/model-viewer.js` and come from
-`benchmarks/datasets/realworld/config/gentle_grasp.json` and
-`realworld_env_cfg.py` in Tabero_X.
+The Tacumi panel shows the assembled UMI. Its **Exploded view** button swaps to
+the exploded GLB and pulls the camera back; both states stay draggable and
+zoomable. The two USD assets share the aligned frame, so the toggle does not
+rotate the device.
 
-Object and UMI GLBs can be regenerated with:
+The Taco panel uses the `real2sim.mp4` replay clip as a large
+Real–Sim replay video instead of a 3D scene.
 
-```bash
-~/miniconda3/envs/isaac5/bin/python tools/convert_usd_to_glb.py <asset.usd> <out.glb>
-gltf-transform optimize <out.glb> <out-opt.glb> \
-  --compress false --simplify true --simplify-ratio 0.002 \
-  --simplify-error 0.01 --texture-compress webp --texture-size 512
-```
-
-Use `--compress meshopt --simplify false` for the robot/UMI if you want smaller
-geometry; the viewer initializes the meshopt decoder for those files.
-
-### Interactive exploded view
-
-The Tacumi panel includes a hover / tap exploded view of the handheld UMI.
-Its 16 frames live in `assets/img/explode/` and are rendered from the paper's
-USD asset:
+Regenerate the UMI GLBs with:
 
 ```bash
-bash tools/render_explode_umi.sh
+~/miniconda3/envs/isaac5/bin/python tools/convert_usd_to_glb.py \
+  ~/docs/Tacinf-NVTech/figs/UMI_URDF/usd/handheld_umi_aligned.usd /tmp/umi.glb
+~/miniconda3/envs/isaac5/bin/python tools/convert_usd_to_glb.py \
+  ~/docs/Tacinf-NVTech/figs/UMI_URDF/usd/handheld_umi_exploded.usd /tmp/umi-exploded.glb
+gltf-transform optimize <in.glb> <out.glb> \
+  --compress meshopt --simplify true --simplify-ratio 0.5 \
+  --simplify-error 0.001 --texture-compress false
 ```
 
-This requires the `isaac5` conda environment and the paper repository at
-`~/docs/Tacinf-NVTech` (override with `TACINF_PAPER=/path/to/Tacinf-NVTech`).
-`tools/render_kit_preview_fixed.py` is the paper's headless Kit renderer with a
-`--camera-usd` option, so every frame of the sequence shares the fully exploded
-framing. Keep `FRAME_COUNT` in `assets/js/main.js` in sync if you change the
-number of frames.
+The viewer initializes the meshopt decoder for both files.
 
 ## Publish to GitHub Pages
 

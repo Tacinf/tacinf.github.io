@@ -29,7 +29,7 @@
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
   </script>
-  <noscript><style>[data-copy-bib]{display:none}.explode-hint{display:none}.model-loading,.model-ui{display:none}</style></noscript>
+  <noscript><style>[data-copy-bib]{display:none}.model-loading,.model-ui{display:none}</style></noscript>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -236,27 +236,15 @@
               <div class="model-loading" role="status" aria-live="polite">Loading Tacumi UMI…</div>
               <div class="model-ui">
                 <span class="model-hint">Drag to rotate · Scroll to zoom</span>
-                <button class="model-reset" type="button">Reset view</button>
+                <div class="model-actions">
+                  <button class="model-toggle" id="umi-explode-toggle" type="button" aria-pressed="false">Exploded view</button>
+                  <button class="model-reset" type="button">Reset view</button>
+                </div>
               </div>
             </div>
-            <figcaption><strong>Tacumi UMI, in 3D.</strong> The shared gripper assembly: wrist camera, Xense tactile fingertips, QDD motor, rails, and VR tracker. Drag to orbit; scroll or pinch to zoom.</figcaption>
+            <figcaption><strong>Tacumi UMI, in 3D.</strong> Use <em>Exploded view</em> to take the shared assembly apart, then drag to inspect the camera, Xense tactile fingertips, QDD motor, rails, and VR tracker. Scroll or pinch to zoom.</figcaption>
           </figure>
 
-          <figure class="explode-figure" id="umi-explode">
-            <button class="explode-stage" id="umi-explode-stage" type="button" aria-pressed="false" aria-label="Tacumi handheld UMI, assembled view. Hover, tap, or press Enter to explode the assembly.">
-              <img class="explode-frame" id="umi-explode-frame" src="assets/img/explode/umi-00.webp" width="1400" height="788" loading="lazy" alt="Assembled Tacumi handheld UMI. The interactive view separates its camera, tactile sensors, motor, rails, and fingers.">
-              <span class="explode-ui" aria-hidden="true">
-                <span class="explode-state" id="umi-explode-state">Assembled</span>
-                <span class="explode-hint" id="umi-explode-hint">Hover to explode</span>
-                <span class="explode-meter"><i id="umi-explode-meter"></i></span>
-              </span>
-            </button>
-            <figcaption>
-              <strong>Take the shared gripper apart.</strong>
-              Hover, tap, or press Enter to pull the camera, tactile sensors, motor, rails, and fingers along the assembly axes.
-              <a class="explode-static" href="assets/img/tacumi-compare.webp" target="_blank" rel="noopener">Static comparison ↗</a>
-            </figcaption>
-          </figure>
         </article>
 
         <!-- ---------------------------- TABERO ---------------------------- -->
@@ -452,16 +440,11 @@
             </div>
           </header>
 
-          <figure class="model-figure" id="taco-viewer">
-            <div class="model-stage" id="taco-viewer-stage" tabindex="0" role="group" aria-label="Interactive 3D Taco task scene: XArm robot with the shared Tacumi gripper, white table, Vitasoy, Coca-Cola, cookie, and basket. Drag to rotate and scroll or pinch to zoom.">
-              <div class="model-poster"><img src="assets/img/real2sim-views.webp" width="1280" height="960" loading="lazy" alt="Real and simulated views of the Taco task scene."></div>
-              <div class="model-loading" role="status" aria-live="polite">Loading Taco scene…</div>
-              <div class="model-ui">
-                <span class="model-hint">Drag to rotate · Scroll to zoom</span>
-                <button class="model-reset" type="button">Reset view</button>
-              </div>
-            </div>
-            <figcaption><strong>Taco scene, in 3D.</strong> XArm + shared Tacumi gripper, Vitasoy, Coca-Cola, cookie, and basket in the Figure-12 layout. Drag to orbit; scroll or pinch to zoom; arrow keys rotate when focused.</figcaption>
+          <figure class="video-card video-feature">
+            <video muted loop playsinline preload="none" poster="assets/img/poster-taco-real2sim.webp" data-auto controls aria-label="Real and simulated replay of the Taco task.">
+              <source src="assets/video/taco-real2sim.mp4" type="video/mp4">
+            </video>
+            <figcaption><span>REAL ↔ SIM REPLAY</span><span>TACO</span></figcaption>
           </figure>
 
           <div class="panel-grid">
@@ -496,21 +479,6 @@
                 <figcaption><strong>Three sources, one policy.</strong> Teleoperation anchors; simulation scales; Tacumi adds spatial variation.</figcaption>
               </figure>
 
-              <div class="media-row">
-                <figure class="video-card">
-                  <video muted loop playsinline preload="none" poster="assets/img/poster-taco-real2sim.webp" data-auto aria-label="Real task and its simulation replay.">
-                    <source src="assets/video/taco-real2sim.mp4" type="video/mp4">
-                  </video>
-                  <button class="video-toggle" type="button" aria-label="Play real2sim video">▶</button>
-                  <figcaption><span>REAL → SIM</span><span>REPLAY</span></figcaption>
-                </figure>
-                <figure class="media media--photo media--small">
-                  <button class="zoom" type="button" data-full="assets/img/real2sim-views.webp" data-caption="Deployment views: the same task in reality and in the aligned simulator.">
-                    <img src="assets/img/real2sim-views.webp" width="1280" height="960" loading="lazy" alt="Four views of the same task: real third-person, simulated third-person, real wrist, and simulated wrist.">
-                  </button>
-                  <figcaption><strong>Real and aligned sim.</strong> Third-person and wrist views.</figcaption>
-                </figure>
-              </div>
             </div>
           </div>
 
