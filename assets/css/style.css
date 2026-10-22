@@ -164,6 +164,30 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   border: 0;
   padding: 0;
 }
+.compute-note {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  max-width: 100%;
+  margin-top: 20px;
+  padding: 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  color: var(--gray);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.compute-note strong { color: var(--white); font-weight: 500; }
+.compute-mark {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  flex: none;
+}
 
 /* ---------- masthead ---------- */
 .masthead {
@@ -1185,7 +1209,6 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   .panel-media { margin-top: 8px; }
   .sub-head { grid-template-columns: 1fr; gap: 12px; }
   .evidence-grid { grid-template-columns: 1fr; gap: 28px; }
-  .controller-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cite-grid { grid-template-columns: 1fr; gap: 36px; }
   .feature-list { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
   .contrib-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -1220,7 +1243,7 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   .media-row--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .media-row--three .video-card figcaption span:first-child { display: none; }
   .media-row--three .video-card video { aspect-ratio: 1 / 1; }
-  .controller-grid { grid-template-columns: 1fr; }
+  .controller-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   .model-figure { max-width: 100%; margin-bottom: 36px; }
   .model-ui { left: 12px; right: 12px; bottom: 10px; }
@@ -1246,6 +1269,7 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   .media-row--three .video-card video { aspect-ratio: 16 / 10; }
   .demo-grid { grid-template-columns: 1fr; }
   .pipeline { grid-template-columns: 1fr; }
+  .controller-grid { grid-template-columns: 1fr; }
   .cite-actions .btn { width: 100%; }
   .error-title { font-size: clamp(6rem, 26vw, 10rem); }
 }
