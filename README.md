@@ -13,9 +13,9 @@ site. The page is organized around four switchable modules:
 | Taco | Task-aligned sim-to-real | white |
 
 Tabero follows the standalone repository
-<https://github.com/NathanWu7/Tabero>: its two milk force-level demo clips and the
-ICML 2026 poster are pulled from that repo. The remaining panels use the Tacinf
-technical-report figures.
+<https://github.com/NathanWu7/Tabero>: its two milk force-level demo clips are
+pulled from that repo. The remaining panels use the Tacinf technical-report
+figures.
 
 ## Preview locally
 
@@ -43,18 +43,17 @@ This rebuilds:
 - Self-hosted NVIDIA Sans WOFF2 subsets in `assets/fonts/`
 - The paper PDF in `assets/pdf/`
 
-Tabero's GitHub demos and poster are rebuilt separately:
+Tabero's GitHub demos are rebuilt separately:
 
 ```bash
 bash tools/fetch_tabero_github_assets.sh
 ```
 
-This downloads the two milk force-level GIFs and the ICML 2026 poster from
-`NathanWu7/Tabero` (Git LFS via `media.githubusercontent.com`) and writes:
+This downloads the two milk force-level GIFs from `NathanWu7/Tabero` (Git LFS
+via `media.githubusercontent.com`) and writes:
 
 | Output | Source |
 |---|---|
-| `assets/img/tabero-poster.webp` | `docs/assets/poster_preview.png` |
 | `assets/video/tabero-demo-milk-*.mp4` | `docs/assets/task7_*.gif` |
 | `assets/img/poster-tabero-demo-*.webp` | first frames of the same clips |
 

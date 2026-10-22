@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fetch the Tabero GitHub demo GIFs and ICML 2026 poster, then build web assets.
+# Fetch the Tabero GitHub milk demo GIFs, then build web assets.
 # Source: https://github.com/NathanWu7/Tabero (docs/assets, Git LFS).
 set -euo pipefail
 SITE="$(cd "$(dirname "$0")/.." && pwd)"
@@ -10,17 +10,6 @@ trap 'rm -rf "$TMP"' EXIT
 mkdir -p "$OUT_IMG" "$OUT_VID"
 
 BASE="https://media.githubusercontent.com/media/NathanWu7/Tabero/main/docs/assets"
-curl -sSL --max-time 120 "$BASE/poster_preview.png" -o "$TMP/poster.png"
-
-python3 - "$TMP/poster.png" "$OUT_IMG/tabero-poster.webp" <<'PY'
-import sys
-from PIL import Image
-im = Image.open(sys.argv[1]).convert("RGB")
-if im.width > 1800:
-    im = im.resize((1800, round(im.height * 1800 / im.width)), Image.LANCZOS)
-im.save(sys.argv[2], "WEBP", quality=88, method=6)
-print("poster", im.size)
-PY
 
 # name -> GitHub GIF
 for entry in \
