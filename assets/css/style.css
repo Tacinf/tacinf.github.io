@@ -33,6 +33,43 @@
   font-display: swap;
 }
 
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Mono";
+  src: url("../fonts/space-mono-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Mono";
+  src: url("../fonts/space-mono-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ---------- tokens ---------- */
 :root {
   --bg: #000;
@@ -56,7 +93,10 @@
 
   --font: "NVIDIA Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "Helvetica Neue", Arial, sans-serif;
-  --mono: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  --display: "Space Grotesk", "NVIDIA Sans", -apple-system, BlinkMacSystemFont,
+    "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Space Mono", "SF Mono", ui-monospace, "JetBrains Mono", Menlo,
+    Consolas, monospace;
 
   --wrap: min(1120px, calc(100% - 48px));
   --header-h: 48px;
@@ -125,12 +165,13 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 /* ---------- shared ---------- */
 .kicker {
   display: flex;
+  font-family: var(--mono);
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--gray-2);
 }
@@ -147,6 +188,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   text-align: center;
 }
 .section-head h2 {
+  font-family: var(--display);
   margin-top: 12px;
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 700;
@@ -214,9 +256,10 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 }
 .brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .brand-mark { width: 22px; height: 22px; color: var(--green); flex: none; }
-.brand-word { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.brand-word { font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: -0.03em; }
 .brand-tag {
-  font-size: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
   color: var(--gray-2);
   padding-left: 12px;
   border-left: 1px solid var(--line);
@@ -283,6 +326,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .hero-copy { max-width: 900px; text-align: center; }
 .hero-copy > .kicker { animation: rise 0.8s var(--ease) 0.05s both; }
 .hero-title {
+  font-family: var(--display);
   margin-top: 18px;
   font-size: clamp(4.5rem, 11vw, 10rem);
   font-weight: 700;
@@ -296,6 +340,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .title-line { display: inline-block; animation: rise 0.9s var(--ease) both; }
 .title-accent { color: var(--green); animation-delay: 0.06s; }
 .hero-sub {
+  font-family: var(--display);
   max-width: 30ch;
   margin: 18px auto 0;
   color: var(--gray);
@@ -414,7 +459,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   border-radius: 9px;
   background: transparent;
   color: var(--gray);
-  font-family: inherit;
+  font-family: var(--display);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -433,7 +478,8 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   justify-content: center;
   gap: 8px;
   color: var(--gray-2);
-  font-size: 13px;
+  font-family: var(--mono);
+  font-size: 12px;
   text-align: center;
 }
 .readout-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex: none; }
@@ -484,11 +530,12 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .panel-head { margin-bottom: 36px; }
 .panel-kicker {
   display: flex;
+  font-family: var(--mono);
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
   color: var(--gray-2);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
@@ -502,6 +549,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   flex: none;
 }
 .panel-title {
+  font-family: var(--display);
   font-size: clamp(2.8rem, 5vw, 4.6rem);
   font-weight: 700;
   line-height: 1.02;
@@ -510,6 +558,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 }
 .panel-title span { color: var(--panel-accent, var(--green)); }
 .panel-lede {
+  font-family: var(--display);
   max-width: 700px;
   margin-top: 14px;
   color: var(--gray);
@@ -554,9 +603,10 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   display: block;
   margin-bottom: 6px;
   color: var(--white);
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
 }
 .feature-list p { color: var(--gray); font-size: 14px; line-height: 1.5; }
 
@@ -574,6 +624,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .stat { padding: 0; border: 0; }
 .stat strong {
   display: block;
+  font-family: var(--display);
   color: var(--white);
   font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 700;
@@ -622,6 +673,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   font-size: 12px;
 }
 .repo-badge {
+  font-family: var(--mono);
   padding: 3px 7px;
   border-radius: 6px;
   background: var(--yellow);
@@ -906,7 +958,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   padding-top: 24px;
   border-top: 1px solid var(--line-soft);
 }
-.pipeline-step span { color: var(--gray-2); font-size: 12px; }
+.pipeline-step span { color: var(--gray-2); font-family: var(--mono); font-size: 12px; }
 .pipeline-step strong {
   display: block;
   margin: 6px 0 4px;
@@ -927,6 +979,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   margin-bottom: 20px;
 }
 .sub-head h4 {
+  font-family: var(--display);
   margin-top: 6px;
   font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 700;
@@ -949,6 +1002,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   margin-top: 56px;
 }
 .evidence-copy h4 {
+  font-family: var(--display);
   margin: 8px 0 14px;
   font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 700;
@@ -966,6 +1020,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   text-align: center;
 }
 .contribution-head h2 {
+  font-family: var(--display);
   font-size: clamp(2.9rem, 8vw, 6rem);
   font-weight: 700;
   line-height: 0.98;
@@ -991,8 +1046,8 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   border: 1px solid var(--line-soft);
   border-radius: 20px;
 }
-.contrib-no { color: var(--gray-2); font-size: 12px; }
-.contrib h3 { margin: 12px 0 8px; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.contrib-no { font-family: var(--mono); color: var(--gray-2); font-size: 11px; }
+.contrib h3 { margin: 12px 0 8px; font-family: var(--display); font-size: 19px; font-weight: 500; letter-spacing: -0.015em; }
 .contrib p { color: var(--gray); font-size: 14px; line-height: 1.55; }
 
 /* ---------- citation ---------- */
@@ -1180,6 +1235,7 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
 }
 .error-page .kicker { justify-content: flex-start; }
 .error-title {
+  font-family: var(--display);
   margin-top: 18px;
   color: var(--green);
   font-size: clamp(7rem, 22vw, 16rem);

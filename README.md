@@ -43,6 +43,10 @@ This rebuilds:
 - Self-hosted NVIDIA Sans WOFF2 subsets in `assets/fonts/`
 - The paper PDF in `assets/pdf/`
 
+Display type is self-hosted too: **Space Grotesk** for headings and **Space Mono**
+for kickers and small technical labels (Latin WOFF2 from Fontsource, committed in
+`assets/fonts/`). Body copy remains NVIDIA Sans.
+
 Tabero's GitHub demos are rebuilt separately:
 
 ```bash
