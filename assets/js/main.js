@@ -154,7 +154,7 @@
           newPanel.classList.remove("is-entering");
           switching = false;
           resolve();
-        }, 700);
+        }, 620);
       }, 260);
     });
   }
