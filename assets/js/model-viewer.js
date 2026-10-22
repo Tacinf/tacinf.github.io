@@ -11,18 +11,19 @@ loader.setMeshoptDecoder(MeshoptDecoder);
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-/* Task-6 object poses from Tabero_X benchmarks/datasets/realworld/config/gentle_grasp.json */
+/* Object positions from gentle_grasp.json task 6; orientations set to the
+   upright Figure-12 layout (Coca-Cola, cookie and Vitasoy standing). */
 const TACO_OBJECTS = [
   {
     url: "assets/models/object-vitasoy.glb",
-    position: [-0.033, 0.156, 0.765],
-    rotation: [0, -Math.PI / 2, -1.1],
+    position: [-0.033, 0.156, 0.779],
+    rotation: [0, 0, Math.PI / 2],
     scale: [0.07, 0.056, 0.056],
   },
   {
     url: "assets/models/object-coca.glb",
     position: [0.0135, -0.08, 0.778],
-    rotation: [-Math.PI / 2, 0, -Math.PI],
+    rotation: [-Math.PI / 2, 0, 0],
     scale: [0.06, 0.0704, 0.06],
   },
   {
@@ -239,23 +240,13 @@ async function initTaco(stage) {
     table.receiveShadow = true;
     root.add(table);
 
-    // The realworld arm is mounted on a stand at the task robot_base_pos.
-    const stand = new THREE.Mesh(
-      new THREE.BoxGeometry(0.14, 0.14, 0.912),
-      new THREE.MeshStandardMaterial({ color: 0x3a3a3c, roughness: 0.7 })
-    );
-    stand.position.set(-0.66, 0, 0.456);
-    stand.castShadow = true;
-    stand.receiveShadow = true;
-    root.add(stand);
-
     const [robot, ...objects] = await Promise.all([
       loader.loadAsync("assets/models/taco-robot.glb"),
       ...TACO_OBJECTS.map((object) => loader.loadAsync(object.url)),
     ]);
 
     const robotGroup = new THREE.Group();
-    robotGroup.position.set(-0.66, 0, 0.912);
+    robotGroup.position.set(-0.5, 0, 0.728);
     robotGroup.add(robot.scene);
     root.add(robotGroup);
 

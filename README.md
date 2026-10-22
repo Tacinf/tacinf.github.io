@@ -47,12 +47,13 @@ This rebuilds:
 
 | File | Source | Notes |
 |---|---|---|
-| `taco-robot.glb` | xArm7 + Tacumi URDF visuals | posed at the task-6 IK pregrasp; built by `python3 tools/build_taco_robot.py` |
+| `taco-robot.glb` | xArm7 + Tacumi URDF visuals | posed at the Figure-12 IK pregrasp above the cookie; built by `python3 tools/build_taco_robot.py` |
 | `object-vitasoy.glb`, `object-coca.glb`, `object-cookie.glb`, `object-basket.glb` | Tabero_X realworld USD objects | optimized to low-poly meshes with 512 px WebP textures |
 | `tacumi-umi.glb` | `handheld_umi.usd` | meshopt-compressed |
 
-The Taco viewer places the robot at the task-6 `robot_base_pos`, the objects at
-the task-6 poses, and uses the 1.2 × 1.6 m realworld tabletop. The initial camera
+The Taco viewer places the robot at the realworld environment default base
+(`-0.5, 0, 0.728`), the gripper above the cookie as in Figure 12, the objects at
+the task-6 positions, and uses the 1.2 × 1.6 m realworld tabletop. The initial camera
 is the realworld `agentview_cam` pose. These values live in
 `assets/js/model-viewer.js` and come from
 `benchmarks/datasets/realworld/config/gentle_grasp.json` and

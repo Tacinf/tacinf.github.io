@@ -2,9 +2,10 @@
 """Build a compact GLB of the posed xArm7 + Tacumi gripper from the URDF visuals.
 
 The URDF visual STLs are low-poly (about 80k faces total).  The realworld
-scene pose is the IK pregrasp above the Vitasoy, with the robot base at the
-task-6 robot_base_pos.  Geometry is baked in the robot base frame; the web
-viewer applies the base pose and the Z-up -> Y-up rotation.
+scene pose is the Figure-12 IK pregrasp above the cookie, with the robot at the
+realworld environment default base (-0.5, 0, 0.728).  Geometry is baked in the
+robot base frame; the web viewer applies the base pose and the Z-up -> Y-up
+rotation.
 
 Usage: python3 tools/build_taco_robot.py
 """
@@ -20,15 +21,17 @@ OUT = Path(__file__).resolve().parent.parent / "assets/models/taco-robot.glb"
 PKG = "package://xarm_umi_description/"
 MESH_ROOT = "/home/wqw/git_pkgs/xarm_umi_description/"
 
-# IK pregrasp above the Vitasoy (radians), from the xArm URDF.
+# Figure 12 pregrasp above the cookie, default realworld base (-0.5, 0, 0.728).
+# link7 target in world = (0.092, 0.035, 1.182); gripper approach = world -Z;
+# finger axis = world X.  Solved from the xArm URDF with PyBullet.
 ANGLES = {
-    "joint1": 0.033696,
-    "joint2": 0.856240,
-    "joint3": 0.291594,
-    "joint4": 1.749504,
-    "joint5": -0.273718,
-    "joint6": 0.932917,
-    "joint7": -1.177236,
+    "joint1": -0.05119030,
+    "joint2": 0.42581595,
+    "joint3": 0.15303164,
+    "joint4": 1.88003243,
+    "joint5": -0.06340463,
+    "joint6": 1.45884507,
+    "joint7": -1.47533813,
     "right_grip_joint": -0.030,   # open: URDF limit [-0.048, 0]
     "left_grip_joint": 0.030,
 }
