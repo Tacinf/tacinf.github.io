@@ -8,12 +8,14 @@ site. The page is organized around four switchable modules:
 | Module | Role | Accent |
 |---|---|---|
 | Tacumi | Handheld tactile data collection | green |
-| Tabero | Tactile simulation + benchmark | yellow |
+| Tabero | Tactile benchmark + force-aware VTLA | yellow |
 | Tacinf-VTLA | Force-aware vision–language–action policy | blue |
 | Taco | Task-aligned sim-to-real | white |
 
-Tabero links to the standalone benchmark repository:
-<https://github.com/NathanWu7/Tabero>.
+Tabero follows the standalone repository
+<https://github.com/NathanWu7/Tabero>: its four force-level demo clips and the
+ICML 2026 poster are pulled from that repo. The remaining panels use the Tacinf
+technical-report figures.
 
 ## Preview locally
 
@@ -40,6 +42,24 @@ This rebuilds:
 - Compressed MP4 clips and poster frames in `assets/video/`
 - Self-hosted NVIDIA Sans WOFF2 subsets in `assets/fonts/`
 - The paper PDF in `assets/pdf/`
+
+Tabero's GitHub demos and poster are rebuilt separately:
+
+```bash
+bash tools/fetch_tabero_github_assets.sh
+```
+
+This downloads the four force-level GIFs and the ICML 2026 poster from
+`NathanWu7/Tabero` (Git LFS via `media.githubusercontent.com`) and writes:
+
+| Output | Source |
+|---|---|
+| `assets/img/tabero-poster.webp` | `docs/assets/poster_preview.png` |
+| `assets/video/tabero-demo-{cream,milk}-*.mp4` | `docs/assets/task*.gif` |
+| `assets/img/poster-tabero-demo-*.webp` | first frames of the same clips |
+
+These files are committed; the script only needs rerunning when the Tabero
+repository media changes.
 
 ### 3D model
 

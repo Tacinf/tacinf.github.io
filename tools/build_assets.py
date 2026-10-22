@@ -32,13 +32,10 @@ PDF_DPI = 220
 # (output name, source path, max width, source kind)
 IMAGES = [
     ("teaser", "figs/fig01_overview/tacinf_main.png", 2000, "image"),
-    ("tabero-sim", "figs/fig02_sim_platform/mul_task_new.png", 1500, "image"),
     ("force-decomposition", "figs/fig03_force_decomposition/force_decomposition.png", 2000, "image"),
     ("vtla-system", "figs/fig04_model_control/vtla_system.pdf", 1600, "pdf"),
     ("force-loop", "figs/fig04_model_control/force_feedback_loop.pdf", 1400, "pdf"),
     ("taco-loop", "figs/fig06_taco_data_loop/taco_data_loop.pdf", 1600, "pdf"),
-    ("force-distribution", "figs/fig07_force_distribute/rgb_marker_new.png", 1200, "image"),
-    ("ablation", "figs/fig08_tactile_ablation/tactile_ablation.png", 2000, "image"),
     ("agreement", "figs/fig09_agreement_bars/agreement_bars.png", 1600, "image"),
     ("controller-firm", "figs/fig10_force_feedback/firm_first151.png", 1200, "image"),
     ("controller-gentle", "figs/fig10_force_feedback/gentle_first151.png", 1200, "image"),
@@ -53,7 +50,6 @@ VIDEOS = [
     ("tacumi-streams", "exp_sup/tacumi_real_multimodal_observation_stream.mp4", 1.0, 12.0, 720, 31),
     ("tacumi-sync", "exp_sup/tacumi_real_sensor_timestamp_alignment.mp4", 1.0, 10.0, 900, 31),
     ("tacumi-multiview", "exp_sup/tacumi_real_multiview_tactile_stream.mp4", 0.5, 8.0, 640, 31),
-    ("tabero-marker", "exp_sup/tacumi_sim_marker_field_manipulation.mp4", 0.2, 8.0, 720, 30),
     ("taco-real2sim", "exp_sup/real2sim.mp4", 0.0, 5.8, 1000, 30),
 ]
 

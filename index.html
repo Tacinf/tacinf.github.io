@@ -144,7 +144,7 @@
           <button class="tab tab--tacumi is-active" id="tab-tacumi" role="tab" aria-selected="true" aria-controls="panel-tacumi" tabindex="0" data-tab="tacumi" data-readout="Handheld tactile data collection.">
             <span class="tab-name">Tacumi</span>
           </button>
-          <button class="tab tab--tabero" id="tab-tabero" role="tab" aria-selected="false" aria-controls="panel-tabero" tabindex="-1" data-tab="tabero" data-readout="Tactile simulation and benchmark.">
+          <button class="tab tab--tabero" id="tab-tabero" role="tab" aria-selected="false" aria-controls="panel-tabero" tabindex="-1" data-tab="tabero" data-readout="Tactile benchmark and force-aware VTLA.">
             <span class="tab-name">Tabero</span>
           </button>
           <button class="tab tab--vtla" id="tab-vtla" role="tab" aria-label="Tacinf–VTLA" aria-selected="false" aria-controls="panel-vtla" tabindex="-1" data-tab="vtla" data-readout="Force-aware vision–language–action policy.">
@@ -246,27 +246,27 @@
         <article class="panel" id="panel-tabero" role="tabpanel" aria-labelledby="tab-tabero" tabindex="0" data-panel="tabero">
           <header class="panel-head">
             <div>
-              <p class="panel-kicker">Tacinf–Tabero · Simulation and benchmark</p>
+              <p class="panel-kicker">Tabero · ICML 2026 / Benchmark + force-aware VTLA</p>
               <h3 class="panel-title">Tabero<span>.</span></h3>
-              <p class="panel-lede">A tactile benchmark built by replaying trajectories the community already trusts.</p>
+              <p class="panel-lede">Learning gentle manipulation with closed-loop force feedback from vision, touch, and language.</p>
             </div>
           </header>
 
           <div class="panel-grid">
             <div class="panel-copy">
-              <p>Open-source manipulation trajectories are reconstructed in Isaac Lab and replayed with a tactile gripper at ordered force levels. Each rollout carries language, RGB, tactile images, marker fields, and 6-D contact force at 20&nbsp;Hz — and is scored on gentleness, not only success.</p>
+              <p>Tabero turns open-source robot manipulation trajectories into diverse vision–tactile–language tasks in Isaac Lab with Taxim/FOTS tactile simulation, paired with a multidimensional evaluation protocol. Its force-aware VTLA uses a decoupled force–position command interface and a fixed hybrid controller, reducing average grip force by more than 70% under gentle instructions while maintaining task success.</p>
 
               <ul class="feature-list">
-                <li><span class="feature-no">A</span><div><strong>Data reuse</strong><p>LIBERO / MuJoCo trajectories replay in Isaac Lab; average success moves 0.85 → 0.76 with the matched robot.</p></div></li>
-                <li><span class="feature-no">B</span><div><strong>Cross-modal acquisition</strong><p>Third-person, wrist, tactile, and marker-field streams stay synchronized through replay.</p></div></li>
-                <li><span class="feature-no">C</span><div><strong>Language-conditioned force levels</strong><p>100% firm versus 25% / 10% gentle; adverbs map onto a continuous force axis, not a binary switch.</p></div></li>
-                <li><span class="feature-no">D</span><div><strong>Metrics beyond success</strong><p>Average and maximum grip force plus applied force make interaction quality measurable.</p></div></li>
+                <li><span class="feature-no">A</span><div><strong>Tabero Benchmark</strong><p>A data-efficient pipeline repurposes open-source trajectories as vision–tactile–language tasks in Isaac Lab + Taxim/FOTS.</p></div></li>
+                <li><span class="feature-no">B</span><div><strong>Language-conditioned force</strong><p>The same task runs under gentle or firm instructions; gentle commands cut average grip force by over 70% while preserving task success.</p></div></li>
+                <li><span class="feature-no">C</span><div><strong>Decoupled force–position</strong><p>The policy predicts force and pose separately; a fixed hybrid controller tracks both on the real robot.</p></div></li>
+                <li><span class="feature-no">D</span><div><strong>Gentleness metrics</strong><p>Average and maximum grip force plus applied force, with a standardized protocol for quantifying gentleness.</p></div></li>
               </ul>
 
               <div class="panel-stats">
-                <div class="stat"><strong>18</strong><span>task conditions</span></div>
-                <div class="stat"><strong>20 Hz</strong><span>force labels</span></div>
-                <div class="stat"><strong>100→10%</strong><span>ordered force levels</span></div>
+                <div class="stat"><strong>5</strong><span>synchronized modalities</span></div>
+                <div class="stat"><strong>20 Hz</strong><span>tactile–force loop</span></div>
+                <div class="stat"><strong>&gt;70%</strong><span>grip-force reduction</span></div>
               </div>
 
               <aside class="repo-card">
@@ -275,7 +275,7 @@
                   <span class="repo-name">NathanWu7 / Tabero</span>
                   <span class="repo-star" aria-hidden="true">◆</span>
                 </div>
-                <p>Code base for the Tabero paper: tactile foundation models and benchmarks. The full simulation pipeline, datasets, and model weights live in the standalone repository.</p>
+                <p>Tabero: Learning Gentle Manipulation with Closed-Loop Force Feedback from Vision, Touch, and Language. The benchmark, VTLA, dataset, and weights live in the standalone repository.</p>
                 <div class="repo-links">
                   <a href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noopener">GitHub ↗</a>
                   <a href="https://arxiv.org/abs/2605.27886" target="_blank" rel="noopener">arXiv ↗</a>
@@ -286,35 +286,49 @@
             </div>
 
             <div class="panel-media">
-              <figure class="media media--paper">
-                <button class="zoom" type="button" data-full="assets/img/tabero-sim.webp" data-caption="A grid of Tabero simulation tasks: varied scenes, objects, and camera views in Isaac Lab.">
-                  <img src="assets/img/tabero-sim.webp" width="1294" height="440" loading="eager" alt="Grid of simulated manipulation scenes with varied camera views and object layouts.">
-                </button>
-                <figcaption><strong>Scalable tactile tasks.</strong> Reconstructed scenes, a tactile gripper, and ordered force conditions.</figcaption>
-              </figure>
+              <p class="demo-note"><strong>Language sets the force.</strong> The same tasks under gentle and firm commands, including the gentleness–reliability trade-off. Demos from the Tabero repository.</p>
 
-              <figure class="video-card">
-                <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-marker.webp" data-auto aria-label="Simulated marker-field manipulation.">
-                  <source src="assets/video/tabero-marker.mp4" type="video/mp4">
-                </video>
-                <button class="video-toggle" type="button" aria-label="Play marker-field simulation video">▶</button>
-                <figcaption><span>MARKER FIELD / SIM</span><span>FORCE LABELS</span></figcaption>
-              </figure>
+              <div class="demo-grid">
+                <figure class="video-card">
+                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-cream-gentle.webp" data-auto aria-label="Gentle cream cheese manipulation, successful.">
+                    <source src="assets/video/tabero-demo-cream-gentle.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><span>GENTLE · SUCCESS</span><span>CREAM CHEESE</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-cream-failure.webp" data-auto aria-label="Gentle cream cheese manipulation, failed grasp.">
+                    <source src="assets/video/tabero-demo-cream-failure.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><span>GENTLE · FAILURE</span><span>CREAM CHEESE</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-milk-firm.webp" data-auto aria-label="Firm milk carton manipulation, successful.">
+                    <source src="assets/video/tabero-demo-milk-firm.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><span>FIRM · SUCCESS</span><span>MILK</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-milk-gentle.webp" data-auto aria-label="Gentle milk carton manipulation, successful.">
+                    <source src="assets/video/tabero-demo-milk-gentle.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><span>GENTLE · SUCCESS</span><span>MILK</span></figcaption>
+                </figure>
+              </div>
             </div>
           </div>
 
           <figure class="wide-figure media--paper">
-            <button class="zoom" type="button" data-full="assets/img/force-distribution.webp" data-caption="Tactile images, marker overlays, and camera views at different force magnitudes.">
-              <img src="assets/img/force-distribution.webp" width="1192" height="1042" loading="lazy" alt="Tactile images, marker overlays, and third-person and wrist camera views at different force magnitudes.">
+            <button class="zoom" type="button" data-full="assets/img/tabero-poster.webp" data-caption="Tabero at ICML 2026: method overview, force-aware VTLA, main results, and real-robot tests.">
+              <img src="assets/img/tabero-poster.webp" width="1800" height="1080" loading="lazy" alt="ICML 2026 Tabero poster summarizing the benchmark, force-aware vision-language-action model, results, and real-robot experiments.">
             </button>
-            <figcaption><strong>One task, ordered force levels.</strong> Tactile RGB and marker overlays at 100%, 25%, and 10% grip force, beside the third-person and wrist views the policy receives.</figcaption>
+            <figcaption><strong>Tabero at ICML 2026.</strong> Benchmark, force-aware VTLA, and results — <a href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noopener">poster from the Tabero repository ↗</a>.</figcaption>
           </figure>
 
           <div class="pipeline" aria-label="Tabero data pipeline">
-            <div class="pipeline-step"><span>01</span><strong>Reuse</strong><p>Open trajectories, reconstructed scene.</p></div>
-            <div class="pipeline-step"><span>02</span><strong>Replay</strong><p>Isaac Lab rollout with a tactile gripper.</p></div>
-            <div class="pipeline-step"><span>03</span><strong>Label</strong><p>Language, tactile, marker field, 6-D force.</p></div>
-            <div class="pipeline-step"><span>04</span><strong>Score</strong><p>Success plus grip and applied force.</p></div>
+            <div class="pipeline-step"><span>01</span><strong>Reuse</strong><p>Open-source trajectories become tactile tasks.</p></div>
+            <div class="pipeline-step"><span>02</span><strong>Replay</strong><p>Isaac Lab with Taxim/FOTS tactile simulation.</p></div>
+            <div class="pipeline-step"><span>03</span><strong>Label</strong><p>Language, vision, touch, and 6-D force at 20 Hz.</p></div>
+            <div class="pipeline-step"><span>04</span><strong>Score</strong><p>Task success plus four gentleness metrics.</p></div>
           </div>
         </article>
 
@@ -336,7 +350,6 @@
                 <li><span class="feature-no">A</span><div><strong>Fingertip-force decomposition</strong><p>Internal grip and applied TCP wrench are separated through a two-contact mapping.</p></div></li>
                 <li><span class="feature-no">B</span><div><strong>Hybrid controller</strong><p>Feedforward plus admittance; both are needed for accurate force tracking.</p></div></li>
                 <li><span class="feature-no">C</span><div><strong>Modular tactile policy</strong><p>Marker-field, tactile-image, and force adapters on π₀ / π₀.₅ backbones with LoRA.</p></div></li>
-                <li><span class="feature-no">D</span><div><strong>Supervision is the ingredient</strong><p>Field+FS reaches 0.86 firm / 0.52 gentle; force supervision alone already modulates grip.</p></div></li>
               </ul>
 
               <div class="panel-stats">
@@ -406,21 +419,6 @@
                 </button>
                 <figcaption><strong>(d) 25%, no admittance.</strong> Tracking degrades.</figcaption>
               </figure>
-            </div>
-          </div>
-
-          <div class="evidence-grid">
-            <figure class="media media--paper">
-              <button class="zoom" type="button" data-full="assets/img/ablation.webp" data-caption="Ablation of tactile modalities and force supervision under firm and gentle commands.">
-                <img src="assets/img/ablation.webp" width="2000" height="789" loading="lazy" alt="Bar chart comparing success rate and average grip force for tactile input and force-supervision variants.">
-              </button>
-              <figcaption><strong>Tactile modalities, separated.</strong> Firm versus gentle success and average grip force.</figcaption>
-            </figure>
-            <div class="evidence-copy">
-              <p class="panel-kicker">Ablation / what actually enables force</p>
-              <h4>Touch realizes its value through supervision.</h4>
-              <p>The baseline without tactile input and without force supervision fails completely. Every variant that predicts the six-dimensional fingertip-force target gains force modulation; every variant without it stays near zero under the gentle condition.</p>
-              <p>With the force loss enabled, the marker-field adapter gives the best firm–gentle trade-off: <strong>0.86 firm / 0.52 gentle</strong>, against 0.82 / 0.45 for supervision alone.</p>
             </div>
           </div>
         </article>
@@ -502,40 +500,26 @@
       </div>
     </section>
 
-    <!-- ============================ ABSTRACT ============================ -->
-    <section class="abstract wrap reveal" id="abstract">
-      <div class="section-head">
-        <div>
-          <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Abstract</p>
-          <h2>Infrastructure,<br><em>not a checkpoint.</em></h2>
-        </div>
-        <p class="section-note">The short version. The paper carries the protocols, tables, and appendices.</p>
-      </div>
-
-      <div class="abstract-grid">
-        <p class="lede">Contact-rich manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. We present <strong>Tacinf</strong>, a modular tactile vision–language–action infrastructure for this setting.</p>
-        <p>It enables policies to predict robot actions and fingertip-force outputs from task language, vision, and touch; an optional language-conditioned force level can be provided when explicit force regulation is required, while ordinary task instructions need no force adverbs. Tacinf integrates synchronized trajectory replay and tactile simulation (Tabero), policy learning (VTLA), handheld collection with a shared deployment gripper (Tacumi), and task-aligned simulation-to-real evaluation (Taco).</p>
-        <p>We validate each component — simulation data, benchmark, controller, and Tacumi — and report the first zero-shot transfer of a foundation model fine-tuned on tactile simulation data only to real-robot tasks. Eight paired policy variants reach Pearson <strong>r = 0.845</strong> between simulated and real combined task-and-force scores. Teleoperation, simulation, and Tacumi data share one contract for mixed-data scaling.</p>
-      </div>
-
-      <div class="contrib-grid">
+    <!-- ========================= CONTRIBUTIONS ========================= -->
+    <section class="abstract wrap reveal" id="contributions">
+      <h2 class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Three contributions</h2>
+      <div class="contrib-grid contrib-grid--solo">
         <article class="contrib">
           <span class="contrib-no">A</span>
           <h3>A modular tactile interface</h3>
-          <p>Policies adapt from task language, vision, and touch, with an optional force level when explicit regulation is needed.</p>
+          <p>Policies predict actions and fingertip force from task language, vision, and touch, with an optional force level for explicit regulation.</p>
         </article>
         <article class="contrib">
           <span class="contrib-no">B</span>
           <h3>Evaluation that transfers</h3>
-          <p>A simulation protocol and real-robot alignment procedure test whether tactile policies are measured the same way in both domains.</p>
+          <p>A simulation evaluation protocol and real-robot alignment procedure test whether tactile policies are measured the same way in both domains.</p>
         </article>
         <article class="contrib">
           <span class="contrib-no">C</span>
           <h3>One data contract</h3>
-          <p>A shared-gripper UMI interface unifies teleoperation, simulation, and handheld trajectories for mixed-data scaling.</p>
+          <p>A shared-gripper UMI interface unifies real teleoperation, simulation, and handheld trajectories for mixed-data scaling and task-level generalization.</p>
         </article>
       </div>
-
     </section>
 
     <!-- ============================ CITE ============================ -->
