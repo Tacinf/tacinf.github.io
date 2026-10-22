@@ -41,6 +41,35 @@ This rebuilds:
 - Self-hosted NVIDIA Sans WOFF2 subsets in `assets/fonts/`
 - The paper PDF in `assets/pdf/`
 
+### 3D models
+
+`assets/models/` holds the WebGL assets:
+
+| File | Source | Notes |
+|---|---|---|
+| `taco-robot.glb` | xArm7 + Tacumi URDF visuals | posed at the task-6 IK pregrasp; built by `python3 tools/build_taco_robot.py` |
+| `object-vitasoy.glb`, `object-coca.glb`, `object-cookie.glb`, `object-basket.glb` | Tabero_X realworld USD objects | optimized to low-poly meshes with 512 px WebP textures |
+| `tacumi-umi.glb` | `handheld_umi.usd` | meshopt-compressed |
+
+The Taco viewer places the robot at the task-6 `robot_base_pos`, the objects at
+the task-6 poses, and uses the 1.2 × 1.6 m realworld tabletop. The initial camera
+is the realworld `agentview_cam` pose. These values live in
+`assets/js/model-viewer.js` and come from
+`benchmarks/datasets/realworld/config/gentle_grasp.json` and
+`realworld_env_cfg.py` in Tabero_X.
+
+Object and UMI GLBs can be regenerated with:
+
+```bash
+~/miniconda3/envs/isaac5/bin/python tools/convert_usd_to_glb.py <asset.usd> <out.glb>
+gltf-transform optimize <out.glb> <out-opt.glb> \
+  --compress false --simplify true --simplify-ratio 0.002 \
+  --simplify-error 0.01 --texture-compress webp --texture-size 512
+```
+
+Use `--compress meshopt --simplify false` for the robot/UMI if you want smaller
+geometry; the viewer initializes the meshopt decoder for those files.
+
 ### Interactive exploded view
 
 The Tacumi panel includes a hover / tap exploded view of the handheld UMI.

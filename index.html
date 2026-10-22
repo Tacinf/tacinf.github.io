@@ -26,7 +26,10 @@
 
   <link rel="stylesheet" href="assets/css/style.css">
   <script>document.documentElement.classList.add("js");</script>
-  <noscript><style>[data-copy-bib]{display:none}.explode-hint{display:none}</style></noscript>
+  <script type="importmap">
+    {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
+  </script>
+  <noscript><style>[data-copy-bib]{display:none}.explode-hint{display:none}.model-loading,.model-ui{display:none}</style></noscript>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -226,6 +229,18 @@
               </div>
             </div>
           </div>
+
+          <figure class="model-figure model-figure--umi" id="umi-viewer">
+            <div class="model-stage model-stage--umi" id="umi-viewer-stage" tabindex="0" role="group" aria-label="Interactive 3D Tacumi UMI, the handheld shared tactile gripper assembly. Drag to rotate and scroll or pinch to zoom.">
+              <div class="model-poster"><img src="assets/img/hero-handheld.webp" width="1045" height="1200" loading="lazy" alt="Structural render of the handheld Tacumi UMI."></div>
+              <div class="model-loading" role="status" aria-live="polite">Loading Tacumi UMI…</div>
+              <div class="model-ui">
+                <span class="model-hint">Drag to rotate · Scroll to zoom</span>
+                <button class="model-reset" type="button">Reset view</button>
+              </div>
+            </div>
+            <figcaption><strong>Tacumi UMI, in 3D.</strong> The shared gripper assembly: wrist camera, Xense tactile fingertips, QDD motor, rails, and VR tracker. Drag to orbit; scroll or pinch to zoom.</figcaption>
+          </figure>
 
           <figure class="explode-figure" id="umi-explode">
             <button class="explode-stage" id="umi-explode-stage" type="button" aria-pressed="false" aria-label="Tacumi handheld UMI, assembled view. Hover, tap, or press Enter to explode the assembly.">
@@ -437,6 +452,18 @@
             </div>
           </header>
 
+          <figure class="model-figure" id="taco-viewer">
+            <div class="model-stage" id="taco-viewer-stage" tabindex="0" role="group" aria-label="Interactive 3D Taco task scene: XArm robot with the shared Tacumi gripper, white table, Vitasoy, Coca-Cola, cookie, and basket. Drag to rotate and scroll or pinch to zoom.">
+              <div class="model-poster"><img src="assets/img/real2sim-views.webp" width="1280" height="960" loading="lazy" alt="Real and simulated views of the Taco task scene."></div>
+              <div class="model-loading" role="status" aria-live="polite">Loading Taco scene…</div>
+              <div class="model-ui">
+                <span class="model-hint">Drag to rotate · Scroll to zoom</span>
+                <button class="model-reset" type="button">Reset view</button>
+              </div>
+            </div>
+            <figcaption><strong>Taco scene, in 3D.</strong> XArm + shared Tacumi gripper, Vitasoy, Coca-Cola, cookie, and basket at the task-6 poses. Drag to orbit; scroll or pinch to zoom; arrow keys rotate when focused.</figcaption>
+          </figure>
+
           <div class="panel-grid">
             <div class="panel-copy">
               <p>Taco aligns the workspace, objects, embodiment, cameras, and tactile response to the task — then mixes real teleoperation, simulation replay, and UMI demonstrations into one post-training set. The test is policy-relevant consistency: contact onset, patch persistence, force scale, marker response, action replay.</p>
@@ -630,5 +657,31 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="assets/js/main.js"></script>
+  <script type="module">
+    {
+      const stages = document.querySelectorAll(".model-stage");
+      let loaded = false;
+      const load = () => {
+        if (loaded) return;
+        loaded = true;
+        import("./assets/js/model-viewer.js").catch(() => {
+          document.querySelectorAll(".model-loading").forEach((el) => {
+            el.textContent = "3D view unavailable — showing the reference image.";
+          });
+        });
+      };
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            load();
+          }
+        }, { rootMargin: "400px" });
+        stages.forEach((stage) => observer.observe(stage));
+      } else {
+        load();
+      }
+    }
+  </script>
 </body>
 </html>

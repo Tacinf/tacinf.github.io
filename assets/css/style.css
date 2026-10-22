@@ -874,6 +874,99 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .explode-static { color: var(--green); font-size: 14px; margin-left: 6px; }
 .explode-static:hover { text-decoration: underline; }
 
+/* ---------- 3D model viewers ---------- */
+.model-figure {
+  max-width: 960px;
+  margin: 0 auto 48px;
+}
+.model-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-l);
+  background: radial-gradient(58% 58% at 50% 42%, #1d1d1f, #000 76%);
+  cursor: grab;
+  touch-action: none;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+}
+.model-stage--umi {
+  background: radial-gradient(52% 52% at 50% 46%, rgba(48, 209, 88, 0.18), #070908 72%);
+}
+.model-stage:active { cursor: grabbing; }
+.model-stage:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.model-stage canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+}
+.model-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: #0a0a0c;
+  transition: opacity 0.5s var(--ease);
+}
+.model-poster img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+.model-stage--umi .model-poster img { object-fit: contain; padding: 10%; opacity: 0.9; }
+.model-stage.is-loaded .model-poster,
+.model-stage.is-loaded .model-loading { opacity: 0; pointer-events: none; }
+.model-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.36);
+  color: var(--gray);
+  font-size: 14px;
+  transition: opacity 0.3s var(--ease);
+}
+.model-ui {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+.model-hint {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--gray);
+  font-size: 12px;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+.model-reset {
+  pointer-events: auto;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #1d1d1f;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s var(--ease);
+}
+.model-reset:hover { background: #fff; }
+.model-figure figcaption {
+  padding: 14px 2px 0;
+  color: var(--gray);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.model-figure figcaption strong { color: var(--white); font-weight: 500; }
+
 /* ---------- pipeline / sub-blocks ---------- */
 .pipeline {
   display: grid;
@@ -1229,6 +1322,9 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   .controller-grid { grid-template-columns: 1fr; }
   .pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   .explode-frame { aspect-ratio: 4 / 3; object-fit: cover; }
+  .model-figure { max-width: 100%; margin-bottom: 36px; }
+  .model-ui { left: 12px; right: 12px; bottom: 10px; }
+  .model-hint, .model-reset { font-size: 11px; }
   .explode-state, .explode-hint { top: 12px; padding: 6px 10px; font-size: 11px; }
   .explode-state { left: 12px; }
   .explode-hint { right: 12px; }
