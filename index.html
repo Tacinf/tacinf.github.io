@@ -27,7 +27,7 @@
   <link rel="preload" href="assets/fonts/space-grotesk-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/space-grotesk-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261022g">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261022i">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -175,12 +175,32 @@
             <div class="panel-copy">
               <p>The operator’s grip drives a QDD parallel gripper; a servo renders the slave motor’s torque back to the hand. Xense tactile fingertips and a wrist camera record contact as it happens. On the robot, the same gripper, sensors, and motor mount unchanged.</p>
 
-              <ul class="feature-list">
-                <li><span class="feature-no">A</span><div><strong>Torque-based hybrid control</strong><p>Position control before contact; a closed torque-feedback loop during contact, with no external six-axis sensor.</p></div></li>
-                <li><span class="feature-no">B</span><div><strong>Tracked hand pose</strong><p>A consumer VR tracker supplies 6-DoF trajectories without an optical motion-capture rig.</p></div></li>
-                <li><span class="feature-no">C</span><div><strong>Shared gripper assembly</strong><p>Collection and deployment share geometry, occlusion, shear response, and kinematics.</p></div></li>
-                <li><span class="feature-no">D</span><div><strong>Synchronized streams</strong><p>RGB, stereo tactile, marker fields, and device motion on one timeline.</p></div></li>
-              </ul>
+              <div class="resource-grid">
+                <a class="resource-card" href="https://github.com/ChangerC77/xensesdk" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--data">TACTILE SDK</span>
+                  <strong>Xense SDK</strong>
+                  <p>Drivers and APIs for the Xense tactile fingertips.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://huggingface.co/datasets/NathanWu7/Isaaclab_Libero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--tasks">TASKS</span>
+                  <strong>LIBERO task assets</strong>
+                  <p>All LIBERO task assets and reset states in Isaac Lab, ready for collection.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--code">CODE</span>
+                  <strong>Collection pipeline</strong>
+                  <p>Data-collection, conversion, and evaluation code for the tactile stack.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://huggingface.co/NathanWu7/pi0_lora_tacfield_tabero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
+                  <strong>VTLA weights</strong>
+                  <p>Reference π₀ LoRA tactile VTLA checkpoint.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+              </div>
 
               <div class="panel-stats">
                 <div class="stat"><strong>3</strong><span>shared parts<br>camera · sensor · motor</span></div>
@@ -257,14 +277,34 @@
 
           <div class="panel-grid">
             <div class="panel-copy">
-              <p>Tabero turns open-source robot manipulation trajectories into diverse vision–tactile–language tasks in Isaac Lab with Taxim/FOTS tactile simulation, paired with a multidimensional evaluation protocol. Its force-aware VTLA uses a decoupled force–position command interface and a fixed hybrid controller, reducing average grip force by more than 70% under gentle instructions while maintaining task success.</p>
+              <p>Tabero turns open-source manipulation trajectories into vision–tactile–language tasks in Isaac Lab with Taxim/FOTS. Its force-aware VTLA pairs a decoupled force–position interface with a fixed hybrid controller, cutting average grip force by over 70% under gentle instructions while preserving task success.</p>
 
-              <ul class="feature-list">
-                <li><span class="feature-no">A</span><div><strong>Tabero Benchmark</strong><p>A data-efficient pipeline repurposes open-source trajectories as vision–tactile–language tasks in Isaac Lab + Taxim/FOTS.</p></div></li>
-                <li><span class="feature-no">B</span><div><strong>Language-conditioned force</strong><p>The same task runs under gentle or firm instructions; gentle commands cut average grip force by over 70% while preserving task success.</p></div></li>
-                <li><span class="feature-no">C</span><div><strong>Decoupled force–position</strong><p>The policy predicts force and pose separately; a fixed hybrid controller tracks both on the real robot.</p></div></li>
-                <li><span class="feature-no">D</span><div><strong>Gentleness metrics</strong><p>Average and maximum grip force plus applied force, with a standardized protocol for quantifying gentleness.</p></div></li>
-              </ul>
+              <div class="resource-grid">
+                <a class="resource-card" href="https://huggingface.co/datasets/china-sae-robotics/Tactile_Manipulation_Dataset" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--data">TACTILE DATA</span>
+                  <strong>Tactile calibration</strong>
+                  <p>GelSight mini calibration files for real2sim alignment, following TacEX.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://huggingface.co/datasets/NathanWu7/Isaaclab_Libero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--tasks">TASKS</span>
+                  <strong>LIBERO task assets</strong>
+                  <p>All LIBERO assets and task resets in Isaac Lab, for task setup.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--code">CODE</span>
+                  <strong>Tabero code</strong>
+                  <p>Evaluation and data-collection code for the Tabero benchmark.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://huggingface.co/NathanWu7/pi0_lora_tacfield_tabero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
+                  <strong>VTLA weights</strong>
+                  <p>Reference π₀ LoRA VTLA weights for the tactile policy.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+              </div>
 
               <div class="panel-stats">
                 <div class="stat"><strong>5</strong><span>synchronized modalities</span></div>
@@ -272,6 +312,9 @@
                 <div class="stat"><strong>&gt;70%</strong><span>grip-force reduction</span></div>
               </div>
 
+              <p class="panel-links">
+                <a href="https://arxiv.org/abs/2605.27886" target="_blank" rel="noopener">Tabero paper ↗</a>
+              </p>
             </div>
 
             <div class="panel-media">
@@ -292,20 +335,6 @@
                 </figure>
               </div>
 
-              <aside class="repo-card">
-                <div class="repo-top">
-                  <span class="repo-badge">ICML 2026</span>
-                  <span class="repo-name">NathanWu7 / Tabero</span>
-                  <span class="repo-star" aria-hidden="true">◆</span>
-                </div>
-                <p>Tabero: Learning Gentle Manipulation with Closed-Loop Force Feedback from Vision, Touch, and Language. The benchmark, VTLA, dataset, and weights live in the standalone repository.</p>
-                <div class="repo-links">
-                  <a href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noopener">GitHub ↗</a>
-                  <a href="https://arxiv.org/abs/2605.27886" target="_blank" rel="noopener">arXiv ↗</a>
-                  <a href="https://huggingface.co/datasets/NathanWu7/Isaaclab_Libero" target="_blank" rel="noopener">Dataset ↗</a>
-                  <a href="https://huggingface.co/NathanWu7/pi0_lora_tacfield_tabero" target="_blank" rel="noopener">Weights ↗</a>
-                </div>
-              </aside>
             </div>
           </div>
 
@@ -331,11 +360,32 @@
             <div class="panel-copy">
               <p>A modular tactile interface for foundation VLA models. Marker-field, tactile-image, and 6-D force adapters feed a shared backbone; the policy predicts pose and fingertip-force setpoints, and a hybrid controller tracks both. Force is decoupled from position, so language can set how hard to hold without rewriting the motion.</p>
 
-              <ul class="feature-list">
-                <li><span class="feature-no">A</span><div><strong>Fingertip-force decomposition</strong><p>Internal grip and applied TCP wrench are separated through a two-contact mapping.</p></div></li>
-                <li><span class="feature-no">B</span><div><strong>Hybrid controller</strong><p>Feedforward plus admittance; both are needed for accurate force tracking.</p></div></li>
-                <li><span class="feature-no">C</span><div><strong>Modular tactile policy</strong><p>Marker-field, tactile-image, and force adapters on π₀ / π₀.₅ backbones with LoRA.</p></div></li>
-              </ul>
+              <div class="resource-grid">
+                <a class="resource-card" href="https://github.com/NathanWu7/Tabero-VTLA" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--code">TRAIN</span>
+                  <strong>Training code</strong>
+                  <p>π₀ / π₀.₅ tactile training and inference on Tabero data.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://huggingface.co/NathanWu7/pi0_lora_tacfield_tabero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
+                  <strong>Reference weights</strong>
+                  <p>LoRA VTLA checkpoint for Tabero tasks.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--code">EVAL</span>
+                  <strong>Evaluation client</strong>
+                  <p>Data conversion and evaluation code for model rollouts.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://huggingface.co/datasets/china-sae-robotics/Tactile_Manipulation_Dataset" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--data">TACTILE DATA</span>
+                  <strong>Tactile calibration</strong>
+                  <p>GelSight mini real2sim calibration for the tactile adapters.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+              </div>
 
               <div class="panel-stats">
                 <div class="stat"><strong>6-D</strong><span>fingertip force</span></div>
@@ -429,12 +479,32 @@
             <div class="panel-copy">
               <p>Taco aligns the workspace, objects, embodiment, cameras, and tactile response to the task — then mixes real teleoperation, simulation replay, and UMI demonstrations into one post-training set. The test is policy-relevant consistency: contact onset, patch persistence, force scale, marker response, action replay.</p>
 
-              <ul class="feature-list">
-                <li><span class="feature-no">A</span><div><strong>Task-aligned scenes</strong><p>3D Gaussian workspace and Seed3D object meshes, with rendering and contact kept separate.</p></div></li>
-                <li><span class="feature-no">B</span><div><strong>Embodiment real2sim</strong><p>XArm dynamics, the shared Tacumi gripper, and Taxim + FOTS tactile models in one interface.</p></div></li>
-                <li><span class="feature-no">C</span><div><strong>Mixed-data post-training</strong><p>Real seeds, simulated visual and force variation, and UMI spatial variation in one policy.</p></div></li>
-                <li><span class="feature-no">D</span><div><strong>Paired evaluation</strong><p>Same tasks, language, controller, and termination; simulation versus the physical robot.</p></div></li>
-              </ul>
+              <div class="resource-grid">
+                <a class="resource-card" href="https://huggingface.co/datasets/NathanWu7/Isaaclab_Libero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--tasks">TASKS</span>
+                  <strong>Task assets</strong>
+                  <p>All LIBERO task assets and reset states in Isaac Lab, for paired real–sim setup.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://huggingface.co/datasets/china-sae-robotics/Tactile_Manipulation_Dataset" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--data">TACTILE DATA</span>
+                  <strong>Tactile real2sim</strong>
+                  <p>GelSight mini calibration for matching simulation to the real sensor.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--code">CODE</span>
+                  <strong>Evaluation code</strong>
+                  <p>Evaluation and data-collection code used for paired real–sim tests.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-card" href="https://huggingface.co/NathanWu7/pi0_lora_tacfield_tabero" target="_blank" rel="noopener">
+                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
+                  <strong>Reference policy</strong>
+                  <p>π₀ LoRA VTLA weights for the tactile policy.</p>
+                  <span class="resource-arrow" aria-hidden="true">↗</span>
+                </a>
+              </div>
 
               <div class="panel-stats panel-stats--four">
                 <div class="stat"><strong>0.845</strong><span>Pearson <em>r</em><br>combined score</span></div>
@@ -577,7 +647,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/main.js?v=20261022g"></script>
+  <script src="assets/js/main.js?v=20261022i"></script>
   <script type="module">
     {
       const stages = document.querySelectorAll(".model-stage");
