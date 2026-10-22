@@ -269,6 +269,26 @@
                 <div class="stat"><strong>&gt;70%</strong><span>grip-force reduction</span></div>
               </div>
 
+            </div>
+
+            <div class="panel-media">
+              <p class="demo-note"><strong>Language sets the force.</strong> The same milk task under firm and gentle commands. Demos from the <a href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noopener">Tabero repository</a>.</p>
+
+              <div class="demo-grid demo-grid--milk">
+                <figure class="video-card">
+                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-milk-firm.webp" data-auto aria-label="Firm milk carton manipulation, successful.">
+                    <source src="assets/video/tabero-demo-milk-firm.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><span>FIRM · STANDARD FORCE</span><span>MILK</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-milk-gentle.webp" data-auto aria-label="Gentle milk carton manipulation, successful.">
+                    <source src="assets/video/tabero-demo-milk-gentle.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><span>GENTLE · ~70% LESS FORCE</span><span>MILK</span></figcaption>
+                </figure>
+              </div>
+
               <aside class="repo-card">
                 <div class="repo-top">
                   <span class="repo-badge">ICML 2026</span>
@@ -283,37 +303,6 @@
                   <a href="https://huggingface.co/NathanWu7/pi0_lora_tacfield_tabero" target="_blank" rel="noopener">Weights ↗</a>
                 </div>
               </aside>
-            </div>
-
-            <div class="panel-media">
-              <p class="demo-note"><strong>Language sets the force.</strong> The same tasks under gentle and firm commands, including the gentleness–reliability trade-off. Demos from the Tabero repository.</p>
-
-              <div class="demo-grid">
-                <figure class="video-card">
-                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-cream-gentle.webp" data-auto aria-label="Gentle cream cheese manipulation, successful.">
-                    <source src="assets/video/tabero-demo-cream-gentle.mp4" type="video/mp4">
-                  </video>
-                  <figcaption><span>GENTLE · SUCCESS</span><span>CREAM CHEESE</span></figcaption>
-                </figure>
-                <figure class="video-card">
-                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-cream-failure.webp" data-auto aria-label="Gentle cream cheese manipulation, failed grasp.">
-                    <source src="assets/video/tabero-demo-cream-failure.mp4" type="video/mp4">
-                  </video>
-                  <figcaption><span>GENTLE · FAILURE</span><span>CREAM CHEESE</span></figcaption>
-                </figure>
-                <figure class="video-card">
-                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-milk-firm.webp" data-auto aria-label="Firm milk carton manipulation, successful.">
-                    <source src="assets/video/tabero-demo-milk-firm.mp4" type="video/mp4">
-                  </video>
-                  <figcaption><span>FIRM · SUCCESS</span><span>MILK</span></figcaption>
-                </figure>
-                <figure class="video-card">
-                  <video muted loop playsinline preload="none" poster="assets/img/poster-tabero-demo-milk-gentle.webp" data-auto aria-label="Gentle milk carton manipulation, successful.">
-                    <source src="assets/video/tabero-demo-milk-gentle.mp4" type="video/mp4">
-                  </video>
-                  <figcaption><span>GENTLE · SUCCESS</span><span>MILK</span></figcaption>
-                </figure>
-              </div>
             </div>
           </div>
 
@@ -355,7 +344,7 @@
               <div class="panel-stats">
                 <div class="stat"><strong>6-D</strong><span>fingertip force</span></div>
                 <div class="stat"><strong>20 Hz</strong><span>policy + controller</span></div>
-                <div class="stat"><strong>0.86 / 0.52</strong><span>firm / gentle success</span></div>
+                <div class="stat"><strong class="stat-pair">0.86 / 0.52</strong><span>firm / gentle success</span></div>
               </div>
 
               <p class="panel-links">
@@ -372,18 +361,18 @@
                 <figcaption><strong>One backbone, two outputs.</strong> Pose chunks and fingertip-force setpoints from vision, touch, language, and state.</figcaption>
               </figure>
 
-              <div class="media-row">
-                <figure class="media media--paper media--small">
+              <div class="media-stack">
+                <figure class="media media--paper">
                   <button class="zoom" type="button" data-full="assets/img/force-loop.webp" data-caption="The two-loop force and position controller.">
                     <img src="assets/img/force-loop.webp" width="1400" height="679" loading="lazy" alt="Two-loop controller diagram: the policy predicts pose and force targets, and a closed-loop controller tracks them.">
                   </button>
-                  <figcaption><strong>Force + position loop.</strong></figcaption>
+                  <figcaption><strong>Force + position loop.</strong> The policy sets pose and force targets; the controller tracks both.</figcaption>
                 </figure>
-                <figure class="media media--paper media--small">
+                <figure class="media media--paper">
                   <button class="zoom" type="button" data-full="assets/img/force-decomposition.webp" data-caption="Fingertip-force decomposition across gentle grasping, blackboard wiping, card swiping, and knob turning.">
                     <img src="assets/img/force-decomposition.webp" width="2000" height="666" loading="lazy" alt="Four panels showing fingertip contact decomposed into grip and applied forces for four tactile skills.">
                   </button>
-                  <figcaption><strong>Grip vs. applied wrench.</strong></figcaption>
+                  <figcaption><strong>Grip vs. applied wrench.</strong> Internal grip and applied TCP force, separated at the fingertips.</figcaption>
                 </figure>
               </div>
             </div>
@@ -489,20 +478,15 @@
               <p>The alignment checks CLIP above 0.75, tactile SSIM above 0.93, and action MAE below 0.074 on the channels the policy actually consumes.</p>
             </div>
           </div>
-
-          <figure class="wide-figure media--photo">
-            <button class="zoom" type="button" data-full="assets/img/real-task-progress.webp" data-caption="Real-robot task expansion: blackboard wiping, card swiping, and knob turning, with the closed-loop controller on and off.">
-              <img src="assets/img/real-task-progress.webp" width="1960" height="604" loading="lazy" alt="Three rows of real-robot task progress: blackboard wiping, card swiping, and knob turning, with controller on and off.">
-            </button>
-            <figcaption><strong>Real tasks, closed loop.</strong> Blackboard wiping, card swiping, and knob turning — with the controller on and off.</figcaption>
-          </figure>
         </article>
       </div>
     </section>
 
     <!-- ========================= CONTRIBUTIONS ========================= -->
-    <section class="abstract wrap reveal" id="contributions">
-      <h2 class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Three contributions</h2>
+    <section class="contribution wrap reveal" id="contributions">
+      <div class="contribution-head">
+        <h2>Contribution<em>.</em></h2>
+      </div>
       <div class="contrib-grid contrib-grid--solo">
         <article class="contrib">
           <span class="contrib-no">A</span>

@@ -24,8 +24,6 @@ PY
 
 # name -> GitHub GIF
 for entry in \
-  "cream-gentle task1_gentle_success.gif" \
-  "cream-failure task1_gentle_failure.gif" \
   "milk-firm task7_firm_success.gif" \
   "milk-gentle task7_gentle_success.gif"; do
   set -- $entry

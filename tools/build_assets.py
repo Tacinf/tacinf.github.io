@@ -41,7 +41,6 @@ IMAGES = [
     ("controller-gentle", "figs/fig10_force_feedback/gentle_first151.png", 1200, "image"),
     ("controller-no-ff", "figs/fig10_force_feedback/gentle_woff_first151.png", 1200, "image"),
     ("controller-no-adm", "figs/fig10_force_feedback/gentle_woall_first151.png", 1200, "image"),
-    ("real-task-progress", "figs/fig11_real_task_expansion/real_task_progress.png", 1960, "image"),
     ("tacumi-hardware", "exp_sup/gripper.jpg", 1600, "image"),
 ]
 

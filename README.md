@@ -13,7 +13,7 @@ site. The page is organized around four switchable modules:
 | Taco | Task-aligned sim-to-real | white |
 
 Tabero follows the standalone repository
-<https://github.com/NathanWu7/Tabero>: its four force-level demo clips and the
+<https://github.com/NathanWu7/Tabero>: its two milk force-level demo clips and the
 ICML 2026 poster are pulled from that repo. The remaining panels use the Tacinf
 technical-report figures.
 
@@ -49,13 +49,13 @@ Tabero's GitHub demos and poster are rebuilt separately:
 bash tools/fetch_tabero_github_assets.sh
 ```
 
-This downloads the four force-level GIFs and the ICML 2026 poster from
+This downloads the two milk force-level GIFs and the ICML 2026 poster from
 `NathanWu7/Tabero` (Git LFS via `media.githubusercontent.com`) and writes:
 
 | Output | Source |
 |---|---|
 | `assets/img/tabero-poster.webp` | `docs/assets/poster_preview.png` |
-| `assets/video/tabero-demo-{cream,milk}-*.mp4` | `docs/assets/task*.gif` |
+| `assets/video/tabero-demo-milk-*.mp4` | `docs/assets/task7_*.gif` |
 | `assets/img/poster-tabero-demo-*.webp` | first frames of the same clips |
 
 These files are committed; the script only needs rerunning when the Tabero
