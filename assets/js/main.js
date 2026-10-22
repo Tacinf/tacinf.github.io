@@ -8,6 +8,7 @@
     tabs.map((tab) => [tab.dataset.tab, document.getElementById(tab.getAttribute("aria-controls"))])
   );
   const deck = document.getElementById("deck");
+  const switcher = document.querySelector(".switcher");
   const tabIndicator = document.querySelector(".tab-indicator");
   const readout = document.getElementById("tab-readout");
   const toast = document.getElementById("toast");
@@ -37,7 +38,8 @@
     if (!tabIndicator || !tab) return;
     if (!animate) tabIndicator.style.transition = "none";
     tabIndicator.style.width = `${tab.offsetWidth}px`;
-    tabIndicator.style.transform = `translateX(${tab.offsetLeft}px)`;
+    tabIndicator.style.height = `${tab.offsetHeight}px`;
+    tabIndicator.style.transform = `translate(${tab.offsetLeft}px, ${tab.offsetTop}px)`;
     if (!animate) {
       void tabIndicator.offsetWidth;
       tabIndicator.style.transition = "";
@@ -52,7 +54,18 @@
       tab.tabIndex = selected ? 0 : -1;
     });
     const activeTab = tabs.find((tab) => tab.dataset.tab === key);
-    if (activeTab && readout) readout.textContent = activeTab.dataset.readout || "";
+    if (activeTab && readout) {
+      readout.textContent = activeTab.dataset.readout || "";
+      if (!reduceMotion.matches) {
+        readout.animate(
+          [
+            { opacity: 0.2, transform: "translateY(3px)" },
+            { opacity: 1, transform: "none" },
+          ],
+          { duration: 320, easing: "cubic-bezier(0.2, 0.8, 0.2, 1)" }
+        );
+      }
+    }
     window.requestAnimationFrame(() => moveTabIndicator(activeTab));
   }
 
@@ -81,7 +94,9 @@
   }
 
   function setDeckAccent(key) {
-    if (deck) deck.style.setProperty("--deck-accent", ACCENTS[key] || "var(--green)");
+    const accent = ACCENTS[key] || "var(--green)";
+    if (deck) deck.style.setProperty("--deck-accent", accent);
+    if (switcher) switcher.style.setProperty("--tab-accent", accent);
   }
 
   function swapPanel(key) {
@@ -227,6 +242,7 @@
     panel.hidden = key !== activeKey;
     panel.classList.toggle("is-active", key === activeKey);
   });
+  setDeckAccent(activeKey);
   setTabState(activeKey);
 
   /* ---------------- videos ---------------- */

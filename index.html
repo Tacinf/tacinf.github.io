@@ -26,7 +26,7 @@
 
   <link rel="preload" href="assets/fonts/space-grotesk-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261022c">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261022d">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -144,16 +144,16 @@
         <div class="tabs" role="tablist" aria-label="Tacinf modules">
           <span class="tab-indicator" aria-hidden="true"></span>
           <button class="tab tab--tacumi is-active" id="tab-tacumi" role="tab" aria-selected="true" aria-controls="panel-tacumi" tabindex="0" data-tab="tacumi" data-readout="Handheld tactile data collection.">
-            <span class="tab-name">Tacumi</span>
+            <span class="tab-no" aria-hidden="true">01</span><span class="tab-name">Tacumi</span>
           </button>
           <button class="tab tab--tabero" id="tab-tabero" role="tab" aria-selected="false" aria-controls="panel-tabero" tabindex="-1" data-tab="tabero" data-readout="Tactile benchmark and force-aware VTLA.">
-            <span class="tab-name">Tabero</span>
+            <span class="tab-no" aria-hidden="true">02</span><span class="tab-name">Tabero</span>
           </button>
           <button class="tab tab--vtla" id="tab-vtla" role="tab" aria-label="Tacinf–VTLA" aria-selected="false" aria-controls="panel-vtla" tabindex="-1" data-tab="vtla" data-readout="Force-aware vision–language–action policy.">
-            <span class="tab-name">VTLA</span>
+            <span class="tab-no" aria-hidden="true">03</span><span class="tab-name">VTLA</span>
           </button>
           <button class="tab tab--taco" id="tab-taco" role="tab" aria-selected="false" aria-controls="panel-taco" tabindex="-1" data-tab="taco" data-readout="Task-aligned sim-to-real evaluation.">
-            <span class="tab-name">Taco</span>
+            <span class="tab-no" aria-hidden="true">04</span><span class="tab-name">Taco</span>
           </button>
         </div>
         <div class="tab-readout" aria-hidden="true"><span class="readout-dot"></span><span id="tab-readout">Handheld tactile data collection.</span></div>
@@ -576,7 +576,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/main.js?v=20261022c"></script>
+  <script src="assets/js/main.js?v=20261022d"></script>
   <script type="module">
     {
       const stages = document.querySelectorAll(".model-stage");
