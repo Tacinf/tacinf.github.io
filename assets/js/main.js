@@ -8,6 +8,7 @@
     tabs.map((tab) => [tab.dataset.tab, document.getElementById(tab.getAttribute("aria-controls"))])
   );
   const deck = document.getElementById("deck");
+  const tabIndicator = document.querySelector(".tab-indicator");
   const readout = document.getElementById("tab-readout");
   const toast = document.getElementById("toast");
   const masthead = document.getElementById("masthead");
@@ -32,6 +33,17 @@
   onScroll();
 
   /* ---------------- tabs ---------------- */
+  function moveTabIndicator(tab, animate = true) {
+    if (!tabIndicator || !tab) return;
+    if (!animate) tabIndicator.style.transition = "none";
+    tabIndicator.style.width = `${tab.offsetWidth}px`;
+    tabIndicator.style.transform = `translateX(${tab.offsetLeft}px)`;
+    if (!animate) {
+      void tabIndicator.offsetWidth;
+      tabIndicator.style.transition = "";
+    }
+  }
+
   function setTabState(key) {
     tabs.forEach((tab) => {
       const selected = tab.dataset.tab === key;
@@ -41,7 +53,18 @@
     });
     const activeTab = tabs.find((tab) => tab.dataset.tab === key);
     if (activeTab && readout) readout.textContent = activeTab.dataset.readout || "";
+    window.requestAnimationFrame(() => moveTabIndicator(activeTab));
   }
+
+  function repositionIndicator() {
+    const activeTab = tabs.find((tab) => tab.dataset.tab === activeKey);
+    window.requestAnimationFrame(() => moveTabIndicator(activeTab, false));
+  }
+  window.addEventListener("resize", repositionIndicator);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(repositionIndicator);
+  }
+  window.addEventListener("load", repositionIndicator);
 
   function syncVideos() {
     document.querySelectorAll("video[data-auto]").forEach((video) => {
@@ -272,7 +295,7 @@
     let lastPressed = false;
     let lastPointerType = "mouse";
 
-    if (explodeHint) explodeHint.textContent = canHover ? "HOVER TO EXPLODE" : "TAP TO EXPLODE";
+    if (explodeHint) explodeHint.textContent = canHover ? "Hover to explode" : "Tap to explode";
 
     function preloadExplode() {
       if (loaded.length) return;
@@ -308,7 +331,7 @@
       }
       if (explodeState) {
         explodeState.textContent =
-          progress <= 0.005 ? "ASSEMBLED" : pressed ? "EXPLODED" : "EXPLODING";
+          progress <= 0.005 ? "Assembled" : pressed ? "Exploded" : "Exploding";
       }
     }
 

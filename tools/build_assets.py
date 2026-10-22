@@ -18,7 +18,7 @@ from pathlib import Path
 
 import numpy as np
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 SITE = Path(__file__).resolve().parent.parent
 PAPER = Path.home() / "docs" / "Tacinf-NVTech"
@@ -221,40 +221,48 @@ def build_fonts() -> None:
 
 
 def make_og() -> None:
-    """1200x630 social card in the page's black / acid-green language."""
+    """1200x630 social card in the page's black / system-green language."""
     W, H = 1200, 630
-    canvas = Image.new("RGB", (W, H), (6, 8, 6))
-    draw = ImageDraw.Draw(canvas)
+    base = Image.new("RGB", (W, H), (0, 0, 0)).convert("RGBA")
 
-    # Diagonal green field on the left.
-    draw.polygon([(0, 0), (430, 0), (330, H), (0, H)], fill=(12, 22, 13))
-    for x in range(-200, 500, 34):
-        draw.line([(x, H), (x + 230, 0)], fill=(17, 34, 19), width=2)
-
-    # Halftone corner.
-    for y in range(0, H, 18):
-        for x in range(0, 460, 18):
-            if (x + y) % 36 == 0:
-                draw.ellipse([x, y, x + 4, y + 4], fill=(34, 66, 36))
+    # soft product glow on the right
+    glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    gd = ImageDraw.Draw(glow)
+    for r in range(470, 0, -10):
+        alpha = int(26 * (1 - r / 470))
+        gd.ellipse([980 - r, 300 - r, 980 + r, 300 + r], fill=(48, 209, 88, alpha))
+    glow = glow.filter(ImageFilter.GaussianBlur(30))
+    base = Image.alpha_composite(base, glow)
 
     arm = Image.open(IMG_OUT / "hero-arm.webp").convert("RGBA")
-    scale = min((H - 80) / arm.height, 460 / arm.width)
+    scale = (H - 50) / arm.height
     arm = arm.resize((round(arm.width * scale), round(arm.height * scale)), Image.LANCZOS)
-    canvas.paste(arm, (900 - arm.width // 2, (H - arm.height) // 2 + 10), arm)
+    base.alpha_composite(arm, (980 - arm.width // 2, (H - arm.height) // 2 + 10))
+
+    canvas = base.convert("RGB")
+    draw = ImageDraw.Draw(canvas)
 
     font_display = ImageFont.truetype(str(PAPER / "NVIDIA-Sans-Font-TTF" / "NVIDIASans_Bd.ttf"), 112)
-    font_sub = ImageFont.truetype(str(PAPER / "NVIDIA-Sans-Font-TTF" / "NVIDIASans_Md.ttf"), 31)
-    font_mono = ImageFont.truetype(str(PAPER / "NVIDIA-Sans-Font-TTF" / "NVIDIASans_Rg.ttf"), 19)
+    font_sub = ImageFont.truetype(str(PAPER / "NVIDIA-Sans-Font-TTF" / "NVIDIASans_Md.ttf"), 27)
+    font_small = ImageFont.truetype(str(PAPER / "NVIDIA-Sans-Font-TTF" / "NVIDIASans_Rg.ttf"), 18)
 
-    draw.text((58, 78), "TACINF", font=font_display, fill=(238, 255, 230))
-    draw.rectangle([62, 210, 246, 218], fill=(163, 255, 60))
-    draw.text((62, 242), "A UNIFIED TACTILE", font=font_sub, fill=(163, 255, 60))
-    draw.text((62, 281), "INFRASTRUCTURE FOR", font=font_sub, fill=(238, 255, 230))
-    draw.text((62, 320), "ROBOT MANIPULATION", font=font_sub, fill=(238, 255, 230))
-    draw.text((62, 410), "TACUMI  /  TABERO  /  VTLA  /  TACO", font=font_mono, fill=(143, 166, 144))
-    draw.text((62, 442), "NVIDIA  ×  HKUST (GZ)  ×  CAMBRIDGE  ·  2026",
-              font=font_mono, fill=(143, 166, 144))
-    draw.text((62, H - 56), "tacinf.github.io", font=font_mono, fill=(238, 255, 230))
+    white = (245, 245, 247)
+    gray = (161, 161, 166)
+    gray_2 = (110, 110, 115)
+    green = (48, 209, 88)
+
+    draw.text((72, 74), "Tac", font=font_display, fill=white)
+    tac_w = draw.textlength("Tac", font=font_display)
+    draw.text((72 + tac_w, 74), "inf", font=font_display, fill=green)
+
+    draw.text((74, 232), "A unified tactile infrastructure", font=font_sub, fill=gray)
+    draw.text((74, 268), "for robot manipulation.", font=font_sub, fill=gray)
+
+    draw.ellipse([74, 352, 80, 358], fill=green)
+    draw.text((90, 343), "Technical report · 2026", font=font_small, fill=gray_2)
+
+    draw.text((74, 400), "Tacumi · Tabero · VTLA · Taco", font=font_small, fill=gray)
+    draw.text((74, H - 58), "tacinf.github.io", font=font_small, fill=white)
 
     canvas.save(IMG_OUT / "og.jpg", "JPEG", quality=90, optimize=True)
     print(f"og.jpg                         1200x630  {(IMG_OUT / 'og.jpg').stat().st_size / 1024:.1f} KB")
