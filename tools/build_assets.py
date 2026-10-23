@@ -38,10 +38,6 @@ IMAGES = [
     ("force-loop", "figs/fig04_model_control/force_feedback_loop.pdf", 1400, "pdf"),
     ("taco-loop", "figs/fig06_taco_data_loop/taco_data_loop.pdf", 1600, "pdf"),
     ("agreement", "figs/fig09_agreement_bars/agreement_bars.png", 1600, "image"),
-    ("controller-firm", "figs/fig10_force_feedback/firm_first151.png", 1200, "image"),
-    ("controller-gentle", "figs/fig10_force_feedback/gentle_first151.png", 1200, "image"),
-    ("controller-no-ff", "figs/fig10_force_feedback/gentle_woff_first151.png", 1200, "image"),
-    ("controller-no-adm", "figs/fig10_force_feedback/gentle_woall_first151.png", 1200, "image"),
     ("tacumi-hardware", "exp_sup/gripper.jpg", 1600, "image"),
 ]
 
@@ -51,6 +47,9 @@ VIDEOS = [
     ("tacumi-sync", "exp_sup/tacumi_real_sensor_timestamp_alignment.mp4", 1.0, 10.0, 900, 31),
     ("tacumi-multiview", "exp_sup/tacumi_real_multiview_tactile_stream.mp4", 0.5, 8.0, 640, 31),
     ("taco-real2sim", "exp_sup/real2sim.mp4", 0.0, 5.8, 1000, 30),
+    ("vtla-boardwipe", "exp_sup/real++/boradwipe.mp4", 0.0, 16.2, 640, 28),
+    ("vtla-cardswap", "exp_sup/real++/cardswap.mp4", 0.0, 12.9, 640, 28),
+    ("vtla-switch", "exp_sup/real++/switch.mp4", 0.0, 9.0, 640, 28),
 ]
 
 FONTS = [

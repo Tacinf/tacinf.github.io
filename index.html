@@ -8,10 +8,10 @@
   <meta name="author" content="Qiwei Wu, Xiangyu Chen, Xin Xiang, Rui Zhang, Yihang Kang, Weiran Chen, Zikang Xie, Tao Wang, Xiangzheng Wang, Tianyi Bi, Zhiyan Zhang, Xianpeng Wang, Mingqian Zhou, Yangfan Li, Tao Li, Weihua Zhang, Renjing Xu, Junjie Lai">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://tacinf.github.io/">
-  <link rel="icon" href="favicon.svg?v=20261022o" type="image/svg+xml" sizes="any">
-  <link rel="icon" href="favicon-32.png?v=20261022o" sizes="32x32" type="image/png">
-  <link rel="icon" href="favicon.ico?v=20261022o" sizes="16x16 32x32 48x48">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261022o">
+  <link rel="icon" href="favicon.svg?v=20261022p" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="favicon-32.png?v=20261022p" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon.ico?v=20261022p" sizes="16x16 32x32 48x48">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261022p">
   <link rel="preload" href="assets/fonts/nvidia-sans-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/nvidia-sans-regular.woff2" as="font" type="font/woff2" crossorigin>
 
@@ -30,7 +30,7 @@
   <link rel="preload" href="assets/fonts/space-grotesk-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/space-grotesk-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261022o">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261022p">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -408,7 +408,7 @@
 
               <p class="panel-links">
                 <a href="assets/pdf/Tacinf_NVTech.pdf" target="_blank" rel="noopener">Method in the paper ↗</a>
-                <a href="#vtla-controller" data-jump-tab="vtla">Controller ablation ↓</a>
+                <a href="#vtla-demos" data-jump-tab="vtla">Real-robot demos ↓</a>
               </p>
             </div>
 
@@ -437,35 +437,29 @@
             </div>
           </div>
 
-          <div class="sub-block" id="vtla-controller">
+          <div class="sub-block" id="vtla-demos">
             <div class="sub-head">
-              <div><p class="panel-kicker">Controller ablation / real + simulation</p><h4>The controller does the force tracking.</h4></div>
-              <p>Predicted force in blue, measured force in red. Feedforward and admittance are both required; the same controller runs on the real robot.</p>
+              <div><p class="panel-kicker">Real-robot execution / VTLA</p><h4>On the real robot.</h4></div>
+              <p>Blackboard wiping, card swapping, and switch turning with the tactile policy and controller running on the physical arm.</p>
             </div>
-            <div class="controller-grid">
-              <figure class="media media--paper media--small">
-                <button class="zoom" type="button" data-full="assets/img/controller-firm.webp" data-caption="100% force with full hybrid control.">
-                  <img src="assets/img/controller-firm.webp" width="1200" height="671" loading="lazy" alt="Force tracking plot at 100% force with hybrid control.">
-                </button>
-                <figcaption><strong>(a) 100% force.</strong> Full hybrid control.</figcaption>
+            <div class="demo-grid demo-grid--three vtla-demo-grid">
+              <figure class="video-card">
+                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-boardwipe.webp" data-auto aria-label="VTLA real-robot blackboard wiping.">
+                  <source src="assets/video/vtla-boardwipe.mp4" type="video/mp4">
+                </video>
+                <figcaption><span>BLACKBOARD WIPE</span><span>REAL ROBOT</span></figcaption>
               </figure>
-              <figure class="media media--paper media--small">
-                <button class="zoom" type="button" data-full="assets/img/controller-gentle.webp" data-caption="25% force with full hybrid control.">
-                  <img src="assets/img/controller-gentle.webp" width="1200" height="672" loading="lazy" alt="Force tracking plot at 25% force with hybrid control.">
-                </button>
-                <figcaption><strong>(b) 25% force.</strong> Full hybrid control.</figcaption>
+              <figure class="video-card">
+                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-cardswap.webp" data-auto aria-label="VTLA real-robot card swapping.">
+                  <source src="assets/video/vtla-cardswap.mp4" type="video/mp4">
+                </video>
+                <figcaption><span>CARD SWAP</span><span>REAL ROBOT</span></figcaption>
               </figure>
-              <figure class="media media--paper media--small">
-                <button class="zoom" type="button" data-full="assets/img/controller-no-ff.webp" data-caption="25% force without the feedforward term.">
-                  <img src="assets/img/controller-no-ff.webp" width="1200" height="672" loading="lazy" alt="Force tracking plot at 25% force without the feedforward term.">
-                </button>
-                <figcaption><strong>(c) 25%, no feedforward.</strong> Tracking degrades.</figcaption>
-              </figure>
-              <figure class="media media--paper media--small">
-                <button class="zoom" type="button" data-full="assets/img/controller-no-adm.webp" data-caption="25% force without admittance control.">
-                  <img src="assets/img/controller-no-adm.webp" width="1200" height="672" loading="lazy" alt="Force tracking plot at 25% force without admittance control.">
-                </button>
-                <figcaption><strong>(d) 25%, no admittance.</strong> Tracking degrades.</figcaption>
+              <figure class="video-card">
+                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-switch.webp" data-auto aria-label="VTLA real-robot switch turning.">
+                  <source src="assets/video/vtla-switch.mp4" type="video/mp4">
+                </video>
+                <figcaption><span>SWITCH</span><span>REAL ROBOT</span></figcaption>
               </figure>
             </div>
           </div>
@@ -636,7 +630,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/main.js?v=20261022o"></script>
+  <script src="assets/js/main.js?v=20261022p"></script>
   <script type="module">
     {
       const stages = document.querySelectorAll(".model-stage");

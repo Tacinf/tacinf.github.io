@@ -866,7 +866,6 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   color: #6e6e73;
 }
 .media--paper figcaption strong { color: #1d1d1f; font-weight: 500; }
-.media--small figcaption { font-size: 13px; padding: 12px 14px; }
 .media--photo { background: var(--surface); }
 .media--photo .zoom img { filter: none; }
 
@@ -964,6 +963,13 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: contain;
+}
+.demo-grid--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.vtla-demo-grid .video-card video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
 }
 
 .wide-figure {
@@ -1155,12 +1161,6 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   letter-spacing: -0.025em;
 }
 .sub-head > p { color: var(--gray); font-size: 15px; line-height: 1.5; }
-.controller-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-.controller-grid .media--small figcaption { padding: 10px 12px; font-size: 12px; }
 
 .evidence-grid {
   display: grid;
@@ -1426,7 +1426,6 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   .media-row--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .media-row--three .video-card figcaption span:first-child { display: none; }
   .media-row--three .video-card video { aspect-ratio: 1 / 1; }
-  .controller-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   .model-figure { max-width: 100%; margin-bottom: 36px; }
   .model-ui { left: 12px; right: 12px; bottom: 10px; }
@@ -1458,9 +1457,8 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   .media-row--three { grid-template-columns: 1fr; }
   .media-row--three .video-card figcaption span:first-child { display: inline; }
   .media-row--three .video-card video { aspect-ratio: 16 / 10; }
-  .demo-grid { grid-template-columns: 1fr; }
+  .demo-grid, .demo-grid--three { grid-template-columns: 1fr; }
   .pipeline { grid-template-columns: 1fr; }
-  .controller-grid { grid-template-columns: 1fr; }
   .cite-actions .btn { width: 100%; }
   .error-title { font-size: clamp(6rem, 26vw, 10rem); }
 }
