@@ -955,6 +955,13 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   object-fit: contain;
 }
 .comparison-grid .video-card figcaption { padding: 8px 10px; font-size: 10px; }
+.comparison-block {
+  margin-top: 48px;
+  margin-bottom: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line-soft);
+}
+.comparison-block .demo-note { max-width: 70ch; }
 .vtla-demo-grid .video-card video {
   width: 100%;
   height: auto;
