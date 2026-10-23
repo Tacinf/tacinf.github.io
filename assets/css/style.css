@@ -480,7 +480,7 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 
 /* ---------- sections ---------- */
 .modules { padding: 100px 0; }
-.contribution, .cite { padding: 100px 0; border-top: 1px solid var(--line-soft); }
+.cite { padding: 100px 0; border-top: 1px solid var(--line-soft); }
 
 /* ---------- segmented module control ---------- */
 .switcher {
@@ -1181,43 +1181,6 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .evidence-copy p + p { margin-top: 12px; }
 .evidence-copy strong { color: var(--white); font-weight: 500; }
 
-/* ---------- contributions ---------- */
-.contribution-head {
-  max-width: 900px;
-  margin: 0 auto 48px;
-  text-align: center;
-}
-.contribution-head h2 {
-  font-family: var(--display);
-  font-size: clamp(2.9rem, 8vw, 6rem);
-  font-weight: 600;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
-  text-transform: none;
-}
-.contribution-head h2 em {
-  font-style: normal;
-  color: var(--green);
-  text-shadow: 0 0 42px rgba(118, 185, 0, 0.3);
-}
-.contrib-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  max-width: 1000px;
-  margin: 48px auto 0;
-}
-.contrib-grid--solo { margin-top: 0; }
-.contrib {
-  padding: 24px;
-  background: var(--surface);
-  border: 1px solid var(--line-soft);
-  border-radius: 20px;
-}
-.contrib-no { font-family: var(--mono); color: var(--gray-2); font-size: 11px; }
-.contrib h3 { margin: 12px 0 8px; font-family: var(--display); font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
-.contrib p { color: var(--gray); font-size: 14px; line-height: 1.55; }
-
 /* ---------- citation ---------- */
 .cite-grid {
   display: grid;
@@ -1434,7 +1397,6 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   .sub-head { grid-template-columns: 1fr; gap: 12px; }
   .evidence-grid { grid-template-columns: 1fr; gap: 28px; }
   .cite-grid { grid-template-columns: 1fr; gap: 36px; }
-  .contrib-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 }
 
 @media (max-width: 760px) {
@@ -1451,7 +1413,7 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   .hero-authors { margin-top: 32px; }
   .authors { font-size: 12px; line-height: 1.7; }
   .affiliations { font-size: 11px; }
-  .modules, .contribution, .cite { padding: 72px 0; }
+  .modules, .cite { padding: 72px 0; }
   .section-head { margin-bottom: 36px; }
   .section-note { font-size: 17px; }
   .panel-kicker { font-size: 10px; letter-spacing: 0.02em; }
