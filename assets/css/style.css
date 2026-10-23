@@ -993,6 +993,10 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 .wide-figure.media--photo .zoom { padding: 0; background: var(--surface); }
 .wide-figure.media--photo .zoom img { border-radius: 0; }
 .wide-figure.media--photo figcaption { border-top: 1px solid var(--line-soft); }
+.wide-figure.media--paper { background: #f5f5f7; border-color: rgba(255, 255, 255, 0.08); }
+.wide-figure.media--paper .zoom { background: #f5f5f7; }
+.wide-figure.media--paper figcaption { color: #6e6e73; border-top-color: rgba(0, 0, 0, 0.08); }
+.wide-figure.media--paper figcaption strong { color: #1d1d1f; }
 
 /* ---------- 3D model viewers ---------- */
 .model-figure {

@@ -32,6 +32,7 @@ PDF_DPI = 220
 # (output name, source path, max width, source kind)
 IMAGES = [
     ("teaser", "figs/fig01_overview/tacinf_main.png", 2000, "image"),
+    ("tabero-sim", "figs/fig02_sim_platform/mul_task_new.png", 1500, "image"),
     ("force-decomposition", "figs/fig03_force_decomposition/force_decomposition.png", 2000, "image"),
     ("vtla-system", "figs/fig04_model_control/vtla_system.pdf", 1600, "pdf"),
     ("force-loop", "figs/fig04_model_control/force_feedback_loop.pdf", 1400, "pdf"),
