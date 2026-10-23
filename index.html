@@ -8,10 +8,10 @@
   <meta name="author" content="Qiwei Wu, Xiangyu Chen, Xin Xiang, Rui Zhang, Yihang Kang, Weiran Chen, Zikang Xie, Tao Wang, Xiangzheng Wang, Tianyi Bi, Zhiyan Zhang, Xianpeng Wang, Mingqian Zhou, Yangfan Li, Tao Li, Weihua Zhang, Renjing Xu, Junjie Lai">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="https://tacinf.github.io/">
-  <link rel="icon" href="favicon.svg?v=20261022p" type="image/svg+xml" sizes="any">
-  <link rel="icon" href="favicon-32.png?v=20261022p" sizes="32x32" type="image/png">
-  <link rel="icon" href="favicon.ico?v=20261022p" sizes="16x16 32x32 48x48">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261022p">
+  <link rel="icon" href="favicon.svg?v=20261022q" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="favicon-32.png?v=20261022q" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon.ico?v=20261022q" sizes="16x16 32x32 48x48">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261022q">
   <link rel="preload" href="assets/fonts/nvidia-sans-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/nvidia-sans-regular.woff2" as="font" type="font/woff2" crossorigin>
 
@@ -30,7 +30,7 @@
   <link rel="preload" href="assets/fonts/space-grotesk-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/space-grotesk-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261022p">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261022q">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -228,27 +228,20 @@
                 <figcaption><strong>Master–slave, shared assembly.</strong> The real handheld device. The arm-side gripper is the same part.</figcaption>
               </figure>
 
-              <div class="media-row media-row--three">
+              <p class="demo-note"><strong>Teleop vs. UMI.</strong> The same observation layout, collected two ways.</p>
+
+              <div class="comparison-grid">
                 <figure class="video-card">
-                  <video muted loop playsinline preload="none" poster="assets/img/poster-tacumi-streams.webp" data-auto aria-label="Synchronized third-person, wrist, and tactile streams.">
-                    <source src="assets/video/tacumi-streams.mp4" type="video/mp4">
+                  <video muted loop playsinline preload="none" poster="assets/img/poster-tacumi-teleop.webp" data-auto aria-label="Robot teleoperation data with third-person, wrist, and tactile views.">
+                    <source src="assets/video/tacumi-teleop.mp4" type="video/mp4">
                   </video>
-                  <button class="video-toggle" type="button" aria-label="Play synchronized streams video">▶</button>
-                  <figcaption><span>RGB + TACTILE</span><span>SYNC</span></figcaption>
+                  <figcaption><span>TELEOP</span><span>ROBOT DATA</span></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video muted loop playsinline preload="none" poster="assets/img/poster-tacumi-sync.webp" data-auto aria-label="Tactile sensor timestamp alignment.">
-                    <source src="assets/video/tacumi-sync.mp4" type="video/mp4">
+                  <video muted loop playsinline preload="none" poster="assets/img/poster-tacumi-umi-data.webp" data-auto aria-label="Handheld UMI collection data with third-person, wrist, and tactile views.">
+                    <source src="assets/video/tacumi-umi-data.mp4" type="video/mp4">
                   </video>
-                  <button class="video-toggle" type="button" aria-label="Play timestamp alignment video">▶</button>
-                  <figcaption><span>TIMESTAMPS</span><span>ALIGN</span></figcaption>
-                </figure>
-                <figure class="video-card">
-                  <video muted loop playsinline preload="none" poster="assets/img/poster-tacumi-multiview.webp" data-auto aria-label="Multiview tactile stream.">
-                    <source src="assets/video/tacumi-multiview.mp4" type="video/mp4">
-                  </video>
-                  <button class="video-toggle" type="button" aria-label="Play multiview tactile video">▶</button>
-                  <figcaption><span>MULTIVIEW</span><span>TACTILE</span></figcaption>
+                  <figcaption><span>UMI</span><span>HANDHELD DATA</span></figcaption>
                 </figure>
               </div>
             </div>
@@ -630,7 +623,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/main.js?v=20261022p"></script>
+  <script src="assets/js/main.js?v=20261022q"></script>
   <script type="module">
     {
       const stages = document.querySelectorAll(".model-stage");
