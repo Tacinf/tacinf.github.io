@@ -35,34 +35,6 @@
 
 
 @font-face {
-  font-family: "Space Grotesk";
-  src: url("../fonts/space-grotesk-400-normal.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../fonts/space-grotesk-500-normal.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../fonts/space-grotesk-600-normal.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../fonts/space-grotesk-700-normal.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
   font-family: "Space Mono";
   src: url("../fonts/space-mono-400-normal.woff2") format("woff2");
   font-weight: 400;
@@ -70,20 +42,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Instrument Serif";
-  src: url("../fonts/instrument-serif-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Instrument Serif";
-  src: url("../fonts/instrument-serif-italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
 @font-face {
   font-family: "Space Mono";
   src: url("../fonts/space-mono-700-normal.woff2") format("woff2");
@@ -115,7 +73,7 @@
 
   --font: "NVIDIA Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "Helvetica Neue", Arial, sans-serif;
-  --display: "Instrument Serif", "Iowan Old Style", "Baskerville", Georgia, serif;
+  --display: "NVIDIA Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --mono: "Space Mono", "SF Mono", ui-monospace, "JetBrains Mono", Menlo,
     Consolas, monospace;
 
@@ -1546,19 +1504,19 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
    A quieter, more architectural layer over the original interaction system.
    The content stays intact; the visual hierarchy gets more deliberate. */
 :root {
-  --bg: #0b0d0c;
-  --bg-soft: #111411;
-  --surface: #151916;
-  --surface-2: #1b201b;
+  --bg: #050705;
+  --bg-soft: #090d08;
+  --surface: #11160e;
+  --surface-2: #171e12;
   --white: #f2f3ec;
-  --gray: #a4aaa0;
-  --gray-2: #6f786d;
-  --line: rgba(230, 239, 223, 0.16);
-  --line-soft: rgba(230, 239, 223, 0.095);
-  --green: #b8c67a;
-  --green-hover: #ceda96;
-  --yellow: #c9ad78;
-  --blue: #8eabb4;
+  --gray: #b0b8a8;
+  --gray-2: #818b7b;
+  --line: rgba(118, 185, 0, 0.2);
+  --line-soft: rgba(118, 185, 0, 0.12);
+  --green: #76b900;
+  --green-hover: #8ed600;
+  --yellow: #e7b416;
+  --blue: #38bdf8;
   --radius-s: 8px;
   --radius-m: 12px;
   --radius-l: 18px;
@@ -1566,7 +1524,9 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
 }
 
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(58% 38% at 42% -8%, rgba(118, 185, 0, 0.075), transparent 72%),
+    var(--bg);
   color: var(--white);
 }
 
@@ -1575,8 +1535,8 @@ body {
   padding-inline: max(28px, calc((100vw - 1180px) / 2));
 }
 .masthead.is-scrolled {
-  background: rgba(11, 13, 12, 0.84);
-  border-bottom-color: rgba(230, 239, 223, 0.12);
+  background: rgba(5, 7, 5, 0.88);
+  border-bottom-color: rgba(118, 185, 0, 0.16);
 }
 .brand-mark { width: 24px; height: 24px; }
 .brand-word { font-size: 19px; }
@@ -1589,12 +1549,12 @@ body {
   padding: calc(var(--header-h) + 88px) 0 72px;
   background:
     linear-gradient(90deg, transparent 0, transparent calc(50% - 1px), rgba(230, 239, 223, 0.045) 50%, transparent calc(50% + 1px)),
-    radial-gradient(54% 44% at 30% 5%, rgba(218, 224, 211, 0.035), transparent 74%),
-    radial-gradient(34% 26% at 84% 16%, rgba(142, 171, 180, 0.035), transparent 74%);
+    radial-gradient(54% 44% at 30% 5%, rgba(118, 185, 0, 0.095), transparent 74%),
+    radial-gradient(34% 26% at 84% 16%, rgba(56, 189, 248, 0.035), transparent 74%);
 }
 .hero::before {
   background-size: 32px 32px;
-  opacity: 0.07;
+  opacity: 0.09;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
 }
@@ -1615,7 +1575,7 @@ body {
   padding: 12px;
   border-color: rgba(230, 239, 223, 0.2);
   border-radius: 14px;
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(230, 239, 223, 0.04);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(118, 185, 0, 0.05);
 }
 .hero-authors {
   grid-column: 1 / -1;
@@ -1690,29 +1650,28 @@ body {
 .bib-card { border-radius: 12px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22); }
 .footer { padding: 34px 0; }
 
-/* Quiet typography and signal details. */
-:root { --display: "NVIDIA Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; --editorial: "Instrument Serif", "Iowan Old Style", "Baskerville", Georgia, serif; }
-.hero-title, .section-head h2, .panel-title, .sub-head h4, .evidence-copy h4, .error-title { font-family: var(--editorial); font-weight: 400; letter-spacing: -0.035em; }
-.hero-title { font-size: clamp(6rem, 10.8vw, 10.4rem); line-height: 0.82; }
-.hero-title .title-accent { color: var(--white); font-style: italic; }
+/* NVIDIA Sans typography with restrained green signal details. */
+.hero-title, .section-head h2, .panel-title, .sub-head h4, .evidence-copy h4, .error-title { font-family: var(--display); font-weight: 700; letter-spacing: -0.045em; }
+.hero-title { font-size: clamp(5.5rem, 10vw, 9.8rem); line-height: 0.86; }
+.hero-title .title-accent { color: var(--green); font-style: normal; }
 .hero-sub { font-family: var(--display); font-weight: 500; letter-spacing: -0.025em; }
-.section-head h2 em { color: var(--white); font-style: italic; }
-.brand-mark { color: var(--white); }
-.brand-mark .brand-core, .footer-brand .brand-core { fill: var(--green); }
+.section-head h2 em { color: var(--green); font-style: normal; }
+.brand-mark, .footer-brand svg { color: var(--green); }
+.brand-mark .brand-core, .footer-brand .brand-core { fill: var(--green-hover); }
 .brand-word { font-family: var(--display); font-weight: 700; letter-spacing: -0.04em; }
 .btn-solid {
-  border-color: var(--white);
-  background: var(--white);
-  color: #11130f;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  border-color: rgba(118, 185, 0, 0.78);
+  background: linear-gradient(180deg, rgba(142, 214, 0, 0.95), rgba(118, 185, 0, 0.86));
+  color: #071000;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28), 0 0 28px rgba(118, 185, 0, 0.16);
 }
-.btn-solid:hover { border-color: #dce3d4; background: #dce3d4; color: #11130f; box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32); }
-.btn-ghost { border-color: rgba(230, 239, 223, 0.22); background: rgba(230, 239, 223, 0.025); box-shadow: none; }
-.btn-ghost:hover { border-color: rgba(230, 239, 223, 0.48); background: rgba(230, 239, 223, 0.075); }
+.btn-solid:hover { border-color: var(--green-hover); background: var(--green-hover); color: #071000; box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32), 0 0 32px rgba(118, 185, 0, 0.22); }
+.btn-ghost { border-color: rgba(118, 185, 0, 0.42); background: rgba(118, 185, 0, 0.035); box-shadow: none; }
+.btn-ghost:hover { border-color: rgba(118, 185, 0, 0.72); background: rgba(118, 185, 0, 0.1); }
 .deck::before { opacity: 0.012; }
-.hero-figure .zoom:hover { border-color: rgba(230, 239, 223, 0.32); }
-.resource-card:hover { border-color: rgba(184, 198, 122, 0.38); }
-.media:not(.media--paper):hover, .video-card:hover { border-color: rgba(184, 198, 122, 0.26); box-shadow: 0 0 0 1px rgba(184, 198, 122, 0.04); }
+.hero-figure .zoom:hover { border-color: rgba(118, 185, 0, 0.38); }
+.resource-card:hover { border-color: rgba(118, 185, 0, 0.38); }
+.media:not(.media--paper):hover, .video-card:hover { border-color: rgba(118, 185, 0, 0.26); box-shadow: 0 0 0 1px rgba(118, 185, 0, 0.04); }
 
 @media (max-width: 900px) {
   .hero { min-height: 0; }
@@ -1728,7 +1687,7 @@ body {
   :root { --wrap: calc(100% - 32px); --header-h: 44px; }
   .masthead { height: 44px; padding-inline: 16px; }
   .utility { gap: 12px; }
-  .hero { padding: calc(var(--header-h) + 58px) 0 56px; background: radial-gradient(90% 42% at 50% 0%, rgba(218, 224, 211, 0.035), transparent 74%); }
+  .hero { padding: calc(var(--header-h) + 58px) 0 56px; background: radial-gradient(90% 42% at 50% 0%, rgba(118, 185, 0, 0.08), transparent 74%); }
   .hero-grid { gap: 30px; }
   .hero-copy, .hero-figure, .hero-authors { min-width: 0; max-width: 100%; }
   .hero-copy { text-align: center; }
