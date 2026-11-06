@@ -69,6 +69,21 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../fonts/instrument-serif-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../fonts/instrument-serif-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
 @font-face {
   font-family: "Space Mono";
   src: url("../fonts/space-mono-700-normal.woff2") format("woff2");
@@ -100,8 +115,7 @@
 
   --font: "NVIDIA Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "Helvetica Neue", Arial, sans-serif;
-  --display: "Space Grotesk", "NVIDIA Sans", -apple-system, BlinkMacSystemFont,
-    "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  --display: "Instrument Serif", "Iowan Old Style", "Baskerville", Georgia, serif;
   --mono: "Space Mono", "SF Mono", ui-monospace, "JetBrains Mono", Menlo,
     Consolas, monospace;
 
@@ -1541,10 +1555,10 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
   --gray-2: #6f786d;
   --line: rgba(230, 239, 223, 0.16);
   --line-soft: rgba(230, 239, 223, 0.095);
-  --green: #a4d62c;
-  --green-hover: #b8ee44;
-  --yellow: #d4b35b;
-  --blue: #7bb7c9;
+  --green: #b8c67a;
+  --green-hover: #ceda96;
+  --yellow: #c9ad78;
+  --blue: #8eabb4;
   --radius-s: 8px;
   --radius-m: 12px;
   --radius-l: 18px;
@@ -1552,9 +1566,7 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
 }
 
 body {
-  background:
-    radial-gradient(70% 50% at 50% -8%, rgba(164, 214, 44, 0.085), transparent 68%),
-    var(--bg);
+  background: var(--bg);
   color: var(--white);
 }
 
@@ -1576,13 +1588,13 @@ body {
   min-height: 820px;
   padding: calc(var(--header-h) + 88px) 0 72px;
   background:
-    linear-gradient(90deg, transparent 0, transparent calc(50% - 1px), rgba(230, 239, 223, 0.055) 50%, transparent calc(50% + 1px)),
-    radial-gradient(58% 46% at 28% 4%, rgba(164, 214, 44, 0.12), transparent 72%),
-    radial-gradient(40% 30% at 84% 14%, rgba(123, 183, 201, 0.07), transparent 72%);
+    linear-gradient(90deg, transparent 0, transparent calc(50% - 1px), rgba(230, 239, 223, 0.045) 50%, transparent calc(50% + 1px)),
+    radial-gradient(54% 44% at 30% 5%, rgba(218, 224, 211, 0.035), transparent 74%),
+    radial-gradient(34% 26% at 84% 16%, rgba(142, 171, 180, 0.035), transparent 74%);
 }
 .hero::before {
   background-size: 32px 32px;
-  opacity: 0.11;
+  opacity: 0.07;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
 }
@@ -1603,7 +1615,7 @@ body {
   padding: 12px;
   border-color: rgba(230, 239, 223, 0.2);
   border-radius: 14px;
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(164, 214, 44, 0.06);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(230, 239, 223, 0.04);
 }
 .hero-authors {
   grid-column: 1 / -1;
@@ -1678,6 +1690,30 @@ body {
 .bib-card { border-radius: 12px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22); }
 .footer { padding: 34px 0; }
 
+/* Quiet typography and signal details. */
+:root { --display: "NVIDIA Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; --editorial: "Instrument Serif", "Iowan Old Style", "Baskerville", Georgia, serif; }
+.hero-title, .section-head h2, .panel-title, .sub-head h4, .evidence-copy h4, .error-title { font-family: var(--editorial); font-weight: 400; letter-spacing: -0.035em; }
+.hero-title { font-size: clamp(6rem, 10.8vw, 10.4rem); line-height: 0.82; }
+.hero-title .title-accent { color: var(--white); font-style: italic; }
+.hero-sub { font-family: var(--display); font-weight: 500; letter-spacing: -0.025em; }
+.section-head h2 em { color: var(--white); font-style: italic; }
+.brand-mark { color: var(--white); }
+.brand-mark .brand-core, .footer-brand .brand-core { fill: var(--green); }
+.brand-word { font-family: var(--display); font-weight: 700; letter-spacing: -0.04em; }
+.btn-solid {
+  border-color: var(--white);
+  background: var(--white);
+  color: #11130f;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+.btn-solid:hover { border-color: #dce3d4; background: #dce3d4; color: #11130f; box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32); }
+.btn-ghost { border-color: rgba(230, 239, 223, 0.22); background: rgba(230, 239, 223, 0.025); box-shadow: none; }
+.btn-ghost:hover { border-color: rgba(230, 239, 223, 0.48); background: rgba(230, 239, 223, 0.075); }
+.deck::before { opacity: 0.012; }
+.hero-figure .zoom:hover { border-color: rgba(230, 239, 223, 0.32); }
+.resource-card:hover { border-color: rgba(184, 198, 122, 0.38); }
+.media:not(.media--paper):hover, .video-card:hover { border-color: rgba(184, 198, 122, 0.26); box-shadow: 0 0 0 1px rgba(184, 198, 122, 0.04); }
+
 @media (max-width: 900px) {
   .hero { min-height: 0; }
   .hero-grid { grid-template-columns: 1fr; gap: 38px; }
@@ -1692,7 +1728,7 @@ body {
   :root { --wrap: calc(100% - 32px); --header-h: 44px; }
   .masthead { height: 44px; padding-inline: 16px; }
   .utility { gap: 12px; }
-  .hero { padding: calc(var(--header-h) + 58px) 0 56px; background: radial-gradient(90% 42% at 50% 0%, rgba(164, 214, 44, 0.11), transparent 74%); }
+  .hero { padding: calc(var(--header-h) + 58px) 0 56px; background: radial-gradient(90% 42% at 50% 0%, rgba(218, 224, 211, 0.035), transparent 74%); }
   .hero-grid { gap: 30px; }
   .hero-copy, .hero-figure, .hero-authors { min-width: 0; max-width: 100%; }
   .hero-copy { text-align: center; }
