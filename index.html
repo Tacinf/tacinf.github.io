@@ -28,7 +28,7 @@
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261107r5">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261107r7">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -581,24 +581,49 @@
               <p class="panel-links">
                 <span class="link-soon">Evaluation in the paper <span class="soon">Coming soon</span></span>
                 <span class="link-soon">Tabero benchmark <span class="soon">Coming soon</span></span>
-                <a href="#data-synergy">Explore the data pyramid ↑</a>
+                <a href="#data-synergy">Explore the data flow ↑</a>
               </p>
             </div>
 
-          </div>
+            <div class="panel-media">
+              <div class="agreement-evidence">
+                <figure class="agreement-chart" aria-labelledby="agreement-chart-title">
+                  <div class="agreement-chart__head">
+                    <div><p class="agreement-chart__kicker">SIM ↔ REAL · CONTEXTUAL COMPARISON</p><h4 id="agreement-chart-title">Cross-domain agreement</h4></div>
+                    <span class="agreement-chart__mark" aria-hidden="true">TACO</span>
+                  </div>
+                  <div class="agreement-chart__metrics">
+                    <section class="agreement-metric" aria-label="Pearson r, higher is better">
+                      <div class="agreement-metric__head"><strong>Pearson <em>r</em></strong><span>↑ HIGHER IS BETTER</span></div>
+                      <div class="agreement-rows">
+                        <div class="agreement-row agreement-row--tacinf"><span>Tacinf · SR only</span><span class="agreement-row__track"><i style="--bar:99.8%"></i></span><b>0.998</b></div>
+                        <div class="agreement-row"><span>PolaRiS</span><span class="agreement-row__track"><i style="--bar:83%"></i></span><b>0.830</b></div>
+                        <div class="agreement-row"><span>OpenViTac</span><span class="agreement-row__track"><i style="--bar:96.7%"></i></span><b>0.967</b></div>
+                        <div class="agreement-row"><span>SimFoundry</span><span class="agreement-row__track"><i style="--bar:91.1%"></i></span><b>0.911</b></div>
+                        <div class="agreement-row"><span>SceneRig</span><span class="agreement-row__track"><i style="--bar:92%"></i></span><b>0.920</b></div>
+                      </div>
+                    </section>
+                    <section class="agreement-metric" aria-label="MMRV, lower is better">
+                      <div class="agreement-metric__head"><strong>MMRV</strong><span>↓ LOWER IS BETTER</span></div>
+                      <div class="agreement-rows">
+                        <div class="agreement-row agreement-row--tacinf"><span>Tacinf · SR only</span><span class="agreement-row__track"><i style="--bar:4%"></i></span><b>0.010</b></div>
+                        <div class="agreement-row"><span>Ctrl-World</span><span class="agreement-row__track"><i style="--bar:92%"></i></span><b>0.230</b></div>
+                        <div class="agreement-row"><span>OpenViTac</span><span class="agreement-row__track"><i style="--bar:2.4%"></i></span><b>0.006</b></div>
+                        <div class="agreement-row"><span>SimFoundry</span><span class="agreement-row__track"><i style="--bar:7.2%"></i></span><b>0.018</b></div>
+                        <div class="agreement-row"><span>SceneRig</span><span class="agreement-row__track"><i style="--bar:16%"></i></span><b>0.040</b></div>
+                      </div>
+                    </section>
+                  </div>
+                  <figcaption>Across eight policy variants and six tasks, Tacinf reports <strong>r = 0.998</strong> and <strong>MMRV = 0.010</strong>. Other studies are contextual; task suites and scoring protocols differ.</figcaption>
+                </figure>
 
-          <div class="evidence-grid">
-            <figure class="media media--paper">
-              <button class="zoom" type="button" data-full="assets/img/agreement.webp?v=20261107r1" data-caption="Cross-domain agreement of simulated and real-robot success scores across eight policy variants, with contextual results from other sim-to-real studies.">
-                <img src="assets/img/agreement.webp?v=20261107r1" width="1800" height="510" loading="lazy" alt="Cross-domain evaluation figure: Tacinf success-only Pearson correlation 0.998 and MMRV 0.010, compared with contextual sim-to-real results from prior work.">
-              </button>
-              <figcaption><strong>Simulation preserves success ordering.</strong> Eight policy variants; literature results are contextual and use different protocols.</figcaption>
-            </figure>
-            <div class="evidence-copy">
-              <p class="panel-kicker">Evidence / paired evaluation</p>
-              <h4>Simulation predicts success ordering.</h4>
-              <p>Across eight policy variants and six tasks, simulated success scores track real-robot scores with <strong>Pearson r = 0.998</strong> and <strong>MMRV = 0.010</strong>. The paper reports this success-only comparison; measured force retains a small sim-to-real gap.</p>
-              <p>The replay data also align across visual, tactile, and action channels: CLIP similarity above 0.75, tactile SSIM above 0.93, and action MAE below 0.074. The comparison bars from other studies are contextual because their task suites and scoring protocols differ.</p>
+                <div class="evidence-copy">
+                  <p class="panel-kicker">Evidence / paired evaluation</p>
+                  <h4>Simulation predicts success ordering.</h4>
+                  <p>The paper reports this success-only comparison; measured force retains a small sim-to-real gap.</p>
+                  <p>Replay data also align across visual, tactile, and action channels: <strong>CLIP similarity &gt; 0.75</strong>, <strong>tactile SSIM &gt; 0.93</strong>, and <strong>action MAE &lt; 0.074</strong>.</p>
+                </div>
+              </div>
             </div>
           </div>
         </article>
