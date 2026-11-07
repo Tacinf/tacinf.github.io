@@ -28,7 +28,7 @@
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261107r4">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261107r5">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -136,10 +136,10 @@
       <div class="wrap">
         <header class="data-synergy-head">
           <div>
-            <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Data synergy · a data pyramid</p>
+            <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Data synergy · three-source co-training</p>
             <h2 id="data-synergy-title">Three sources.<br><em>Complementary strengths.</em></h2>
           </div>
-          <p>Three complementary streams form a data pyramid: simulation scales visual and object diversity, Tacumi expands where and how objects are grasped, and teleoperation anchors demonstrations in real sensor and actuator statistics.</p>
+          <p>Three complementary streams balance collection cost and capability: simulation scales visual and object diversity, Tacumi expands where and how objects are grasped, and teleoperation anchors demonstrations in real sensor and actuator statistics.</p>
         </header>
 
         <div class="synergy-layout">
@@ -155,11 +155,11 @@
                   <marker id="flow-arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#76b900"/></marker>
                   <marker id="flow-arrow-violet" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#a78bfa"/></marker>
                 </defs>
-                <path class="flow-link flow-link--replay" d="M334 70H393" marker-end="url(#flow-arrow-green)"/>
-                <path class="flow-link flow-link--umi" d="M785 100H725" marker-end="url(#flow-arrow-violet)"/>
-                <path class="flow-stream flow-stream--teleop" d="M200 182C200 240 360 245 390 312" marker-end="url(#flow-arrow-green)"/>
-                <path class="flow-stream flow-stream--sim" d="M600 182V312" marker-end="url(#flow-arrow-green)"/>
-                <path class="flow-stream flow-stream--tacumi" d="M1000 182C1000 240 840 245 810 312" marker-end="url(#flow-arrow-violet)"/>
+                <path class="flow-link flow-link--replay" d="M357 82H427" marker-end="url(#flow-arrow-green)"/>
+                <path class="flow-link flow-link--umi" d="M843 82H773" marker-end="url(#flow-arrow-violet)"/>
+                <path class="flow-stream flow-stream--teleop" d="M187 182C187 232 345 236 350 280" marker-end="url(#flow-arrow-green)"/>
+                <path class="flow-stream flow-stream--sim" d="M600 182V280" marker-end="url(#flow-arrow-green)"/>
+                <path class="flow-stream flow-stream--tacumi" d="M1013 182C1013 232 855 236 850 280" marker-end="url(#flow-arrow-violet)"/>
               </svg>
 
               <div class="flow-sources">
@@ -167,23 +167,23 @@
                   <div class="flow-source__top"><span>01 / REAL ROBOT</span><span class="flow-source__signal" aria-hidden="true"></span></div>
                   <h3>Teleoperation</h3>
                   <p>Precise demonstrations grounded in real sensor and actuator statistics.</p>
-                  <span class="flow-source__tag">HIGHEST COLLECTION COST</span>
+                  <div class="flow-source__cost" aria-label="High collection cost"><span class="flow-source__cost-label">COLLECTION COST</span><span class="flow-source__cost-value">HIGH</span><span class="flow-cost-meter" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span></div>
                 </article>
                 <article class="flow-source flow-source--sim">
                   <div class="flow-source__top"><span>02 / REPLAY</span><span class="flow-source__signal" aria-hidden="true"></span></div>
                   <h3>Simulation replay</h3>
                   <p>Replay trajectories and scale object appearance and background variation.</p>
-                  <span class="flow-source__tag">LOWEST COLLECTION COST</span>
+                  <div class="flow-source__cost" aria-label="Low collection cost"><span class="flow-source__cost-label">COLLECTION COST</span><span class="flow-source__cost-value">LOW</span><span class="flow-cost-meter" aria-hidden="true"><i class="is-filled"></i><i></i><i></i></span></div>
                 </article>
                 <article class="flow-source flow-source--tacumi">
                   <div class="flow-source__top"><span>03 / HANDHELD</span><span class="flow-source__signal" aria-hidden="true"></span></div>
                   <h3>Tacumi · UMI</h3>
                   <p>Parallel demonstrations expand object positions and grasp approaches.</p>
-                  <span class="flow-source__tag">MID COLLECTION COST</span>
+                  <div class="flow-source__cost" aria-label="Medium collection cost"><span class="flow-source__cost-label">COLLECTION COST</span><span class="flow-source__cost-value">MID</span><span class="flow-cost-meter" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i></span></div>
                 </article>
               </div>
 
-              <div class="flow-replay-caption" aria-hidden="true"><span>TRAJECTORY REPLAY</span><span>PARALLEL DEMONSTRATIONS</span></div>
+              <div class="flow-replay-caption" aria-hidden="true"><span>TELEOP → SIMULATION REPLAY</span><span>TACUMI · PARALLEL DEMONSTRATIONS</span></div>
 
               <div class="flow-training">
                 <div class="flow-training__copy"><span>SHARED DATA CONTRACT</span><h3 id="data-flow-title">Joint policy training</h3><p>Aligned observations · actions · tactile and force labels</p></div>
@@ -193,25 +193,6 @@
             </div>
             <figcaption>Simulation replays teleoperation trajectories; Tacumi demonstrations add spatial variation in parallel. The three aligned sources are mixed for policy post-training.</figcaption>
           </figure>
-
-          <div class="data-pyramid" aria-label="Data pyramid ordered by collection cost, from highest to lowest">
-            <div class="pyramid-tier pyramid-tier--teleop">
-              <span class="pyramid-tier__index" aria-hidden="true">03</span>
-              <div class="pyramid-tier__copy"><strong>Teleoperation</strong><span>Precise examples grounded in real sensor and actuator statistics</span></div>
-              <span class="pyramid-tier__cost">Highest cost</span>
-            </div>
-            <div class="pyramid-tier pyramid-tier--umi">
-              <span class="pyramid-tier__index" aria-hidden="true">02</span>
-              <div class="pyramid-tier__copy"><strong>Tacumi · UMI</strong><span>Variation in object positions and grasp approaches</span></div>
-              <span class="pyramid-tier__cost">Mid cost</span>
-            </div>
-            <div class="pyramid-tier pyramid-tier--sim">
-              <span class="pyramid-tier__index" aria-hidden="true">01</span>
-              <div class="pyramid-tier__copy"><strong>Simulation</strong><span>Scalable variation in object appearance and background</span></div>
-              <span class="pyramid-tier__cost">Lowest cost</span>
-            </div>
-            <p class="pyramid-note"><span aria-hidden="true">↓</span> Lower collection cost · broader variation</p>
-          </div>
 
         </div>
       </div>
