@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tacinf — A Unified Tactile Infrastructure for Robot Manipulation</title>
-  <meta name="description" content="Tacinf is a unified tactile infrastructure for robot manipulation: tactile simulation and benchmarks, force-aware VLA policies, handheld data collection, and task-aligned sim-to-real evaluation in one loop.">
-  <meta name="author" content="Qiwei Wu, Xiangyu Chen, Xin Xiang, Rui Zhang, Yihang Kang, Weiran Chen, Zikang Xie, Tao Wang, Xiangzheng Wang, Tianyi Bi, Zhiyan Zhang, Xianpeng Wang, Mingqian Zhou, Yangfan Li, Tao Li, Weihua Zhang, Renjing Xu, Junjie Lai">
+  <meta name="description" content="Tacinf is a low-cost, modular tactile infrastructure for force-aware manipulation, combining tactile simulation, policy learning, handheld data collection, and task-aligned sim-to-real evaluation.">
+  <meta name="author" content="Qiwei Wu, Xiangyu Chen, Xin Xiang, Rui Zhang, Yihang Kang, Weiran Chen, Zikang Xie, Xiangzheng Wang, Tianyi Bi, Zhiyan Zhang, Xianpeng Wang, Mingqian Zhou, Yangfan Li, Tao Wang, Tao Li, Weihua Zhang, Renjing Xu, Junjie Lai">
   <meta name="theme-color" content="#050705">
   <link rel="canonical" href="https://tacinf.github.io/">
   <link rel="icon" href="favicon.svg?v=20261107r5" type="image/svg+xml" sizes="any">
@@ -17,14 +17,14 @@
 
   <meta property="og:type" content="article">
   <meta property="og:title" content="Tacinf — A Unified Tactile Infrastructure for Robot Manipulation">
-  <meta property="og:description" content="Four modules, one tactile loop: Tabero simulation, Tacinf-VTLA policies, Tacumi handheld collection, Taco sim-to-real.">
+  <meta property="og:description" content="Four modules for tactile manipulation: Tabero simulation, Tacinf-VTLA policies, Tacumi data collection, and Taco sim-to-real evaluation and co-training.">
   <meta property="og:url" content="https://tacinf.github.io/">
   <meta property="og:image" content="https://tacinf.github.io/assets/img/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tacinf — A Unified Tactile Infrastructure for Robot Manipulation">
-  <meta name="twitter:description" content="Four modules, one tactile loop: Tabero simulation, Tacinf-VTLA policies, Tacumi handheld collection, Taco sim-to-real.">
+  <meta name="twitter:description" content="Four modules for tactile manipulation: Tabero simulation, Tacinf-VTLA policies, Tacumi data collection, and Taco sim-to-real evaluation and co-training.">
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -39,7 +39,7 @@
     "@context": "https://schema.org",
     "@type": "ScholarlyArticle",
     "headline": "Tacinf: A Unified Tactile Infrastructure for Robot Manipulation",
-    "abstract": "Contact-rich manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. Tacinf is a modular tactile vision-language-action infrastructure that integrates synchronized trajectory replay and tactile simulation, policy learning, handheld collection with a shared deployment gripper, and task-aligned simulation-to-real evaluation.",
+    "abstract": "Force-aware manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. Tacinf is a low-cost modular infrastructure that predicts actions and fingertip forces from language, vision, and touch, with an optional language-conditioned force level for explicit force regulation. It combines simulation data synthesis and a tactile benchmark (Tabero), policy learning (VTLA), handheld data collection with a shared deployment gripper (Tacumi), and task-aligned simulation-to-real evaluation (Taco). Across eight policy variants, simulation preserves real-robot success ordering (Pearson r=0.998, MMRV=0.010). Mixed teleoperation, simulation, and Tacumi training raises success from 20% to 60% on position-randomized out-of-distribution objects.",
     "author": [
       {"@type": "Person", "name": "Qiwei Wu"},
       {"@type": "Person", "name": "Xiangyu Chen"},
@@ -48,13 +48,13 @@
       {"@type": "Person", "name": "Yihang Kang"},
       {"@type": "Person", "name": "Weiran Chen"},
       {"@type": "Person", "name": "Zikang Xie"},
-      {"@type": "Person", "name": "Tao Wang"},
       {"@type": "Person", "name": "Xiangzheng Wang"},
       {"@type": "Person", "name": "Tianyi Bi"},
       {"@type": "Person", "name": "Zhiyan Zhang"},
       {"@type": "Person", "name": "Xianpeng Wang"},
       {"@type": "Person", "name": "Mingqian Zhou"},
       {"@type": "Person", "name": "Yangfan Li"},
+      {"@type": "Person", "name": "Tao Wang"},
       {"@type": "Person", "name": "Tao Li"},
       {"@type": "Person", "name": "Weihua Zhang"},
       {"@type": "Person", "name": "Renjing Xu"},
@@ -101,7 +101,7 @@
 
           <p class="hero-sub">Making tactile foundation models and devices for everyone.</p>
 
-          <p class="hero-desc">An open-source, low-cost tactile UMI and force-controlled gripper, with a matching simulation environment, extensible tasks and data, a sim-to-real pipeline, model weights, and LEGO-style VTLA plugins.</p>
+          <p class="hero-desc">A low-cost, modular tactile infrastructure: policies predict actions and fingertip forces from language, vision, and touch. An optional language-conditioned force level supports explicit force regulation, while ordinary task instructions need no force adverbs.</p>
 
           <div class="hero-actions">
             <a class="btn btn-solid" href="#modules">Explore the modules <span aria-hidden="true">↓</span></a>
@@ -118,13 +118,13 @@
 
           <div class="hero-authors">
             <p class="authors">
-              <span>Qiwei Wu<sup>1,2,*,‡</sup></span><span>Xiangyu Chen<sup>2,*</sup></span><span>Xin Xiang<sup>2,*</sup></span><span>Rui Zhang<sup>1</sup></span><span>Yihang Kang<sup>2</sup></span><span>Weiran Chen<sup>2</sup></span><span>Zikang Xie<sup>2</sup></span><span>Tao Wang<sup>2</sup></span><span>Xiangzheng Wang<sup>2</sup></span><span>Tianyi Bi<sup>2</sup></span><span>Zhiyan Zhang<sup>2</sup></span><span>Xianpeng Wang<sup>2</sup></span><span>Mingqian Zhou<sup>3</sup></span><span>Yangfan Li<sup>2</sup></span><span>Tao Li<sup>1</sup></span><span>Weihua Zhang<sup>1</sup></span><span>Renjing Xu<sup>2,†</sup></span><span>Junjie Lai<sup>1,†</sup></span>
+              <span>Qiwei Wu<sup>1,2,*,‡</sup></span><span>Xiangyu Chen<sup>2,*</sup></span><span>Xin Xiang<sup>2,*</sup></span><span>Rui Zhang<sup>1</sup></span><span>Yihang Kang<sup>2</sup></span><span>Weiran Chen<sup>2</sup></span><span>Zikang Xie<sup>2</sup></span><span>Xiangzheng Wang<sup>2</sup></span><span>Tianyi Bi<sup>2</sup></span><span>Zhiyan Zhang<sup>2</sup></span><span>Xianpeng Wang<sup>2</sup></span><span>Mingqian Zhou<sup>3</sup></span><span>Yangfan Li<sup>2</sup></span><span>Tao Wang<sup>2</sup></span><span>Tao Li<sup>1</sup></span><span>Weihua Zhang<sup>1,†</sup></span><span>Renjing Xu<sup>2,†</sup></span><span>Junjie Lai<sup>1</sup></span>
             </p>
             <p class="affiliations">
               <span><sup>1</sup>NVIDIA</span>
               <span><sup>2</sup>HKUST (GZ)</span>
               <span><sup>3</sup>University of Cambridge</span>
-              <span class="author-notes"><sup>*</sup>Equal contribution · <sup>‡</sup>Project leader · <sup>†</sup>Corresponding</span>
+              <span class="author-notes"><sup>*</sup>Equal contribution · <sup>‡</sup>Project leader · <sup>†</sup>Corresponding authors</span>
             </p>
           </div>
       </div>
@@ -138,7 +138,7 @@
           <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>The system</p>
           <h2>One loop.<br><em>Four</em> modules.</h2>
         </div>
-        <p class="section-note">Each module owns one part of the tactile loop. Switch between them — collection, simulation, policy, and transfer.</p>
+        <p class="section-note">Together, the modules support tactile data synthesis and collection, force-aware policy learning, and task-aligned sim-to-real evaluation.</p>
         <p class="compute-note"><span class="compute-mark" aria-hidden="true"></span>Minimum compute for all modules: <strong>one RTX 4090 workstation.</strong></p>
       </div>
 
@@ -475,7 +475,7 @@
 
           <div class="panel-grid">
             <div class="panel-copy">
-              <p>Taco aligns the workspace, objects, embodiment, cameras, and tactile response to the task — then mixes real teleoperation, simulation replay, and UMI demonstrations into one post-training set. The test is policy-relevant consistency: contact onset, patch persistence, force scale, marker response, action replay.</p>
+              <p>Taco aligns the workspace, objects, robot, cameras, and tactile response for paired simulation and real-robot evaluation. It also combines teleoperation, simulation, and Tacumi data for policy post-training: simulation adds object variation, Tacumi adds spatial variation, and teleoperation anchors precise examples.</p>
 
               <div class="resource-grid">
                 <div class="resource-card resource-card--soon">
@@ -505,10 +505,10 @@
               </div>
 
               <div class="panel-stats panel-stats--four">
-                <div class="stat"><strong>0.845</strong><span>Pearson <em>r</em><br>combined score</span></div>
-                <div class="stat"><strong>0.195</strong><span>MMRV<br>combined score</span></div>
-                <div class="stat"><strong>96.7%</strong><span>zero-shot<br>mean success</span></div>
-                <div class="stat"><strong>2k+</strong><span>real-robot<br>evaluations</span></div>
+                <div class="stat"><strong>0.998</strong><span>Pearson <em>r</em><br>success ordering</span></div>
+                <div class="stat"><strong>0.010</strong><span>MMRV<br>success ordering</span></div>
+                <div class="stat"><strong>20 → 60%</strong><span>success on position + OOD objects<br>three-source co-training</span></div>
+                <div class="stat"><strong>98%+</strong><span>real-robot success<br>LIBERO-like · sim-only tuning</span></div>
               </div>
 
               <p class="panel-links">
@@ -519,10 +519,10 @@
 
             <div class="panel-media">
               <figure class="media media--paper">
-                <button class="zoom" type="button" data-full="assets/img/taco-loop.webp" data-caption="Three data sources — teleoperation, simulation replay, and Tacumi demonstrations — feeding joint policy training.">
+                <button class="zoom" type="button" data-full="assets/img/taco-loop.webp" data-caption="Data synergy: teleoperation anchors precise examples, simulation varies objects, and Tacumi varies object positions and grasp approaches.">
                   <img src="assets/img/taco-loop.webp" width="1559" height="535" loading="eager" alt="Three data sources feeding one tactile policy: real teleoperation, simulation replay, and Tacumi demonstrations.">
                 </button>
-                <figcaption><strong>Three sources, one policy.</strong> Teleoperation anchors; simulation scales; Tacumi adds spatial variation.</figcaption>
+                <figcaption><strong>Three sources, one policy.</strong> Teleoperation anchors precision; simulation varies objects; Tacumi adds spatial and approach variation.</figcaption>
               </figure>
 
             </div>
@@ -530,16 +530,16 @@
 
           <div class="evidence-grid">
             <figure class="media media--paper">
-              <button class="zoom" type="button" data-full="assets/img/agreement.webp" data-caption="Cross-domain agreement of simulated evaluations: Pearson r and MMRV for the combined task-and-force score, compared with success-only and literature values.">
-                <img src="assets/img/agreement.webp" width="1600" height="453" loading="lazy" alt="Bar charts: Pearson correlation 0.845 and MMRV 0.195 for the combined score.">
+              <button class="zoom" type="button" data-full="assets/img/agreement.webp?v=20261107r1" data-caption="Cross-domain agreement of simulated and real-robot success scores across eight policy variants, with contextual results from other sim-to-real studies.">
+                <img src="assets/img/agreement.webp?v=20261107r1" width="1800" height="510" loading="lazy" alt="Cross-domain evaluation figure: Tacinf success-only Pearson correlation 0.998 and MMRV 0.010, compared with contextual sim-to-real results from prior work.">
               </button>
-              <figcaption><strong>Simulation preserves policy ordering.</strong> Eight policy variants, combined task-and-force score.</figcaption>
+              <figcaption><strong>Simulation preserves success ordering.</strong> Eight policy variants; literature results are contextual and use different protocols.</figcaption>
             </figure>
             <div class="evidence-copy">
               <p class="panel-kicker">Evidence / paired evaluation</p>
-              <h4>r = 0.845 is the harder claim.</h4>
-              <p>Across eight policy variants spanning two VLA backbones and several tactile configurations, the combined task-and-force score gives <strong>r = 0.845</strong> and <strong>MMRV = 0.195</strong>. Success rate alone gives r = 0.726 and MMRV = 0.060, so simulation preserves both task competence and force-level ordering.</p>
-              <p>The alignment checks CLIP above 0.75, tactile SSIM above 0.93, and action MAE below 0.074 on the channels the policy actually consumes.</p>
+              <h4>Simulation predicts success ordering.</h4>
+              <p>Across eight policy variants and six tasks, simulated success scores track real-robot scores with <strong>Pearson r = 0.998</strong> and <strong>MMRV = 0.010</strong>. The paper reports this success-only comparison; measured force retains a small sim-to-real gap.</p>
+              <p>The replay data also align across visual, tactile, and action channels: CLIP similarity above 0.75, tactile SSIM above 0.93, and action MAE below 0.074. The comparison bars from other studies are contextual because their task suites and scoring protocols differ.</p>
             </div>
           </div>
         </article>
@@ -580,9 +580,9 @@
                   for Robot Manipulation},
   author       = {Wu, Qiwei and Chen, Xiangyu and Xiang, Xin
                   and Zhang, Rui and Kang, Yihang and Chen, Weiran
-                  and Xie, Zikang and Wang, Tao and Wang, Xiangzheng
-                  and Bi, Tianyi and Zhang, Zhiyan and Wang, Xianpeng
-                  and Zhou, Mingqian and Li, Yangfan and Li, Tao
+                  and Xie, Zikang and Wang, Xiangzheng and Bi, Tianyi
+                  and Zhang, Zhiyan and Wang, Xianpeng and Zhou, Mingqian
+                  and Li, Yangfan and Wang, Tao and Li, Tao
                   and Zhang, Weihua and Xu, Renjing and Lai, Junjie},
   year         = {2026},
   note         = {Technical report},
