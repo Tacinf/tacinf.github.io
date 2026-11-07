@@ -28,7 +28,7 @@
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261107r3">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261107r4">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -143,11 +143,55 @@
         </header>
 
         <div class="synergy-layout">
-          <figure class="data-flow-figure">
-            <button class="zoom" type="button" data-full="assets/img/taco-data-flow.webp" data-caption="Teleoperation trajectories flow into simulation replay; Tacumi demonstrations add spatial variation in parallel. All three sources feed joint policy training.">
-              <img src="assets/img/taco-data-flow.webp" width="1002" height="378" loading="lazy" alt="Teleoperation trajectories flow into simulation replay, while Tacumi demonstrations add parallel data; all three sources feed joint policy training.">
-            </button>
-            <figcaption>Teleoperation trajectories are replayed in simulation; Tacumi adds demonstrations in parallel. All three data streams feed joint policy training.</figcaption>
+          <figure class="data-flow-diagram" aria-labelledby="data-flow-title">
+            <div class="flow-diagram-head">
+              <span class="flow-diagram-head__label">TACO · DATA MIXING PIPELINE</span>
+              <span class="flow-diagram-head__status"><i aria-hidden="true"></i> Three sources · one policy</span>
+            </div>
+
+            <div class="flow-stage">
+              <svg class="flow-connectors" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <marker id="flow-arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#76b900"/></marker>
+                  <marker id="flow-arrow-violet" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#a78bfa"/></marker>
+                </defs>
+                <path class="flow-link flow-link--replay" d="M334 70H393" marker-end="url(#flow-arrow-green)"/>
+                <path class="flow-link flow-link--umi" d="M785 100H725" marker-end="url(#flow-arrow-violet)"/>
+                <path class="flow-stream flow-stream--teleop" d="M200 182C200 240 360 245 390 312" marker-end="url(#flow-arrow-green)"/>
+                <path class="flow-stream flow-stream--sim" d="M600 182V312" marker-end="url(#flow-arrow-green)"/>
+                <path class="flow-stream flow-stream--tacumi" d="M1000 182C1000 240 840 245 810 312" marker-end="url(#flow-arrow-violet)"/>
+              </svg>
+
+              <div class="flow-sources">
+                <article class="flow-source flow-source--teleop">
+                  <div class="flow-source__top"><span>01 / REAL ROBOT</span><span class="flow-source__signal" aria-hidden="true"></span></div>
+                  <h3>Teleoperation</h3>
+                  <p>Precise demonstrations grounded in real sensor and actuator statistics.</p>
+                  <span class="flow-source__tag">HIGHEST COLLECTION COST</span>
+                </article>
+                <article class="flow-source flow-source--sim">
+                  <div class="flow-source__top"><span>02 / REPLAY</span><span class="flow-source__signal" aria-hidden="true"></span></div>
+                  <h3>Simulation replay</h3>
+                  <p>Replay trajectories and scale object appearance and background variation.</p>
+                  <span class="flow-source__tag">LOWEST COLLECTION COST</span>
+                </article>
+                <article class="flow-source flow-source--tacumi">
+                  <div class="flow-source__top"><span>03 / HANDHELD</span><span class="flow-source__signal" aria-hidden="true"></span></div>
+                  <h3>Tacumi · UMI</h3>
+                  <p>Parallel demonstrations expand object positions and grasp approaches.</p>
+                  <span class="flow-source__tag">MID COLLECTION COST</span>
+                </article>
+              </div>
+
+              <div class="flow-replay-caption" aria-hidden="true"><span>TRAJECTORY REPLAY</span><span>PARALLEL DEMONSTRATIONS</span></div>
+
+              <div class="flow-training">
+                <div class="flow-training__copy"><span>SHARED DATA CONTRACT</span><h3 id="data-flow-title">Joint policy training</h3><p>Aligned observations · actions · tactile and force labels</p></div>
+                <div class="flow-data-stack" aria-hidden="true"><i></i><i></i><i></i></div>
+                <span class="flow-training__note">MIXED DATA<br>FROM ALL SOURCES</span>
+              </div>
+            </div>
+            <figcaption>Simulation replays teleoperation trajectories; Tacumi demonstrations add spatial variation in parallel. The three aligned sources are mixed for policy post-training.</figcaption>
           </figure>
 
           <div class="data-pyramid" aria-label="Data pyramid ordered by collection cost, from highest to lowest">
