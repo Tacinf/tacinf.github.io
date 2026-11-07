@@ -28,7 +28,7 @@
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261106r3">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261107r1">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -129,6 +129,51 @@
           </div>
       </div>
 
+    </section>
+
+    <!-- ============================ DATA SYNERGY ============================ -->
+    <section class="data-synergy" id="data-synergy" aria-labelledby="data-synergy-title">
+      <div class="wrap">
+        <header class="data-synergy-head">
+          <div>
+            <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Data synergy · a data pyramid</p>
+            <h2 id="data-synergy-title">Three sources.<br><em>Complementary strengths.</em></h2>
+          </div>
+          <p>Three complementary streams form a data pyramid: simulation scales visual and object diversity, Tacumi expands where and how objects are grasped, and teleoperation anchors demonstrations in real sensor and actuator statistics.</p>
+        </header>
+
+        <div class="synergy-layout">
+          <div class="data-pyramid" aria-label="Data pyramid ordered by collection cost, from highest to lowest">
+            <div class="pyramid-tier pyramid-tier--teleop">
+              <span class="pyramid-tier__index" aria-hidden="true">03</span>
+              <div class="pyramid-tier__copy"><strong>Teleoperation</strong><span>Precise examples grounded in real sensor and actuator statistics</span></div>
+              <span class="pyramid-tier__cost">Highest cost</span>
+            </div>
+            <div class="pyramid-tier pyramid-tier--umi">
+              <span class="pyramid-tier__index" aria-hidden="true">02</span>
+              <div class="pyramid-tier__copy"><strong>Tacumi · UMI</strong><span>Variation in object positions and grasp approaches</span></div>
+              <span class="pyramid-tier__cost">Mid cost</span>
+            </div>
+            <div class="pyramid-tier pyramid-tier--sim">
+              <span class="pyramid-tier__index" aria-hidden="true">01</span>
+              <div class="pyramid-tier__copy"><strong>Simulation</strong><span>Scalable variation in object appearance and background</span></div>
+              <span class="pyramid-tier__cost">Lowest cost</span>
+            </div>
+            <p class="pyramid-note"><span aria-hidden="true">↓</span> Lower collection cost · broader variation</p>
+          </div>
+
+          <aside class="synergy-result" aria-label="Co-training result">
+            <p class="synergy-result__eyebrow"><span class="synergy-live-dot" aria-hidden="true"></span>Three-source co-training</p>
+            <p class="synergy-result__metric">20<span> → </span>60<small>%</small></p>
+            <p class="synergy-result__label">Mean task success on held-out real-robot tasks</p>
+            <div class="synergy-result__conditions">
+              <span>Randomized positions</span><span>Out-of-distribution objects</span>
+            </div>
+            <p class="synergy-result__compare">Teleoperation only <span>→</span> Teleoperation + simulation + Tacumi</p>
+            <p class="synergy-result__note">In this low-data setting, UMI alone cannot complete the tasks.</p>
+          </aside>
+        </div>
+      </div>
     </section>
 
     <!-- ============================ MODULES ============================ -->
@@ -475,7 +520,7 @@
 
           <div class="panel-grid">
             <div class="panel-copy">
-              <p>Taco aligns the workspace, objects, robot, cameras, and tactile response for paired simulation and real-robot evaluation. It also combines teleoperation, simulation, and Tacumi data for policy post-training: simulation adds object variation, Tacumi adds spatial variation, and teleoperation anchors precise examples.</p>
+              <p>Taco aligns the workspace, objects, robot, cameras, and tactile response for paired simulation and real-robot evaluation. It also supports mixed-data policy post-training across teleoperation, simulation, and Tacumi demonstrations.</p>
 
               <div class="resource-grid">
                 <div class="resource-card resource-card--soon">
@@ -514,18 +559,10 @@
               <p class="panel-links">
                 <span class="link-soon">Evaluation in the paper <span class="soon">Coming soon</span></span>
                 <span class="link-soon">Tabero benchmark <span class="soon">Coming soon</span></span>
+                <a href="#data-synergy">Explore the data pyramid ↑</a>
               </p>
             </div>
 
-            <div class="panel-media">
-              <figure class="media media--paper">
-                <button class="zoom" type="button" data-full="assets/img/taco-loop.webp" data-caption="Data synergy: teleoperation anchors precise examples, simulation varies objects, and Tacumi varies object positions and grasp approaches.">
-                  <img src="assets/img/taco-loop.webp" width="1559" height="535" loading="eager" alt="Three data sources feeding one tactile policy: real teleoperation, simulation replay, and Tacumi demonstrations.">
-                </button>
-                <figcaption><strong>Three sources, one policy.</strong> Teleoperation anchors precision; simulation varies objects; Tacumi adds spatial and approach variation.</figcaption>
-              </figure>
-
-            </div>
           </div>
 
           <div class="evidence-grid">
