@@ -786,6 +786,18 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   letter-spacing: -0.01em;
 }
 .resource-card p { color: var(--gray); font-size: 12.5px; line-height: 1.5; }
+.resource-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: auto;
+  padding-top: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+}
+.resource-links a { color: var(--green); text-decoration: none; }
+.resource-links a:hover { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
 .resource-arrow {
   position: absolute;
   top: 13px;
