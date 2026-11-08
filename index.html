@@ -28,7 +28,7 @@
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261107r7">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261108r2">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -111,9 +111,12 @@
         </div>
 
         <figure class="hero-figure">
-          <button class="zoom" type="button" data-full="assets/img/teaser.webp" data-caption="Tacinf: collection, force-aware policy learning, and zero-shot sim-to-real deployment.">
-            <img src="assets/img/teaser.webp" width="2000" height="901" loading="eager" alt="Tacinf task loop: Tacumi data collection, a tactile VTLA policy and task suite, and zero-shot sim-to-real deployment.">
-          </button>
+          <div class="hero-video-frame">
+            <video muted loop playsinline preload="metadata" poster="assets/img/tacinf-demo-poster.webp" data-auto controls aria-label="Tacinf demonstration video showing tactile robot manipulation.">
+              <source src="assets/video/tacinf-demo-web.mp4" type="video/mp4">
+            </video>
+            <span class="hero-video-label"><i aria-hidden="true"></i> Tacinf · Real robot demonstration</span>
+          </div>
         </figure>
 
           <div class="hero-authors">

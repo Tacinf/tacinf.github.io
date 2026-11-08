@@ -472,17 +472,35 @@ main, .masthead, .footer { position: relative; z-index: 1; }
   margin: 0 auto;
   animation: rise 1s var(--ease) 0.2s both;
 }
-.hero-figure .zoom {
-  display: block;
-  width: 100%;
-  padding: 16px;
-  border: 1px solid var(--line-soft);
+.hero-video-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(118, 185, 0, 0.22);
   border-radius: var(--radius-l);
-  background: #f5f5f7;
-  cursor: zoom-in;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+  background: #070907;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(118, 185, 0, 0.04);
 }
-.hero-figure img { display: block; width: 100%; height: auto; }
+.hero-video-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.hero-video-label {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 5px;
+  background: rgba(4,6,4,0.72);
+  color: #f1f4ed;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+}
+.hero-video-label i { width: 7px; height: 7px; border-radius: 50%; background: var(--green-hover); box-shadow: 0 0 10px rgba(142,214,0,0.65); }
 
 /* ---------- sections ---------- */
 .modules { padding: 100px 0; }
@@ -1496,6 +1514,7 @@ html:not(.js) .masthead { background: var(--bg); border-bottom-color: var(--line
 
 @media (max-width: 560px) {
   .hero-title { font-size: clamp(3.2rem, 19vw, 5rem); }
+  .hero-video-label { top: 10px; left: 10px; padding: 6px 8px; font-size: 7px; }
   .section-head h2 { font-size: clamp(2.1rem, 9vw, 3rem); }
   .tabs {
     display: grid;
@@ -1806,12 +1825,7 @@ body {
 .hero-desc { margin-left: 0; font-size: 16px; max-width: 48ch; }
 .hero-actions { justify-content: flex-start; }
 .hero-figure { width: 100%; }
-.hero-figure .zoom {
-  padding: 12px;
-  border-color: rgba(230, 239, 223, 0.2);
-  border-radius: 14px;
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(118, 185, 0, 0.05);
-}
+.hero-video-frame { border-radius: 14px; box-shadow: 0 26px 70px rgba(0,0,0,0.48), 0 0 0 1px rgba(118,185,0,0.05); }
 .hero-authors {
   grid-column: 1 / -1;
   width: 100%;
