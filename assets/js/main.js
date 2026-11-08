@@ -439,6 +439,25 @@
 
   reduceMotion.addEventListener("change", syncVideos);
 
+  /* ---------------- resource cards ---------------- */
+  document.querySelectorAll(".resource-card").forEach((card) => {
+    const primary = card.querySelector(".resource-links a");
+    if (!primary) return;
+    card.setAttribute("role", "link");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", `${card.querySelector("strong")?.textContent || "Resource"}: open resource`);
+    const open = () => window.open(primary.href, "_blank", "noopener,noreferrer");
+    card.addEventListener("click", (event) => {
+      if (!event.target.closest("a")) open();
+    });
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open();
+      }
+    });
+  });
+
   // The initial panel should not keep the entering animation class.
   const initialPanel = panels.get("tacumi");
   if (initialPanel) initialPanel.classList.remove("is-entering");

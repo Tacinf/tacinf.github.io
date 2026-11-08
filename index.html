@@ -115,7 +115,6 @@
             <video muted loop playsinline preload="metadata" poster="assets/img/tacinf-demo-poster.webp" data-auto controls aria-label="Tacinf demonstration video showing tactile robot manipulation.">
               <source src="assets/video/tacinf-demo-web.mp4" type="video/mp4">
             </video>
-            <span class="hero-video-label"><i aria-hidden="true"></i> Tacinf · Real robot demonstration</span>
           </div>
         </figure>
 
@@ -272,6 +271,19 @@
                   <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets" target="_blank" rel="noreferrer">Tabero X assets ↗</a></span>
                 </div>
               </div>
+                <div class="resource-card">
+                  <span class="resource-tag resource-tag--data">DATA</span>
+                  <strong>Replay-plus</strong>
+                  <p>Expanded handheld replay data for collection and policy training.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replay_plus" target="_blank" rel="noreferrer">Replay+ ↗</a></span>
+                </div>
+                <div class="resource-card">
+                  <span class="resource-tag resource-tag--code">CODE</span>
+                  <strong>Tabero X pipeline</strong>
+                  <p>Shared tooling for converting demonstrations into tactile tasks.</p>
+                  <span class="resource-links"><a href="https://github.com/xiangixn/Tabero_X" target="_blank" rel="noreferrer">GitHub ↗</a></span>
+                </div>
+
 
               <div class="panel-stats">
                 <div class="stat"><strong>3</strong><span>shared parts<br>camera · sensor · motor</span></div>
@@ -279,10 +291,6 @@
                 <div class="stat"><strong>1:1</strong><span>same gripper<br>both sides</span></div>
               </div>
 
-              <p class="panel-links">
-                <span class="link-soon">Hardware in the paper <span class="soon">Coming soon</span></span>
-                <a href="#panel-tabero" data-jump-tab="tabero">Tabero data contract ↗</a>
-              </p>
             </div>
 
             <div class="panel-media">
@@ -372,6 +380,19 @@
                   <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacfield_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀ field ↗</a><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀.₅ field ↗</a></span>
                 </div>
               </div>
+                <div class="resource-card">
+                  <span class="resource-tag resource-tag--data">DATA</span>
+                  <strong>Task 820</strong>
+                  <p>Real-world task episodes for benchmark setup and evaluation.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_task820" target="_blank" rel="noreferrer">Dataset ↗</a></span>
+                </div>
+                <div class="resource-card">
+                  <span class="resource-tag resource-tag--data">DATA</span>
+                  <strong>Firm-force replay</strong>
+                  <p>Force-conditioned replay data for controlled comparisons.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_task820_firm_current" target="_blank" rel="noreferrer">Dataset ↗</a></span>
+                </div>
+
 
               <div class="panel-stats">
                 <div class="stat"><strong>5</strong><span>synchronized modalities</span></div>
@@ -460,6 +481,19 @@
                   <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Xense calibs ↗</a></span>
                 </div>
               </div>
+                <div class="resource-card">
+                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
+                  <strong>Force decoder</strong>
+                  <p>π₀ force-decoupled adapter for tactile policy studies.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacforce_dec_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀ force dec ↗</a></span>
+                </div>
+                <div class="resource-card">
+                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
+                  <strong>No-tactile baseline</strong>
+                  <p>Vision-only reference checkpoint for ablation comparisons.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi05_lora_notac_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀.₅ no tac ↗</a></span>
+                </div>
+
 
               <div class="panel-stats">
                 <div class="stat"><strong>6-D</strong><span>fingertip force</span></div>
@@ -573,6 +607,19 @@
                   <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_realworld_sim_820_mix_nostate" target="_blank" rel="noreferrer">Real + sim ↗</a><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_realworld_umi_sim_820_mix_nostate" target="_blank" rel="noreferrer">Real + sim + UMI ↗</a></span>
                 </div>
               </div>
+                <div class="resource-card">
+                  <span class="resource-tag resource-tag--data">DATA</span>
+                  <strong>Replay benchmark</strong>
+                  <p>Simulation replay episodes used to predict real-robot ordering.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replayed_task820" target="_blank" rel="noreferrer">Dataset ↗</a></span>
+                </div>
+                <div class="resource-card">
+                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
+                  <strong>UMI + sim policy</strong>
+                  <p>Checkpoint combining handheld and simulated demonstrations.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_realworld_umi_sim_mix_nostate" target="_blank" rel="noreferrer">Checkpoint ↗</a></span>
+                </div>
+
 
               <div class="panel-stats panel-stats--four">
                 <div class="stat"><strong>0.998</strong><span>Pearson <em>r</em><br>success ordering</span></div>
