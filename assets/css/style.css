@@ -1216,8 +1216,9 @@ main, .masthead, .footer { position: relative; z-index: 1; }
 }
 .sub-head > p { color: var(--gray); font-size: 15px; line-height: 1.5; }
 
-#panel-taco .panel-grid { align-items: stretch; }
+#panel-taco .panel-grid { align-items: start; }
 #panel-taco .panel-media { justify-content: flex-start; }
+#panel-taco .panel-media { align-self: start; }
 .agreement-evidence { width: 100%; max-width: none; margin-left: 0; }
 .agreement-chart {
   overflow: hidden;
