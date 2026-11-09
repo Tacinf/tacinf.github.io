@@ -28,7 +28,8 @@
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261109r1">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261109r2">
+  <link rel="stylesheet" href="assets/css/tacumi.css?v=20261109r1">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -224,19 +225,170 @@
       <div class="deck" id="deck">
         <!-- ---------------------------- TACUMI ---------------------------- -->
         <article class="panel is-active" id="panel-tacumi" role="tabpanel" aria-labelledby="tab-tacumi" tabindex="0" data-panel="tacumi">
-          <header class="panel-head">
+          <header class="panel-head tacumi-intro">
             <div>
               <p class="panel-kicker">Tacinf–Tacumi · Hardware and collection</p>
               <h3 class="panel-title">Tacumi<span>.</span></h3>
-              <p class="panel-lede">A handheld interface that records the same gripper the robot will deploy.</p>
+              <p class="panel-lede">Tactile demonstrations, with active load feedback.</p>
+              <p class="tacumi-summary">Guide the gripper by hand. Feel changes in grasp load. Record the motion, vision, and touch that a robot needs to learn contact-rich manipulation.</p>
             </div>
           </header>
 
-          <div class="panel-grid">
-            <div class="panel-copy">
-              <p>The operator’s grip drives a QDD parallel gripper; a servo renders the slave motor’s torque back to the hand. Xense tactile fingertips and a wrist camera record contact as it happens. On the robot, the same gripper, sensors, and motor mount unchanged.</p>
+          <nav class="tacumi-nav" aria-label="Explore Tacumi">
+            <a href="#tacumi-hardware" data-jump-tab="tacumi">Hardware</a>
+            <a href="#tacumi-actuator" data-jump-tab="tacumi">Robot-side actuator</a>
+            <a href="#tacumi-collection" data-jump-tab="tacumi">Collection</a>
+            <a href="#tacumi-pipeline" data-jump-tab="tacumi">Data pipeline</a>
+            <a href="#tacumi-resources" data-jump-tab="tacumi">Resources</a>
+          </nav>
 
-              <div class="resource-grid">
+          <div class="tacumi-overview">
+            <div class="tacumi-overview-copy">
+              <p>A handheld interface for teaching without a robot arm. The operator controls the grasp through an active trigger while the device records end-effector motion, gripper opening, and contact observations.</p>
+              <ul class="tacumi-highlights">
+                <li><span class="tacumi-feature-index" aria-hidden="true">01</span><div><strong>Active load feedback</strong><p>The motorized trigger commands the grasp and returns resistance derived from gripper-motor load.</p></div></li>
+                <li><span class="tacumi-feature-index" aria-hidden="true">02</span><div><strong>6-DoF tracked motion</strong><p>Quest 3 tracks a controller fixed to the device; a calibrated transform maps its pose to the gripper tool center.</p></div></li>
+                <li><span class="tacumi-feature-index" aria-hidden="true">03</span><div><strong>Shared actuation design</strong><p>The gripper motor design and command/state interface carry from handheld collection to robot execution.</p></div></li>
+              </ul>
+            </div>
+            <figure class="media media--photo">
+                <button class="zoom" type="button" data-full="assets/img/tacumi-hardware.webp" data-caption="Two views of the handheld Tacumi interface with its gripper, tactile fingertips, wrist camera, and motion tracker.">
+                  <img src="assets/img/tacumi-hardware.webp" width="1600" height="1200" loading="eager" alt="Two views of the real handheld Tacumi gripper on a table.">
+                </button>
+                <figcaption><strong>The handheld interface.</strong> A motorized trigger, instrumented parallel gripper, wrist camera, and tracked handle bring motion and contact into one demonstration.</figcaption>
+              </figure>
+          </div>
+
+          <div class="tacumi-hardware-pair">
+          <section class="tacumi-section tacumi-hardware-card" id="tacumi-hardware" aria-labelledby="tacumi-hardware-title">
+            <header class="tacumi-section-head">
+              <p class="panel-kicker">01 / Hardware</p>
+              <h4 id="tacumi-hardware-title">Inspect the handheld interface.</h4>
+              <p>Grasp input, load feedback, tracking, and contact sensing in one hand-operated device.</p>
+            </header>
+            <div class="tacumi-hardware-grid">
+              <figure class="model-figure model-figure--umi" id="umi-viewer">
+            <div class="model-stage model-stage--umi" id="umi-viewer-stage" tabindex="0" role="group" aria-label="Interactive 3D Tacumi UMI, the handheld shared tactile gripper assembly. Drag to rotate and scroll or pinch to zoom.">
+              <div class="model-poster"><img src="assets/img/hero-handheld.webp" width="1045" height="1200" loading="lazy" alt="Structural render of the handheld Tacumi UMI."></div>
+              <div class="model-loading" role="status" aria-live="polite">Loading Tacumi UMI…</div>
+              <div class="model-ui">
+                <span class="model-hint">Drag to rotate · Scroll to zoom</span>
+                <div class="model-actions">
+                  <button class="model-toggle" id="umi-explode-toggle" type="button" aria-pressed="false">Exploded view</button>
+                  <button class="model-reset" type="button">Reset view</button>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Tacumi UMI, in 3D.</strong> Explore the camera, tactile fingertips, drive motor, linear guides, and motion tracker. Switch to <em>Exploded view</em> to inspect the assembly.</figcaption>
+          </figure>
+              <aside class="tacumi-specs" aria-label="Handheld UMI components">
+                <p class="tacumi-mode">Human-operated</p>
+                <h5>Handheld UMI</h5>
+                <p>The trigger closes the loop between the operator’s hand and the gripper’s load.</p>
+                <dl class="tacumi-spec-list">
+                  <div><dt>Grasp input</dt><dd>FOC motorized trigger</dd></div>
+                  <div><dt>Actuation</dt><dd>DAMIAO gripper motor</dd></div>
+                  <div><dt>Touch</dt><dd>Xense tactile fingertips</dd></div>
+                  <div><dt>Motion</dt><dd>Quest 3 controller<br>6-DoF tracking</dd></div>
+                  <div><dt>Vision</dt><dd>Wrist-mounted camera</dd></div>
+                </dl>
+                <p class="tacumi-detail-note">Motor load drives trigger feedback. Tactile images and contact-force estimates come from the fingertip sensors.</p>
+              </aside>
+            </div>
+          </section>
+
+          <section class="actuator-section tacumi-section tacumi-hardware-card" id="tacumi-actuator" aria-labelledby="actuator-section-title">
+            <header class="tacumi-section-head">
+              <p class="panel-kicker">02 / Robot-side execution</p>
+              <h4 id="actuator-section-title">Reuse the actuation design.</h4>
+              <p>A separate robot-side assembly carries the gripper drive, camera, and tactile fingertips onto the arm.</p>
+            </header>
+            <div class="tacumi-hardware-grid">
+              <figure class="model-figure model-figure--actuator" id="actuator-viewer">
+              <div class="model-stage model-stage--umi" id="actuator-viewer-stage" tabindex="0" role="group" aria-label="Interactive 3D Tacumi robot-side actuator. Drag to rotate and scroll or pinch to zoom." data-actuator-viewer data-assembled="assets/models/tacumi-actuator.glb" data-exploded="assets/models/tacumi-actuator-exploded.glb">
+                <div class="model-poster"><img src="assets/img/hero-actuator.webp" width="2400" height="1800" loading="lazy" alt="Structural render of the Tacumi robot-side actuator."></div>
+                <div class="model-loading" role="status" aria-live="polite">Loading Tacumi actuator…</div>
+                <div class="model-ui">
+                  <span class="model-hint">Drag to rotate · Scroll to zoom</span>
+                  <div class="model-actions">
+                    <button class="model-toggle" type="button" aria-pressed="false" data-actuator-explode>Exploded view</button>
+                    <button class="model-reset" type="button" data-actuator-reset>Reset view</button>
+                  </div>
+                </div>
+              </div>
+              <figcaption><strong>Tacumi actuator, in 3D.</strong> Inspect the robot-side assembly using <em>Exploded view</em>, then drag to rotate and scroll or pinch to zoom.</figcaption>
+            </figure>
+              <aside class="tacumi-specs" aria-label="Robot-side actuator components">
+                <p class="tacumi-mode">Robot-mounted</p>
+                <h5>Robot-side actuator</h5>
+                <p>The human trigger is used during collection. The robot operates the gripper through the shared drive interface.</p>
+                <dl class="tacumi-spec-list">
+                  <div><dt>Drive</dt><dd>Shared gripper motor design</dd></div>
+                  <div><dt>Contact</dt><dd>Tactile fingertips</dd></div>
+                  <div><dt>Vision</dt><dd>Wrist-mounted camera</dd></div>
+                  <div><dt>Control</dt><dd>Shared command/state interface</dd></div>
+                </dl>
+                <p class="tacumi-detail-note">Transfer also requires alignment of fingertip geometry, sensor mounting, and control calibration.</p>
+              </aside>
+            </div>
+          </section>
+          </div>
+
+          <section class="tacumi-section" id="tacumi-collection" aria-labelledby="tacumi-collection-title">
+            <header class="tacumi-section-head">
+              <p class="panel-kicker">03 / Collection</p>
+              <h4 id="tacumi-collection-title">Two ways to demonstrate. A shared observation format.</h4>
+              <p>Robot teleoperation and handheld UMI examples, each showing third-person, wrist-camera, and tactile views.</p>
+            </header>
+            <div class="comparison-grid">
+              <figure class="video-card">
+                <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-teleop.webp" data-auto aria-label="Robot teleoperation data with third-person, wrist, and tactile views.">
+                  <source src="assets/video/tacumi-teleop.mp4" type="video/mp4">
+                </video>
+                <figcaption><span>TELEOPERATION</span><span>ROBOT DEMONSTRATION</span></figcaption>
+              </figure>
+              <figure class="video-card">
+                <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-umi-data.webp" data-auto aria-label="Handheld UMI collection data with third-person, wrist, and tactile views.">
+                  <source src="assets/video/tacumi-umi-data.mp4" type="video/mp4">
+                </video>
+                <figcaption><span>HANDHELD UMI</span><span>HUMAN DEMONSTRATION</span></figcaption>
+              </figure>
+            </div>
+            <div class="tacumi-observation-strip" aria-label="Recorded demonstration signals">
+              <div><span>End-effector</span><strong>6-DoF pose</strong></div>
+              <div><span>Gripper</span><strong>Target &amp; actual opening</strong></div>
+              <div><span>Vision</span><strong>Wrist-camera observations</strong></div>
+              <div><span>Touch</span><strong>Images &amp; force estimates</strong></div>
+            </div>
+          </section>
+
+          <section class="tacumi-section" id="tacumi-pipeline" aria-labelledby="tacumi-pipeline-title">
+            <header class="tacumi-section-head">
+              <p class="panel-kicker">04 / Data pipeline</p>
+              <h4 id="tacumi-pipeline-title">From handheld collection to robot learning.</h4>
+              <p>A common data schema connects handheld collection with teleoperation, simulation, and policy training.</p>
+            </header>
+            <ol class="tacumi-pipeline">
+              <li><span class="tacumi-step-no" aria-hidden="true">01</span><h5>Guide &amp; feel</h5><p>Move the device through the task and command the opening with the trigger. Gripper-motor load is returned as active resistance.</p></li>
+              <li><span class="tacumi-step-no" aria-hidden="true">02</span><h5>Track &amp; record</h5><p>Map tracked controller poses to the gripper tool center and record visual, tactile, and motor streams against a shared host-time reference.</p></li>
+              <li><span class="tacumi-step-no" aria-hidden="true">03</span><h5>Train &amp; deploy</h5><p>Combine demonstrations through the common schema, then execute with the reused gripper drive and command/state interface.</p></li>
+            </ol>
+            <details class="tacumi-method-details">
+              <summary>Calibration and signal alignment</summary>
+              <div class="tacumi-detail-grid">
+                <div><h5>Controller → tool center</h5><p>A fixed controller-to-tool transform converts controller poses into gripper tool-center poses in the Quest tracking frame. Calibrate this relationship again when the mounting geometry changes.</p></div>
+                <div><h5>A shared time reference</h5><p>Pose, images, tactile observations, and motor states carry timestamps from the collection host. These streams have different native sampling rates; a shared clock does not imply simultaneous physical acquisition.</p></div>
+              </div>
+            </details>
+          </section>
+
+          <section class="tacumi-section" id="tacumi-resources" aria-labelledby="tacumi-resources-title">
+            <header class="tacumi-section-head">
+              <p class="panel-kicker">05 / Resources</p>
+              <h4 id="tacumi-resources-title">Explore the collection stack.</h4>
+              <p>Collection code, demonstrations, sensor calibration, and the shared training pipeline.</p>
+            </header>
+            <div class="resource-grid">
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--data">TACTILE SDK</span>
                   <strong>Xense SDK</strong>
@@ -256,15 +408,15 @@
                   <span class="resource-links"><a href="https://github.com/ChangerC77/tactile_umi" target="_blank" rel="noreferrer">GitHub ↗</a></span>
                 </div>
                 <div class="resource-card">
-                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
+                  <span class="resource-tag resource-tag--weights">ASSETS</span>
                   <strong>Shared data contract</strong>
-                  <p>Replay-ready assets used to move Tacumi demonstrations into training.</p>
+                  <p>Assets for replay and mixed-data training.</p>
                   <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets" target="_blank" rel="noreferrer">Tabero X assets ↗</a></span>
                 </div>
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--data">DATA</span>
                   <strong>Replay-plus</strong>
-                  <p>Expanded handheld replay data for collection and policy training.</p>
+                  <p>Expanded replay data for policy training.</p>
                   <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replay_plus" target="_blank" rel="noreferrer">Replay+ ↗</a></span>
                 </div>
                 <div class="resource-card">
@@ -276,60 +428,7 @@
 
 
               </div>
-
-              <div class="panel-stats">
-                <div class="stat"><strong>3</strong><span>shared parts<br>camera · sensor · motor</span></div>
-                <div class="stat"><strong>6-DoF</strong><span>tracked hand pose</span></div>
-                <div class="stat"><strong>1:1</strong><span>same gripper<br>both sides</span></div>
-              </div>
-
-            </div>
-
-            <div class="panel-media">
-              <figure class="media media--photo">
-                <button class="zoom" type="button" data-full="assets/img/tacumi-hardware.webp" data-caption="The handheld Tacumi master–slave device; the robot mounts the same gripper and tactile sensors.">
-                  <img src="assets/img/tacumi-hardware.webp" width="1600" height="1200" loading="eager" alt="Two views of the real handheld Tacumi gripper on a table.">
-                </button>
-                <figcaption><strong>Master–slave, shared assembly.</strong> The real handheld device. The arm-side gripper is the same part.</figcaption>
-              </figure>
-
-            </div>
-          </div>
-
-          <div class="comparison-block">
-            <p class="demo-note"><strong>Teleop vs. UMI.</strong> The same observation layout, collected two ways.</p>
-
-            <div class="comparison-grid">
-              <figure class="video-card">
-                <video muted loop playsinline preload="none" poster="assets/img/poster-tacumi-teleop.webp" data-auto aria-label="Robot teleoperation data with third-person, wrist, and tactile views.">
-                  <source src="assets/video/tacumi-teleop.mp4" type="video/mp4">
-                </video>
-                <figcaption><span>TELEOP</span><span>ROBOT DATA</span></figcaption>
-              </figure>
-              <figure class="video-card">
-                <video muted loop playsinline preload="none" poster="assets/img/poster-tacumi-umi-data.webp" data-auto aria-label="Handheld UMI collection data with third-person, wrist, and tactile views.">
-                  <source src="assets/video/tacumi-umi-data.mp4" type="video/mp4">
-                </video>
-                <figcaption><span>UMI</span><span>HANDHELD DATA</span></figcaption>
-              </figure>
-            </div>
-          </div>
-
-          <figure class="model-figure model-figure--umi" id="umi-viewer">
-            <div class="model-stage model-stage--umi" id="umi-viewer-stage" tabindex="0" role="group" aria-label="Interactive 3D Tacumi UMI, the handheld shared tactile gripper assembly. Drag to rotate and scroll or pinch to zoom.">
-              <div class="model-poster"><img src="assets/img/hero-handheld.webp" width="1045" height="1200" loading="lazy" alt="Structural render of the handheld Tacumi UMI."></div>
-              <div class="model-loading" role="status" aria-live="polite">Loading Tacumi UMI…</div>
-              <div class="model-ui">
-                <span class="model-hint">Drag to rotate · Scroll to zoom</span>
-                <div class="model-actions">
-                  <button class="model-toggle" id="umi-explode-toggle" type="button" aria-pressed="false">Exploded view</button>
-                  <button class="model-reset" type="button">Reset view</button>
-                </div>
-              </div>
-            </div>
-            <figcaption><strong>Tacumi UMI, in 3D.</strong> Use <em>Exploded view</em> to take the shared assembly apart, then drag to inspect the camera, Xense tactile fingertips, QDD motor, rails, and VR tracker. Scroll or pinch to zoom.</figcaption>
-          </figure>
-
+          </section>
         </article>
 
         <!-- ---------------------------- TABERO ---------------------------- -->
@@ -776,6 +875,27 @@
         load();
       }
     }
+  </script>
+  <script type="module">
+    const actuatorStage = document.getElementById("actuator-viewer-stage");
+    let actuatorStarted = false;
+    const loadActuator = () => {
+      if (actuatorStarted) return;
+      actuatorStarted = true;
+      import("./assets/js/tacumi-actuator-viewer.js")
+        .then(({ initActuator }) => initActuator(actuatorStage))
+        .catch((error) => {
+          const loading = actuatorStage?.querySelector(".model-loading");
+          if (loading) loading.textContent = "3D view unavailable — showing the reference image.";
+          console.error("Actuator viewer could not be loaded.", error);
+        });
+    };
+    if (actuatorStage && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) { observer.disconnect(); loadActuator(); }
+      }, { rootMargin: "400px" });
+      observer.observe(actuatorStage);
+    } else if (actuatorStage) loadActuator();
   </script>
 </body>
 </html>
