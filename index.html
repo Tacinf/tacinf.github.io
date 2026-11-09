@@ -28,7 +28,7 @@
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261108r2">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261109r1">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -89,48 +89,39 @@
   </header>
 
   <main id="main">
-    <!-- ============================ HERO ============================ -->
-    <section class="hero" id="top">
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Technical Report · 2026 · NVIDIA × HKUST (GZ)</p>
-
-          <h1 class="hero-title">
-            <span class="title-line">Tac</span><span class="title-line title-accent">inf</span>
-          </h1>
-
-          <p class="hero-sub">Making tactile foundation models and devices for everyone.</p>
-
-          <p class="hero-desc">A low-cost, modular tactile infrastructure: policies predict actions and fingertip forces from language, vision, and touch. An optional language-conditioned force level supports explicit force regulation, while ordinary task instructions need no force adverbs.</p>
-
-          <div class="hero-actions">
-            <a class="btn btn-solid" href="#modules">Explore the modules <span aria-hidden="true">↓</span></a>
-            <span class="btn btn-ghost btn--soon" aria-disabled="true">Read the paper <span class="soon">Coming soon</span></span>
+    <!-- ============================ PAPER HEADER ============================ -->
+    <section class="paper-hero" id="top" aria-labelledby="paper-title">
+      <div class="wrap">
+        <header class="paper-heading">
+          <p class="paper-kicker">Technical Report · 2026 · NVIDIA × HKUST (GZ)</p>
+          <h1 class="paper-title" id="paper-title"><span>Tacinf:</span> A Unified Tactile Infrastructure<br class="paper-title-break"> for Robot Manipulation</h1>
+          <div class="paper-byline">
+            <p class="paper-authors">
+              <span>Qiwei Wu<sup>1,2,*,‡</sup></span><span>Xiangyu Chen<sup>2,*</sup></span><span>Xin Xiang<sup>2,*</sup></span><span>Rui Zhang<sup>1</sup></span><span>Yihang Kang<sup>2</sup></span><span>Weiran Chen<sup>2</sup></span><span>Zikang Xie<sup>2</sup></span><span>Xiangzheng Wang<sup>2</sup></span><span>Tianyi Bi<sup>2</sup></span><span>Zhiyan Zhang<sup>2</sup></span><span>Xianpeng Wang<sup>2</sup></span><span>Mingqian Zhou<sup>3</sup></span><span>Yangfan Li<sup>2</sup></span><span>Tao Wang<sup>2</sup></span><span>Tao Li<sup>1</sup></span><span>Weihua Zhang<sup>1,†</sup></span><span>Renjing Xu<sup>2,†</sup></span><span>Junjie Lai<sup>1</sup></span>
+            </p>
+            <p class="paper-affiliations"><span><sup>1</sup>NVIDIA</span><span><sup>2</sup>HKUST (GZ)</span><span><sup>3</sup>University of Cambridge</span></p>
+            <p class="paper-author-notes"><span><sup>*</sup>Equal contribution</span><span><sup>‡</sup>Project leader</span><span><sup>†</sup>Corresponding authors</span></p>
           </div>
+          <nav class="paper-links" aria-label="Project resources">
+            <span class="paper-link paper-link--disabled" aria-disabled="true">Paper <span>Coming soon</span></span>
+            <a class="paper-link paper-link--primary" href="#modules">Explore the modules <span aria-hidden="true">↓</span></a>
+            <a class="paper-link" href="#cite">Cite <span aria-hidden="true">↓</span></a>
+          </nav>
+        </header>
 
-        </div>
-
-        <figure class="hero-figure">
-          <div class="hero-video-frame">
+        <figure class="paper-video">
+          <div class="paper-video-frame">
             <video muted loop playsinline preload="metadata" poster="assets/img/tacinf-demo-poster.webp" data-auto controls aria-label="Tacinf demonstration video showing tactile robot manipulation.">
               <source src="assets/video/tacinf-demo-web.mp4" type="video/mp4">
             </video>
           </div>
+          <figcaption>Making tactile foundation models and devices for everyone.</figcaption>
         </figure>
-
-          <div class="hero-authors">
-            <p class="authors">
-              <span>Qiwei Wu<sup>1,2,*,‡</sup></span><span>Xiangyu Chen<sup>2,*</sup></span><span>Xin Xiang<sup>2,*</sup></span><span>Rui Zhang<sup>1</sup></span><span>Yihang Kang<sup>2</sup></span><span>Weiran Chen<sup>2</sup></span><span>Zikang Xie<sup>2</sup></span><span>Xiangzheng Wang<sup>2</sup></span><span>Tianyi Bi<sup>2</sup></span><span>Zhiyan Zhang<sup>2</sup></span><span>Xianpeng Wang<sup>2</sup></span><span>Mingqian Zhou<sup>3</sup></span><span>Yangfan Li<sup>2</sup></span><span>Tao Wang<sup>2</sup></span><span>Tao Li<sup>1</sup></span><span>Weihua Zhang<sup>1,†</sup></span><span>Renjing Xu<sup>2,†</sup></span><span>Junjie Lai<sup>1</sup></span>
-            </p>
-            <p class="affiliations">
-              <span><sup>1</sup>NVIDIA</span>
-              <span><sup>2</sup>HKUST (GZ)</span>
-              <span><sup>3</sup>University of Cambridge</span>
-              <span class="author-notes"><sup>*</sup>Equal contribution · <sup>‡</sup>Project leader · <sup>†</sup>Corresponding authors</span>
-            </p>
-          </div>
+        <section class="paper-abstract" aria-labelledby="abstract-title">
+          <h2 id="abstract-title">Abstract</h2>
+          <p>Force-aware manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. Tacinf is a low-cost modular infrastructure that predicts actions and fingertip forces from language, vision, and touch, with an optional language-conditioned force level for explicit force regulation. It combines simulation data synthesis and a tactile benchmark (Tabero), policy learning (VTLA), handheld data collection with a shared deployment gripper (Tacumi), and task-aligned simulation-to-real evaluation (Taco). Across eight policy variants, simulation preserves real-robot success ordering (Pearson r=0.998, MMRV=0.010). Mixed teleoperation, simulation, and Tacumi training raises success from 20% to 60% on position-randomized out-of-distribution objects.</p>
+        </section>
       </div>
-
     </section>
 
     <!-- ============================ DATA SYNERGY ============================ -->
