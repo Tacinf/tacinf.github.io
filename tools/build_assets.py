@@ -31,12 +31,12 @@ PDF_DPI = 220
 
 # (output name, source path, max width, source kind)
 IMAGES = [
-    ("teaser", "figs/fig01_overview/tacinf_main.png", 2000, "image"),
+    ("teaser", "figs/figure1/quest3_teleoperation.png", 2000, "image"),
     ("tabero-sim", "figs/fig02_sim_platform/mul_task_new.png", 1500, "image"),
     ("force-decomposition", "figs/fig03_force_decomposition/force_decomposition.png", 2000, "image"),
     ("vtla-system", "figs/fig04_model_control/vtla_system.pdf", 1600, "pdf"),
     ("force-loop", "figs/fig04_model_control/force_feedback_loop.pdf", 1400, "pdf"),
-    ("taco-loop", "figs/fig06_taco_data_loop/taco_data_loop.pdf", 1600, "pdf"),
+    ("taco-loop", "figs/fig06_taco_data_loop/taco_data_loop_new.pdf", 1600, "pdf"),
     ("agreement", "figs/fig09_agreement_bars/agreement_bars.png", 1600, "image"),
     ("tacumi-hardware", "exp_sup/gripper.jpg", 1600, "image"),
 ]
@@ -130,13 +130,13 @@ def duotone(im: Image.Image, dark: tuple[int, int, int], light: tuple[int, int, 
 
 def build_cutouts() -> None:
     """Transparent, high-contrast renders used as the hero composition."""
-    green_panels = PAPER / "figs" / "Gripper_URDF" / "panels_green"
+    blue_panels = PAPER / "figs" / "Gripper_URDF" / "panels_blue"
     for src_name, out_name, max_side in [
         ("arm.png", "hero-arm.webp", 1300),
         ("handheld.png", "hero-handheld.webp", 1200),
     ]:
-        im = Image.open(green_panels / src_name).convert("RGBA")
-        cut = key_background(im, (191, 204, 194), tol=15, feather=3)
+        im = Image.open(blue_panels / src_name).convert("RGBA")
+        cut = key_background(im, (187, 201, 217), tol=15, feather=3)
         cut = crop_alpha(cut, pad=12)
         save_webp_alpha(cut, IMG_OUT / out_name, max_side)
 
@@ -262,7 +262,7 @@ def make_og() -> None:
 
 def copy_paper() -> None:
     PDF_OUT.mkdir(parents=True, exist_ok=True)
-    paper_pdf = PAPER / "Tacinf_NVTech.pdf"
+    paper_pdf = PAPER / "main.pdf"
     if paper_pdf.exists():
         shutil.copy2(paper_pdf, PDF_OUT / "Tacinf_NVTech.pdf")
         print(f"copied paper PDF -> assets/pdf/Tacinf_NVTech.pdf "
