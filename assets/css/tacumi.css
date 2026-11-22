@@ -209,6 +209,54 @@
 #panel-tacumi .tacumi-spec-list dd { margin: 0; color: var(--white); text-align: right; overflow-wrap: anywhere; }
 #panel-tacumi .tacumi-specs > p.tacumi-detail-note { color: var(--gray-2); font-size: 12px; line-height: 1.65; }
 
+#panel-tacumi .tacumi-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#panel-tacumi .tacumi-download {
+  display: flex;
+  flex: 1 1 200px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  min-height: 70px;
+  padding: 11px 13px;
+  border: 1px solid var(--tacumi-divider);
+  border-radius: 9px;
+  background: rgba(118, 185, 0, 0.045);
+  color: var(--white);
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+#panel-tacumi .tacumi-download:hover {
+  border-color: rgba(118, 185, 0, 0.48);
+  background: rgba(118, 185, 0, 0.09);
+}
+
+#panel-tacumi .tacumi-download:focus-visible {
+  outline: 2px solid var(--tacumi-accent);
+  outline-offset: 3px;
+}
+
+#panel-tacumi .tacumi-download-info { display: grid; gap: 4px; min-width: 0; }
+#panel-tacumi .tacumi-download-info strong { font-size: 14px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+#panel-tacumi .tacumi-download-meta { color: var(--gray); font-family: var(--mono); font-size: 11px; line-height: 1.4; }
+#panel-tacumi .tacumi-download-arrow {
+  display: grid;
+  flex: 0 0 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(118, 185, 0, 0.12);
+  color: var(--tacumi-accent);
+  font-family: var(--mono);
+  font-size: 16px;
+  line-height: 1;
+}
+
 #panel-tacumi .model-figure { width: 100%; min-width: 0; margin: 0; }
 #panel-tacumi .model-stage { aspect-ratio: 4 / 3; border-radius: 10px; }
 #panel-tacumi .model-figure figcaption { padding-top: 13px; font-size: 13px; line-height: 1.65; }
@@ -300,7 +348,7 @@
 #panel-tacumi .tacumi-hardware-card {
   display: grid;
   grid-template-rows: subgrid;
-  grid-row: span 3;
+  grid-row: span 4;
   min-width: 0;
   margin: 0;
   padding: 0;
@@ -312,6 +360,7 @@
 #panel-tacumi .tacumi-hardware-card .tacumi-hardware-grid { display: contents; }
 #panel-tacumi .tacumi-hardware-card .model-figure { grid-row: 2; }
 #panel-tacumi .tacumi-hardware-card .tacumi-specs { grid-row: 3; padding-top: 0; }
+#panel-tacumi .tacumi-hardware-card .tacumi-downloads { grid-row: 4; align-self: start; }
 #panel-tacumi .tacumi-hardware-card .model-hint { display: none; }
 
 @media (max-width: 1000px) {
