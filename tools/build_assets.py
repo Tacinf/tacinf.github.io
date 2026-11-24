@@ -44,7 +44,7 @@ IMAGES = [
 # Videos: (output, source, start seconds, duration seconds, max width, crf)
 VIDEOS = [
     ("tacumi-teleop", "exp_sup/real++/data.mp4", 0.0, 20.9, 640, 28),
-    ("tacumi-umi-data", "exp_sup/real++/umidata.mp4", 0.0, 10.9, 640, 28),
+    ("tacumi-umi-data", "exp_sup/real++/umidata.mp4", 0.0, 8.3, 640, 28),
     ("taco-real2sim", "exp_sup/real2sim.mp4", 0.0, 5.8, 1000, 30),
     ("vtla-boardwipe", "exp_sup/real++/boradwipe.mp4", 0.0, 16.2, 640, 28),
     ("vtla-cardswap", "exp_sup/real++/cardswap.mp4", 0.0, 12.9, 640, 28),

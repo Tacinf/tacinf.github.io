@@ -29,7 +29,7 @@
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css?v=20261109r2">
-  <link rel="stylesheet" href="assets/css/tacumi.css?v=20261122r2">
+  <link rel="stylesheet" href="assets/css/tacumi.css?v=20261123r4">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -289,11 +289,27 @@
                 <h5>Handheld UMI</h5>
                 <p>The trigger closes the loop between the operator’s hand and the gripper’s load.</p>
                 <dl class="tacumi-spec-list">
-                  <div><dt>Grasp input</dt><dd>FOC motorized trigger</dd></div>
-                  <div><dt>Actuation</dt><dd>DAMIAO gripper motor</dd></div>
-                  <div><dt>Touch</dt><dd>Xense tactile fingertips</dd></div>
-                  <div><dt>Motion</dt><dd>Quest 3 controller<br>6-DoF tracking</dd></div>
-                  <div><dt>Vision</dt><dd>Wrist-mounted camera</dd></div>
+                  <div><dt>Grasp input</dt><dd>FOC-controlled trigger</dd></div>
+                  <div>
+                    <dt>Gripper motor</dt>
+                    <dd><a href="https://e.tb.cn/h.jN8QE7xGa2V4bAK?tk=H85p6gNr4t5" target="_blank" rel="noreferrer" aria-label="DAMIAO DM-J4310-2EC V1.1 on Taobao">DAMIAO DM-J4310-2EC V1.1 ↗</a><span class="tacumi-spec-note">Starter kit with motor driver</span></dd>
+                  </div>
+                  <div>
+                    <dt>Tactile sensors</dt>
+                    <dd><a href="https://detail.tmall.com/item.htm?id=958272096167&amp;skuId=6303308555240" target="_blank" rel="noreferrer" aria-label="Xense G1-WS on Tmall">Xense G1-WS ↗</a></dd>
+                  </div>
+                  <div>
+                    <dt>Motion tracking</dt>
+                    <dd><a href="https://item.taobao.com/item.htm?id=1096496830690&amp;skuId=6323683946272" target="_blank" rel="noreferrer" aria-label="Meta Quest 3 on Taobao">Meta Quest 3 ↗</a><span class="tacumi-spec-note">Touch Plus controllers · 6-DoF tracking</span></dd>
+                  </div>
+                  <div>
+                    <dt>Wrist camera</dt>
+                    <dd><a href="https://item.taobao.com/item.htm?id=1094537184523&amp;skuId=6148758052065" target="_blank" rel="noreferrer" aria-label="RealSense D435i on Taobao">RealSense D435i ↗</a></dd>
+                  </div>
+                  <div>
+                    <dt>Bench power supply</dt>
+                    <dd><a href="https://3.cn/3dhDz-5X?jkl=@GDD7dDsU9Wf" target="_blank" rel="noreferrer" aria-label="LODESTAR LKS3005 on JD.com">LODESTAR LKS3005 ↗</a><span class="tacumi-spec-note">Adjustable DC · 30 V / 5 A max.</span></dd>
+                  </div>
                 </dl>
                 <p class="tacumi-detail-note">Motor load drives trigger feedback. Tactile images and contact-force estimates come from the fingertip sensors.</p>
               </aside>
@@ -340,12 +356,25 @@
               <aside class="tacumi-specs" aria-label="Robot-side actuator components">
                 <p class="tacumi-mode">Robot-mounted</p>
                 <h5>Robot-side actuator</h5>
-                <p>The human trigger is used during collection. The robot operates the gripper through the shared drive interface.</p>
+                <p>The human trigger is used during collection. During execution, the robot controls the gripper directly.</p>
                 <dl class="tacumi-spec-list">
-                  <div><dt>Drive</dt><dd>Shared gripper motor design</dd></div>
-                  <div><dt>Contact</dt><dd>Tactile fingertips</dd></div>
-                  <div><dt>Vision</dt><dd>Wrist-mounted camera</dd></div>
-                  <div><dt>Control</dt><dd>Shared command/state interface</dd></div>
+                  <div>
+                    <dt>Gripper motor</dt>
+                    <dd><a href="https://e.tb.cn/h.jN8QE7xGa2V4bAK?tk=H85p6gNr4t5" target="_blank" rel="noreferrer" aria-label="DAMIAO DM-J4310-2EC V1.1 on Taobao">DAMIAO DM-J4310-2EC V1.1 ↗</a><span class="tacumi-spec-note">Starter kit with motor driver</span></dd>
+                  </div>
+                  <div>
+                    <dt>Tactile sensors</dt>
+                    <dd><a href="https://detail.tmall.com/item.htm?id=958272096167&amp;skuId=6303308555240" target="_blank" rel="noreferrer" aria-label="Xense G1-WS on Tmall">Xense G1-WS ↗</a></dd>
+                  </div>
+                  <div>
+                    <dt>Wrist camera</dt>
+                    <dd><a href="https://item.taobao.com/item.htm?id=1094537184523&amp;skuId=6148758052065" target="_blank" rel="noreferrer" aria-label="RealSense D435i on Taobao">RealSense D435i ↗</a></dd>
+                  </div>
+                  <div>
+                    <dt>Bench power supply</dt>
+                    <dd><a href="https://3.cn/3dhDz-5X?jkl=@GDD7dDsU9Wf" target="_blank" rel="noreferrer" aria-label="LODESTAR LKS3005 on JD.com">LODESTAR LKS3005 ↗</a><span class="tacumi-spec-note">Adjustable DC · 30 V / 5 A max.</span></dd>
+                  </div>
+                  <div><dt>Gripper control</dt><dd>Position commands and feedback</dd></div>
                 </dl>
                 <p class="tacumi-detail-note">Transfer also requires alignment of fingertip geometry, sensor mounting, and control calibration.</p>
               </aside>
@@ -388,6 +417,83 @@
               <div><span>Vision</span><strong>Wrist-camera observations</strong></div>
               <div><span>Touch</span><strong>Images &amp; force estimates</strong></div>
             </div>
+
+            <section class="tacumi-tasks" aria-labelledby="tacumi-tasks-title">
+              <header class="tacumi-task-head">
+                <h5 id="tacumi-tasks-title">Handheld demonstrations across tasks</h5>
+                <p>The same handheld setup records these observations across UMI and UMI+ tasks, from pick-and-place to connector insertion and towel folding. Each clip shows a single task from the third-person camera.</p>
+              </header>
+              <div class="demo-grid tacumi-task-grid" role="group" aria-label="UMI demonstrations">
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-vitasoy.webp" data-auto aria-label="Place Vitasoy in the basket (UMI third-person view)">
+                    <source src="assets/video/tacumi-task-vitasoy.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Place Vitasoy in the basket</strong><span>UMI</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-cola.webp" data-auto aria-label="Place Coca-Cola in the basket (UMI third-person view)">
+                    <source src="assets/video/tacumi-task-cola.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Place Coca-Cola in the basket</strong><span>UMI</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-cookie.webp" data-auto aria-label="Place the cookie container in the basket (UMI third-person view)">
+                    <source src="assets/video/tacumi-task-cookie.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Place the cookie container in the basket</strong><span>UMI</span></figcaption>
+                </figure>
+              </div>
+              <div class="demo-grid tacumi-task-grid tacumi-task-grid--plus" role="group" aria-label="UMI+ demonstrations">
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-power-plug.webp" data-auto aria-label="Insert a power plug (UMI+ third-person view)">
+                    <source src="assets/video/tacumi-task-power-plug.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Insert a power plug</strong><span>UMI+</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-usb.webp" data-auto aria-label="Insert a USB connector (UMI+ third-person view)">
+                    <source src="assets/video/tacumi-task-usb.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Insert a USB connector</strong><span>UMI+</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-peg-plate.webp" data-auto aria-label="Fit a plate onto pegs (UMI+ third-person view)">
+                    <source src="assets/video/tacumi-task-peg-plate.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Fit a plate onto pegs</strong><span>UMI+</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-towel-fold.webp" data-auto aria-label="Fold a towel in half (UMI+ third-person view)">
+                    <source src="assets/video/tacumi-task-towel-fold.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Fold a towel in half</strong><span>UMI+</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-diagonal-fold.webp" data-auto aria-label="Fold a towel diagonally (UMI+ third-person view)">
+                    <source src="assets/video/tacumi-task-diagonal-fold.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Fold a towel diagonally</strong><span>UMI+</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-box-lid.webp" data-auto aria-label="Fit a box lid (UMI+ third-person view)">
+                    <source src="assets/video/tacumi-task-box-lid.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Fit a box lid</strong><span>UMI+</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-bottle-cap.webp" data-auto aria-label="Unscrew a bottle cap (UMI+ third-person view)">
+                    <source src="assets/video/tacumi-task-bottle-cap.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Unscrew a bottle cap</strong><span>UMI+</span></figcaption>
+                </figure>
+                <figure class="video-card">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-test-tube-brush.webp" data-auto aria-label="Insert a test tube brush (UMI+ third-person view)">
+                    <source src="assets/video/tacumi-task-test-tube-brush.mp4" type="video/mp4">
+                  </video>
+                  <figcaption><strong>Insert a test tube brush</strong><span>UMI+</span></figcaption>
+                </figure>
+              </div>
+            </section>
           </section>
 
           <section class="tacumi-section" id="tacumi-pipeline" aria-labelledby="tacumi-pipeline-title">
@@ -420,8 +526,8 @@
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--data">TACTILE SDK</span>
                   <strong>Xense SDK</strong>
-                  <p>Sensor assets and calibration files for the Tacumi collection stack.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/source/tac_manip/tac_manip/assets/data" target="_blank" rel="noreferrer">Assets/data ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Xense calibs ↗</a></span>
+                  <p>Tacumi uses XenseSDK 2.1.1 for tactile sensing. Calibration files support tactile simulation.</p>
+                  <span class="resource-links"><a href="https://docs.xenserobotics.com/en/docs/latest/sdk/xensesdk/installation/#legacy-installation-before-220" target="_blank" rel="noreferrer">SDK docs ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/source/tac_manip/tac_manip/assets/data/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Calibration ↗</a></span>
                 </div>
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--tasks">TASKS</span>
@@ -478,7 +584,7 @@
                   <span class="resource-tag resource-tag--data">TACTILE DATA</span>
                   <strong>Tabero X assets</strong>
                   <p>Benchmark assets, sensor data, and calibration for tactile simulation.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets" target="_blank" rel="noreferrer">Dataset ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Calibs ↗</a></span>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets" target="_blank" rel="noreferrer">Dataset ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/source/tac_manip/tac_manip/assets/data/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Calibs ↗</a></span>
                 </div>
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--tasks">TASKS</span>
@@ -598,7 +704,7 @@
                   <span class="resource-tag resource-tag--data">TACTILE DATA</span>
                   <strong>Tactile calibration</strong>
                   <p>Sensor calibration and assets used by the tactile adapters.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Xense calibs ↗</a></span>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/source/tac_manip/tac_manip/assets/data/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Xense calibs ↗</a></span>
                 </div>
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--weights">WEIGHTS</span>
@@ -656,7 +762,9 @@
           <div class="sub-block" id="vtla-demos">
             <div class="sub-head">
               <div><p class="panel-kicker">Real-robot execution / VTLA</p><h4>On the real robot.</h4></div>
-              <p>Blackboard wiping, card swapping, and switch turning with the tactile policy and controller running on the physical arm.</p>
+              <p>Blackboard wiping, card swapping, and switch turning with the tactile policy and controller running on the xArm 7.
+                <span class="resource-links"><a href="https://github.com/xArm-Developer/xArm-Python-SDK" target="_blank" rel="noreferrer">xArm Python SDK ↗</a></span>
+              </p>
             </div>
             <div class="demo-grid demo-grid--three vtla-demo-grid">
               <figure class="video-card">
