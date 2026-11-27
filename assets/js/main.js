@@ -230,8 +230,14 @@
     let hash = window.location.hash.replace("#", "");
     if (hash.startsWith("panel-")) hash = hash.slice(6);
     if (hash === "tacinf-vtla") hash = "vtla";
-    const key = panels.has(hash) ? hash : null;
-    if (key) activate(key, { animate: false, updateHash: false });
+    const target = document.getElementById(hash) || panels.get(hash);
+    const key = target?.closest("[data-panel]")?.dataset.panel;
+    if (!key) return;
+    activate(key, { animate: false, updateHash: false });
+    if (target?.matches(".taco-catalog-group > summary")) {
+      target.parentElement.open = true;
+    }
+    target.scrollIntoView({ behavior: "instant", block: "start" });
   }
   window.addEventListener("hashchange", activateFromHash);
   activateFromHash();

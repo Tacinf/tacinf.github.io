@@ -170,11 +170,14 @@ def build_videos() -> None:
         if not src.exists():
             raise SystemExit(f"missing video: {src}")
         dst = VID_OUT / f"{name}.mp4"
-        vf = f"scale='min({max_width},iw)':-2,fps=20"
+        vf = f"scale='min({max_width},iw)':-2"
+        if name == "taco-real2sim":
+            # The website caption supplies the task name in place of the source overlay.
+            vf += ",crop=iw:ih-34:0:34"
         run([
             "ffmpeg", "-loglevel", "error", "-y",
             "-ss", str(start), "-t", str(duration), "-i", str(src),
-            "-vf", vf,
+            "-vf", f"{vf},fps=20",
             "-c:v", "libx264", "-profile:v", "main", "-pix_fmt", "yuv420p",
             "-crf", str(crf), "-preset", "slow", "-movflags", "+faststart",
             "-an", str(dst),
@@ -183,7 +186,7 @@ def build_videos() -> None:
         run([
             "ffmpeg", "-loglevel", "error", "-y",
             "-ss", str(start + min(0.8, duration / 4)), "-i", str(src),
-            "-frames:v", "1", "-vf", f"scale='min({max_width},iw)':-2",
+            "-frames:v", "1", "-vf", vf,
             str(poster.with_suffix(".png")),
         ])
         save_webp(Image.open(poster.with_suffix(".png")), poster, max_width, quality=80)

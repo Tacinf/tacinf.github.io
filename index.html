@@ -28,8 +28,8 @@
   <meta name="twitter:image" content="https://tacinf.github.io/assets/img/og.jpg">
 
   <link rel="preload" href="assets/fonts/space-mono-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261109r2">
-  <link rel="stylesheet" href="assets/css/tacumi.css?v=20261123r4">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261128r13">
+  <link rel="stylesheet" href="assets/css/tacumi.css?v=20261127">
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
     {"imports":{"three":"./assets/vendor/three.module.js","three/addons/":"./assets/vendor/jsm/"}}
@@ -40,7 +40,7 @@
     "@context": "https://schema.org",
     "@type": "ScholarlyArticle",
     "headline": "Tacinf: A Unified Tactile Infrastructure for Robot Manipulation",
-    "abstract": "Force-aware manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. Tacinf is a low-cost modular infrastructure that predicts actions and fingertip forces from language, vision, and touch, with an optional language-conditioned force level for explicit force regulation. It combines simulation data synthesis and a tactile benchmark (Tabero), policy learning (VTLA), handheld data collection with a shared deployment gripper (Tacumi), and task-aligned simulation-to-real evaluation (Taco). Across eight policy variants, simulation preserves real-robot success ordering (Pearson r=0.998, MMRV=0.010). Mixed teleoperation, simulation, and Tacumi training raises success from 20% to 60% on position-randomized out-of-distribution objects.",
+    "abstract": "Force-aware manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. Tacinf is a low-cost modular infrastructure that predicts actions and fingertip forces from language, vision, and touch, with an optional language-conditioned force level for explicit force regulation. It combines simulation data synthesis and a tactile benchmark (Tabero), policy learning (VTLA), handheld data collection with a shared deployment gripper (Tacumi), and task-aligned simulation-to-real evaluation (Taco). On Taco’s six Pick and Place tasks, the eight policy variants in the paper yield Pearson r=0.998 and MMRV=0.010 between simulated and real-robot mean success rates. With both object positions and instances randomized, mean real-robot success rises from 20% with VR teleoperation alone to 60% with VR, simulation, and Tacumi UMI data.",
     "author": [
       {"@type": "Person", "name": "Qiwei Wu"},
       {"@type": "Person", "name": "Xiangyu Chen"},
@@ -114,14 +114,14 @@
         <figure class="paper-video">
           <div class="paper-video-frame">
             <video muted loop playsinline preload="metadata" poster="assets/img/tacinf-demo-poster.webp" data-auto controls aria-label="Tacinf demonstration video showing tactile robot manipulation.">
-              <source src="assets/video/tacinf-demo-web.mp4" type="video/mp4">
+              <source src="assets/video/tacinf-demo-web.mp4?v=20261127-hd-subtitles" type="video/mp4">
             </video>
           </div>
           <figcaption>Making tactile foundation models and devices for everyone.</figcaption>
         </figure>
         <section class="paper-abstract" aria-labelledby="abstract-title">
           <h2 id="abstract-title">Abstract</h2>
-          <p>Force-aware manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. Tacinf is a low-cost modular infrastructure that predicts actions and fingertip forces from language, vision, and touch, with an optional language-conditioned force level for explicit force regulation. It combines simulation data synthesis and a tactile benchmark (Tabero), policy learning (VTLA), handheld data collection with a shared deployment gripper (Tacumi), and task-aligned simulation-to-real evaluation (Taco). Across eight policy variants, simulation preserves real-robot success ordering (Pearson r=0.998, MMRV=0.010). Mixed teleoperation, simulation, and Tacumi training raises success from 20% to 60% on position-randomized out-of-distribution objects.</p>
+          <p>Force-aware manipulation requires a robot to infer appropriate interaction forces from task context and tactile feedback. Tacinf is a low-cost modular infrastructure that predicts actions and fingertip forces from language, vision, and touch, with an optional language-conditioned force level for explicit force regulation. It combines simulation data synthesis and a tactile benchmark (Tabero), policy learning (VTLA), handheld data collection with a shared deployment gripper (Tacumi), and task-aligned simulation-to-real evaluation (Taco). On Taco’s six Pick and Place tasks, the eight policy variants in the paper yield Pearson r=0.998 and MMRV=0.010 between simulated and real-robot mean success rates. With both object positions and instances randomized, mean real-robot success rises from 20% with VR teleoperation alone to 60% with VR, simulation, and Tacumi UMI data.</p>
         </section>
       </div>
     </section>
@@ -134,7 +134,7 @@
             <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Data synergy · three-source co-training</p>
             <h2 id="data-synergy-title">Three sources.<br><em>Complementary strengths.</em></h2>
           </div>
-          <p>Three complementary streams balance collection cost and capability: simulation scales visual and object diversity, Tacumi expands where and how objects are grasped, and teleoperation anchors demonstrations in real sensor and actuator statistics.</p>
+          <p>For Pick and Place, simulation replay and ReplayPlus expand object and appearance coverage, Tacumi UMI adds variation in grasp approaches and object positions, and VR teleoperation records demonstrations on the real robot.</p>
         </header>
 
         <div class="synergy-layout">
@@ -160,19 +160,19 @@
               <div class="flow-sources">
                 <article class="flow-source flow-source--teleop">
                   <div class="flow-source__top"><span>01 / REAL ROBOT</span><span class="flow-source__signal" aria-hidden="true"></span></div>
-                  <h3>Teleoperation</h3>
+                  <h3>VR teleoperation</h3>
                   <p>Precise demonstrations grounded in real sensor and actuator statistics.</p>
                   <div class="flow-source__cost" aria-label="High collection cost"><span class="flow-source__cost-label">COLLECTION COST</span><span class="flow-source__cost-value">HIGH</span><span class="flow-cost-meter" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i class="is-filled"></i></span></div>
                 </article>
                 <article class="flow-source flow-source--sim">
                   <div class="flow-source__top"><span>02 / REPLAY</span><span class="flow-source__signal" aria-hidden="true"></span></div>
-                  <h3>Simulation replay</h3>
+                  <h3>Sim Replay + ReplayPlus</h3>
                   <p>Replay trajectories and scale object appearance and background variation.</p>
                   <div class="flow-source__cost" aria-label="Low collection cost"><span class="flow-source__cost-label">COLLECTION COST</span><span class="flow-source__cost-value">LOW</span><span class="flow-cost-meter" aria-hidden="true"><i class="is-filled"></i><i></i><i></i></span></div>
                 </article>
                 <article class="flow-source flow-source--tacumi">
                   <div class="flow-source__top"><span>03 / HANDHELD</span><span class="flow-source__signal" aria-hidden="true"></span></div>
-                  <h3>Tacumi · UMI</h3>
+                  <h3>Tacumi UMI</h3>
                   <p>Parallel demonstrations expand object positions and grasp approaches.</p>
                   <div class="flow-source__cost" aria-label="Medium collection cost"><span class="flow-source__cost-label">COLLECTION COST</span><span class="flow-source__cost-value">MID</span><span class="flow-cost-meter" aria-hidden="true"><i class="is-filled"></i><i class="is-filled"></i><i></i></span></div>
                 </article>
@@ -186,7 +186,7 @@
                 <span class="flow-training__note">MIXED DATA<br>FROM ALL SOURCES</span>
               </div>
             </div>
-            <figcaption>Simulation replays teleoperation trajectories; Tacumi demonstrations add spatial variation in parallel. The three aligned sources are mixed for policy post-training.</figcaption>
+            <figcaption>The simulation stream combines Sim Replay (Current) and ReplayPlus. The three sources are mixed for Pick and Place policy post-training.</figcaption>
           </figure>
 
         </div>
@@ -419,76 +419,78 @@
             <section class="tacumi-tasks" aria-labelledby="tacumi-tasks-title">
               <header class="tacumi-task-head">
                 <h5 id="tacumi-tasks-title">Handheld demonstrations across tasks</h5>
-                <p>The same handheld setup records these observations across UMI and UMI+ tasks, from pick-and-place to connector insertion and towel folding. Each clip shows a single task from the third-person camera.</p>
+                <p>Third-person clips show tasks from Pick and Place UMI and Supplemental UMI. Pick and Place has Firm and Gentle instructions for each of the three objects.</p>
               </header>
-              <div class="demo-grid tacumi-task-grid" role="group" aria-label="UMI demonstrations">
+              <h6 class="tacumi-task-category" id="tacumi-pick-and-place-title">Pick and Place UMI</h6>
+              <div class="demo-grid tacumi-task-grid" role="group" aria-labelledby="tacumi-pick-and-place-title">
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-vitasoy.webp" data-auto aria-label="Place Vitasoy in the basket (UMI third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-vitasoy.webp" data-auto aria-label="Place Vitasoy in the basket (Pick and Place UMI, third-person view)">
                     <source src="assets/video/tacumi-task-vitasoy.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Place Vitasoy in the basket</strong><span>UMI</span></figcaption>
+                  <figcaption><strong>Place Vitasoy in the basket</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-cola.webp" data-auto aria-label="Place Coca-Cola in the basket (UMI third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-cola.webp" data-auto aria-label="Place Coca-Cola in the basket (Pick and Place UMI, third-person view)">
                     <source src="assets/video/tacumi-task-cola.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Place Coca-Cola in the basket</strong><span>UMI</span></figcaption>
+                  <figcaption><strong>Place Coca-Cola in the basket</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-cookie.webp" data-auto aria-label="Place the cookie container in the basket (UMI third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-cookie.webp" data-auto aria-label="Place the cookie in the basket (Pick and Place UMI, third-person view)">
                     <source src="assets/video/tacumi-task-cookie.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Place the cookie container in the basket</strong><span>UMI</span></figcaption>
+                  <figcaption><strong>Place the cookie in the basket</strong></figcaption>
                 </figure>
               </div>
-              <div class="demo-grid tacumi-task-grid tacumi-task-grid--plus" role="group" aria-label="UMI+ demonstrations">
+              <h6 class="tacumi-task-category" id="tacumi-supplemental-title">Supplemental UMI</h6>
+              <div class="demo-grid tacumi-task-grid tacumi-task-grid--supplemental" role="group" aria-labelledby="tacumi-supplemental-title">
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-power-plug.webp" data-auto aria-label="Insert a power plug (UMI+ third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-power-plug.webp" data-auto aria-label="Insert a power plug (Supplemental UMI, third-person view)">
                     <source src="assets/video/tacumi-task-power-plug.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Insert a power plug</strong><span>UMI+</span></figcaption>
+                  <figcaption><strong>Insert a power plug</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-usb.webp" data-auto aria-label="Insert a USB connector (UMI+ third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-usb.webp" data-auto aria-label="Insert a USB connector (Supplemental UMI, third-person view)">
                     <source src="assets/video/tacumi-task-usb.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Insert a USB connector</strong><span>UMI+</span></figcaption>
+                  <figcaption><strong>Insert a USB connector</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-peg-plate.webp" data-auto aria-label="Fit a plate onto pegs (UMI+ third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-peg-plate.webp" data-auto aria-label="Fit a plate onto pegs (Supplemental UMI, third-person view)">
                     <source src="assets/video/tacumi-task-peg-plate.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Fit a plate onto pegs</strong><span>UMI+</span></figcaption>
+                  <figcaption><strong>Fit a plate onto pegs</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-towel-fold.webp" data-auto aria-label="Fold a towel in half (UMI+ third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-towel-fold.webp" data-auto aria-label="Fold a towel in half (Supplemental UMI, third-person view)">
                     <source src="assets/video/tacumi-task-towel-fold.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Fold a towel in half</strong><span>UMI+</span></figcaption>
+                  <figcaption><strong>Fold a towel in half</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-diagonal-fold.webp" data-auto aria-label="Fold a towel diagonally (UMI+ third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-diagonal-fold.webp" data-auto aria-label="Fold a towel diagonally (Supplemental UMI, third-person view)">
                     <source src="assets/video/tacumi-task-diagonal-fold.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Fold a towel diagonally</strong><span>UMI+</span></figcaption>
+                  <figcaption><strong>Fold a towel diagonally</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-box-lid.webp" data-auto aria-label="Fit a box lid (UMI+ third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-box-lid.webp" data-auto aria-label="Close the box with its lid (Supplemental UMI, third-person view)">
                     <source src="assets/video/tacumi-task-box-lid.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Fit a box lid</strong><span>UMI+</span></figcaption>
+                  <figcaption><strong>Close the box with its lid</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-bottle-cap.webp" data-auto aria-label="Unscrew a bottle cap (UMI+ third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-bottle-cap.webp" data-auto aria-label="Unscrew a bottle cap (Supplemental UMI, third-person view)">
                     <source src="assets/video/tacumi-task-bottle-cap.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Unscrew a bottle cap</strong><span>UMI+</span></figcaption>
+                  <figcaption><strong>Unscrew a bottle cap</strong></figcaption>
                 </figure>
                 <figure class="video-card">
-                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-test-tube-brush.webp" data-auto aria-label="Insert a test tube brush (UMI+ third-person view)">
+                  <video controls muted loop playsinline preload="none" poster="assets/img/poster-tacumi-task-test-tube-brush.webp" data-auto aria-label="Insert the brush into the test tube (Supplemental UMI, third-person view)">
                     <source src="assets/video/tacumi-task-test-tube-brush.mp4" type="video/mp4">
                   </video>
-                  <figcaption><strong>Insert a test tube brush</strong><span>UMI+</span></figcaption>
+                  <figcaption><strong>Insert the brush into the test tube</strong></figcaption>
                 </figure>
               </div>
             </section>
@@ -518,49 +520,32 @@
             <header class="tacumi-section-head">
               <p class="panel-kicker">05 / Resources</p>
               <h4 id="tacumi-resources-title">Explore the collection stack.</h4>
-              <p>Collection code, demonstrations, sensor calibration, and the shared training pipeline.</p>
+              <p>Collection code, demonstrations, and the tactile SDK.</p>
             </header>
             <div class="resource-grid">
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--data">TACTILE SDK</span>
                   <strong>Xense SDK</strong>
-                  <p>Tacumi uses XenseSDK 2.1.1 for tactile sensing. Calibration files support tactile simulation.</p>
-                  <span class="resource-links"><a href="https://docs.xenserobotics.com/en/docs/latest/sdk/xensesdk/installation/#legacy-installation-before-220" target="_blank" rel="noreferrer">SDK docs ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/source/tac_manip/tac_manip/assets/data/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Calibration ↗</a></span>
+                  <p>Tacumi uses XenseSDK 2.1.1 for tactile sensing.</p>
+                  <span class="resource-links"><a href="https://docs.xenserobotics.com/en/docs/latest/sdk/xensesdk/installation/#legacy-installation-before-220" target="_blank" rel="noreferrer">SDK docs ↗</a></span>
                 </div>
                 <div class="resource-card">
-                  <span class="resource-tag resource-tag--tasks">TASKS</span>
-                  <strong>UMI task data</strong>
-                  <p>Real-world handheld demonstrations and the expanded Tacumi task set.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_taskumi" target="_blank" rel="noreferrer">Taskumi ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/realworld_task_umi_plus" target="_blank" rel="noreferrer">UMI+ ↗</a></span>
+                  <span class="resource-tag resource-tag--data">DATA</span>
+                  <strong>Handheld UMI datasets</strong>
+                  <p>Handheld demonstrations for Pick and Place and eight supplemental tasks.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/taco_pick_and_place_umi_current" target="_blank" rel="noreferrer">Pick and Place UMI ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/taco_supplemental_umi_current" target="_blank" rel="noreferrer">Supplemental UMI ↗</a></span>
                 </div>
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--code">CODE</span>
                   <strong>Tacumi collection</strong>
                   <p>Handheld tactile collection code and the shared gripper interface.</p>
-                  <span class="resource-links"><a href="https://github.com/ChangerC77/tactile_umi" target="_blank" rel="noreferrer">GitHub ↗</a></span>
+                  <span class="resource-links"><span class="soon">Coming soon</span></span>
                 </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--weights">ASSETS</span>
-                  <strong>Shared data contract</strong>
-                  <p>Assets for replay and mixed-data training.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets" target="_blank" rel="noreferrer">Tabero X assets ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--data">DATA</span>
-                  <strong>Replay-plus</strong>
-                  <p>Expanded replay data for policy training.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replay_plus" target="_blank" rel="noreferrer">Replay+ ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--code">CODE</span>
-                  <strong>Tabero X pipeline</strong>
-                  <p>Shared tooling for converting demonstrations into tactile tasks.</p>
-                  <span class="resource-links"><a href="https://github.com/xiangixn/Tabero_X" target="_blank" rel="noreferrer">GitHub ↗</a></span>
-                </div>
-
-
               </div>
           </section>
+          <nav class="module-pagination" aria-label="Tacumi module navigation">
+            <a href="#panel-tabero" rel="next"><span>Next module</span><strong>Tabero</strong></a>
+          </nav>
         </article>
 
         <!-- ---------------------------- TABERO ---------------------------- -->
@@ -579,43 +564,29 @@
 
               <div class="resource-grid">
                 <div class="resource-card">
-                  <span class="resource-tag resource-tag--data">TACTILE DATA</span>
-                  <strong>Tabero X assets</strong>
-                  <p>Benchmark assets, sensor data, and calibration for tactile simulation.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets" target="_blank" rel="noreferrer">Dataset ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/source/tac_manip/tac_manip/assets/data/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Calibs ↗</a></span>
+                  <span class="resource-tag resource-tag--code">CODE</span>
+                  <strong>Tabero code</strong>
+                  <p>Isaac Lab benchmark environments and tools for data conversion and evaluation.</p>
+                  <span class="resource-links"><a href="https://github.com/NathanWu7/Tabero" target="_blank" rel="noreferrer">Benchmark code ↗</a><a href="https://github.com/NathanWu7/Tabero-VTLA" target="_blank" rel="noreferrer">VTLA code ↗</a></span>
                 </div>
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--tasks">TASKS</span>
-                  <strong>Simulation assets</strong>
-                  <p>USD scenes and augmented variants for replaying the benchmark tasks.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/benchmarks/datasets/realworld/USD" target="_blank" rel="noreferrer">USD ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/benchmarks/datasets/realworld/USD_aug" target="_blank" rel="noreferrer">USD_aug ↗</a></span>
+                  <strong>Benchmark assets</strong>
+                  <p>LIBERO scenes and replayed demonstrations for Isaac Lab.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/NathanWu7/Isaaclab_Libero" target="_blank" rel="noreferrer">IsaacLab LIBERO ↗</a></span>
                 </div>
                 <div class="resource-card">
-                  <span class="resource-tag resource-tag--code">CODE</span>
-                  <strong>Tabero code</strong>
-                  <p>Benchmark setup, replay, and evaluation code for the force-aware VTLA.</p>
-                  <span class="resource-links"><a href="https://github.com/xiangixn/Tabero_X" target="_blank" rel="noreferrer">GitHub ↗</a></span>
+                  <span class="resource-tag resource-tag--data">TACTILE DATA</span>
+                  <strong>Tactile assets</strong>
+                  <p>Calibration data used by Tabero's tactile simulator.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/datasets/china-sae-robotics/Tactile_Manipulation_Dataset" target="_blank" rel="noreferrer">Calibration dataset ↗</a></span>
                 </div>
                 <div class="resource-card">
                   <span class="resource-tag resource-tag--weights">WEIGHTS</span>
-                  <strong>VTLA weights</strong>
-                  <p>Reference tactile policy checkpoints used in the Tabero benchmark.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacfield_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀ field ↗</a><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀.₅ field ↗</a></span>
+                  <strong>Tabero-VTLA weights</strong>
+                  <p>Pretrained π₀ marker-field policy for the Tabero benchmark.</p>
+                  <span class="resource-links"><a href="https://huggingface.co/NathanWu7/pi0_lora_tacfield_tabero" target="_blank" rel="noreferrer">π₀ checkpoint ↗</a></span>
                 </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--data">DATA</span>
-                  <strong>Task 820</strong>
-                  <p>Real-world task episodes for benchmark setup and evaluation.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_task820" target="_blank" rel="noreferrer">Dataset ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--data">DATA</span>
-                  <strong>Firm-force replay</strong>
-                  <p>Force-conditioned replay data for controlled comparisons.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_task820_firm_current" target="_blank" rel="noreferrer">Dataset ↗</a></span>
-                </div>
-
-
               </div>
 
               <div class="panel-stats">
@@ -663,128 +634,308 @@
             <div class="pipeline-step"><span>03</span><strong>Label</strong><p>Language, vision, touch, and 6-D force at 20 Hz.</p></div>
             <div class="pipeline-step"><span>04</span><strong>Score</strong><p>Task success plus four gentleness metrics.</p></div>
           </div>
+          <nav class="module-pagination" aria-label="Tabero module navigation">
+            <a href="#panel-tacumi" rel="prev"><span>Previous module</span><strong>Tacumi</strong></a>
+            <a href="#panel-vtla" rel="next"><span>Next module</span><strong>VTLA</strong></a>
+          </nav>
         </article>
 
         <!-- ---------------------------- VTLA ---------------------------- -->
         <article class="panel" id="panel-vtla" role="tabpanel" aria-labelledby="tab-vtla" tabindex="0" data-panel="vtla">
-          <header class="panel-head">
-            <div>
-              <p class="panel-kicker">Tacinf–VTLA · Policy</p>
-              <h3 class="panel-title">Tacinf–VTLA<span>.</span></h3>
-              <p class="panel-lede">Vision–language–action, with force as a first-class output.</p>
-            </div>
-          </header>
-
-          <div class="panel-grid">
+          <div class="panel-grid vtla-overview">
             <div class="panel-copy">
+              <header class="panel-head">
+                <p class="panel-kicker">Policy</p>
+                <h3 class="panel-title">Tacinf–VTLA<span>.</span></h3>
+                <p class="panel-lede">Vision–language–action, with force as a first-class output.</p>
+              </header>
               <p>A modular tactile interface for foundation VLA models. Marker-field, tactile-image, and 6-D force adapters feed a shared backbone; the policy predicts pose and fingertip-force setpoints, and a hybrid controller tracks both. Force is decoupled from position, so language can set how hard to hold without rewriting the motion.</p>
-
-              <div class="resource-grid">
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--code">TRAIN</span>
-                  <strong>Training code</strong>
-                  <p>π₀ / π₀.₅ tactile training and inference on Tabero data.</p>
-                  <span class="resource-links"><a href="https://github.com/NathanWu7/T2-VLA" target="_blank" rel="noreferrer">T2-VLA GitHub ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
-                  <strong>Reference weights</strong>
-                  <p>Field, force, image, and no-tactile LoRA variants for comparison.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacforce_enc_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀ force ↗</a><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacimg_realworld_replayed_task820_current_nostate" target="_blank" rel="noreferrer">π₀.₅ image ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--code">EVAL</span>
-                  <strong>Evaluation client</strong>
-                  <p>Replay datasets shared by simulation and real-robot policy evaluation.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replayed_task820" target="_blank" rel="noreferrer">Replay data ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replayed_task820_current" target="_blank" rel="noreferrer">Current ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--data">TACTILE DATA</span>
-                  <strong>Tactile calibration</strong>
-                  <p>Sensor calibration and assets used by the tactile adapters.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/Tabero_X-assets/tree/main/source/tac_manip/tac_manip/assets/data/Sensors/Xense/calibs" target="_blank" rel="noreferrer">Xense calibs ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
-                  <strong>Force decoder</strong>
-                  <p>π₀ force-decoupled adapter for tactile policy studies.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacforce_dec_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀ force dec ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
-                  <strong>No-tactile baseline</strong>
-                  <p>Vision-only reference checkpoint for ablation comparisons.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi05_lora_notac_realworld_replayed_task820" target="_blank" rel="noreferrer">π₀.₅ no tac ↗</a></span>
-                </div>
-
-
-              </div>
-
-              <div class="panel-stats">
-                <div class="stat"><strong>6-D</strong><span>fingertip force</span></div>
-                <div class="stat"><strong>20 Hz</strong><span>policy + controller</span></div>
-                <div class="stat"><strong class="stat-pair">0.86 / 0.52</strong><span>firm / gentle success</span></div>
-              </div>
-
               <p class="panel-links">
                 <a href="https://arxiv.org/abs/2611.29240" target="_blank" rel="noreferrer">Method in the paper ↗</a>
                 <a href="#vtla-demos" data-jump-tab="vtla">Real-robot demos ↓</a>
               </p>
             </div>
 
-            <div class="panel-media">
-              <figure class="media media--paper">
-                <button class="zoom" type="button" data-full="assets/img/vtla-system.webp" data-caption="The Tacinf-VTLA architecture: vision, tactile image, marker field, 6-D force, and robot state feed a shared backbone with an action expert.">
-                  <img src="assets/img/vtla-system.webp" width="1600" height="776" loading="eager" alt="VTLA architecture: multimodal inputs encoded into a shared backbone with an action expert predicting force and position chunks.">
-                </button>
-                <figcaption><strong>One backbone, two outputs.</strong> Pose chunks and fingertip-force setpoints from vision, touch, language, and state.</figcaption>
-              </figure>
-
-              <div class="media-stack">
-                <figure class="media media--paper">
-                  <button class="zoom" type="button" data-full="assets/img/force-loop.webp" data-caption="The two-loop force and position controller.">
-                    <img src="assets/img/force-loop.webp" width="1400" height="679" loading="lazy" alt="Two-loop controller diagram: the policy predicts pose and force targets, and a closed-loop controller tracks them.">
-                  </button>
-                  <figcaption><strong>Force + position loop.</strong> The policy sets pose and force targets; the controller tracks both.</figcaption>
-                </figure>
-                <figure class="media media--paper">
-                  <button class="zoom" type="button" data-full="assets/img/force-decomposition.webp" data-caption="Fingertip-force decomposition across gentle grasping, blackboard wiping, card swiping, and knob turning.">
-                    <img src="assets/img/force-decomposition.webp" width="2000" height="666" loading="lazy" alt="Four panels showing fingertip contact decomposed into grip and applied forces for four tactile skills.">
-                  </button>
-                  <figcaption><strong>Grip vs. applied wrench.</strong> Internal grip and applied TCP force, separated at the fingertips.</figcaption>
-                </figure>
-              </div>
-            </div>
+            <figure class="media media--paper vtla-figure">
+              <button class="zoom" type="button" data-full="assets/img/vtla-system.webp" data-caption="The Tacinf-VTLA architecture: vision, tactile image, marker field, 6-D force, and robot state feed a shared backbone with an action expert.">
+                <img src="assets/img/vtla-system.webp" width="1600" height="776" loading="eager" alt="VTLA architecture: multimodal inputs encoded into a shared backbone with an action expert predicting force and position chunks.">
+              </button>
+              <figcaption><strong>One backbone, two outputs</strong> Pose chunks and fingertip-force setpoints from vision, touch, language, and state.</figcaption>
+            </figure>
           </div>
+
+          <div class="vtla-diagrams">
+            <figure class="media media--paper vtla-figure">
+              <button class="zoom" type="button" data-full="assets/img/force-loop.webp" data-caption="The two-loop force and position controller.">
+                <img src="assets/img/force-loop.webp" width="1400" height="679" loading="lazy" alt="Two-loop controller diagram: the policy predicts pose and force targets, and a closed-loop controller tracks them.">
+              </button>
+              <figcaption><strong>Force and position loop</strong> The policy sets pose and force targets, and the controller tracks both.</figcaption>
+            </figure>
+            <figure class="media media--paper vtla-figure">
+              <button class="zoom" type="button" data-full="assets/img/force-decomposition.webp" data-caption="Fingertip-force decomposition across gentle grasping, whiteboard wiping, card swiping, and fan-knob turning.">
+                <img src="assets/img/force-decomposition.webp" width="2000" height="666" loading="lazy" alt="Four panels showing fingertip contact decomposed into grip and applied forces for four tactile skills.">
+              </button>
+              <figcaption><strong>Grip and applied wrench</strong> Internal grip and applied TCP force, separated at the fingertips.</figcaption>
+            </figure>
+          </div>
+
+          <div class="panel-stats vtla-stats">
+            <div class="stat"><strong>6-D</strong><span>Fingertip force</span></div>
+            <div class="stat"><strong>20 Hz</strong><span>Policy + controller</span></div>
+            <div class="stat"><strong>0.86 / 0.52</strong><span>Firm / gentle success · Tabero Dataset B</span></div>
+          </div>
+
+          <nav class="resource-grid resource-grid--vtla" aria-label="VTLA resources">
+            <a class="resource-card" href="https://github.com/NathanWu7/T2-VLA" target="_blank" rel="noreferrer">
+              <span class="resource-tag resource-tag--code">Code</span>
+              <strong>T2-VLA on GitHub</strong>
+              <p>Training and inference for π₀ and π₀.₅ tactile policies.</p>
+            </a>
+            <a class="resource-card" href="#taco-datasets" data-jump-tab="vtla">
+              <span class="resource-tag resource-tag--data">Data</span>
+              <strong>Datasets</strong>
+              <p>VR, simulation replay, and handheld UMI demonstrations.</p>
+            </a>
+            <a class="resource-card" href="#taco-checkpoints" data-jump-tab="vtla">
+              <span class="resource-tag resource-tag--weights">Weights</span>
+              <strong>Checkpoints</strong>
+              <p>Policy weights for evaluation and co-training.</p>
+            </a>
+          </nav>
 
           <div class="sub-block" id="vtla-demos">
             <div class="sub-head">
-              <div><p class="panel-kicker">Real-robot execution / VTLA</p><h4>On the real robot.</h4></div>
-              <p>Blackboard wiping, card swiping, and switch turning with the tactile policy and controller running on the xArm 7.
+              <div><p class="panel-kicker">Real-robot execution / VTLA</p><h4>Real++ task demonstrations</h4></div>
+              <p>The tactile policy and controller run on the xArm 7 for whiteboard wiping, fan-knob turning, and card swiping.
                 <span class="resource-links"><a href="https://github.com/xArm-Developer/xArm-Python-SDK" target="_blank" rel="noreferrer">xArm Python SDK ↗</a></span>
               </p>
             </div>
             <div class="demo-grid demo-grid--three vtla-demo-grid">
               <figure class="video-card">
-                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-boardwipe.webp" data-auto aria-label="VTLA real-robot blackboard wiping.">
+                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-boardwipe.webp" data-auto aria-label="Real++ whiteboard wiping on the real robot.">
                   <source src="assets/video/vtla-boardwipe.mp4" type="video/mp4">
                 </video>
-                <figcaption><span>BLACKBOARD WIPE</span><span>REAL ROBOT</span></figcaption>
+                <figcaption><span>WHITEBOARD WIPE</span><span>REAL ROBOT</span></figcaption>
               </figure>
               <figure class="video-card">
-                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-cardswap.webp" data-auto aria-label="VTLA real-robot card swiping.">
+                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-cardswap.webp" data-auto aria-label="Real++ card swiping on the real robot.">
                   <source src="assets/video/vtla-cardswap.mp4" type="video/mp4">
                 </video>
                 <figcaption><span>CARD SWIPE</span><span>REAL ROBOT</span></figcaption>
               </figure>
               <figure class="video-card">
-                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-switch.webp" data-auto aria-label="VTLA real-robot switch turning.">
+                <video muted loop playsinline preload="none" poster="assets/img/poster-vtla-switch.webp" data-auto aria-label="Real++ fan-knob turning on the real robot.">
                   <source src="assets/video/vtla-switch.mp4" type="video/mp4">
                 </video>
-                <figcaption><span>SWITCH</span><span>REAL ROBOT</span></figcaption>
+                <figcaption><span>FAN-KNOB TURN</span><span>REAL ROBOT</span></figcaption>
               </figure>
             </div>
           </div>
+
+          <div class="sub-block taco-catalog">
+            <section class="taco-resource-index" id="taco-datasets" aria-labelledby="taco-datasets-title">
+              <header class="taco-catalog-head">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13m-16 6.5c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+                <div>
+                  <h4 id="taco-datasets-title">Datasets</h4>
+                  <p>Tasks are counted by language instruction.</p>
+                </div>
+              </header>
+              <details class="taco-catalog-group" name="taco-dataset-groups">
+                <summary id="taco-pick-and-place">
+                  <span>
+                    <strong>Pick and Place</strong>
+                    <small>VR, simulation replay, and UMI</small>
+                  </span>
+                  <span class="taco-catalog-toggle" aria-hidden="true"></span>
+                </summary>
+                <table class="taco-table taco-table--datasets" aria-labelledby="taco-pick-and-place">
+                  <tbody>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/datasets/xiangxin0923/taco_pick_and_place_vr_current" target="_blank" rel="noreferrer" aria-label="Pick and Place VR teleoperation on Hugging Face">VR teleoperation <span aria-hidden="true">↗</span></a></th>
+                      <td>6 tasks</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/datasets/xiangxin0923/taco_pick_and_place_sim_replay_4x4" target="_blank" rel="noreferrer" aria-label="Pick and Place Sim Replay (4×4) on Hugging Face">Sim Replay (4×4) <span aria-hidden="true">↗</span></a></th>
+                      <td>6 tasks</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/datasets/xiangxin0923/taco_pick_and_place_sim_replay_current" target="_blank" rel="noreferrer" aria-label="Pick and Place Sim Replay (Current) on Hugging Face">Sim Replay (Current) <span aria-hidden="true">↗</span></a></th>
+                      <td>6 tasks</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/datasets/xiangxin0923/taco_pick_and_place_sim_replay_plus_current" target="_blank" rel="noreferrer" aria-label="Pick and Place ReplayPlus (augmented sim replay) on Hugging Face">ReplayPlus (augmented sim replay) <span aria-hidden="true">↗</span></a></th>
+                      <td>30 tasks</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/datasets/xiangxin0923/taco_pick_and_place_umi_current" target="_blank" rel="noreferrer" aria-label="Pick and Place Handheld UMI on Hugging Face">Handheld UMI <span aria-hidden="true">↗</span></a></th>
+                      <td>6 tasks</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="taco-release-note"><strong>4×4</strong> arranges the eight most recent tactile frames from each fingertip in a 4×4 grid. <strong>Current</strong> places one frame from each fingertip side by side at the same timestep.</p>
+              </details>
+              <details class="taco-catalog-group" name="taco-dataset-groups">
+                <summary id="taco-real-plus">
+                  <span>
+                    <strong>Real++</strong>
+                    <small>Controller task demonstrations</small>
+                  </span>
+                  <span class="taco-catalog-toggle" aria-hidden="true"></span>
+                </summary>
+                <table class="taco-table taco-table--datasets" aria-labelledby="taco-real-plus">
+                  <tbody>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/datasets/xiangxin0923/taco_real_plus_vr_current" target="_blank" rel="noreferrer" aria-label="Real++ VR teleoperation on Hugging Face">VR teleoperation <span aria-hidden="true">↗</span></a></th>
+                      <td>3 tasks</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </details>
+              <details class="taco-catalog-group" name="taco-dataset-groups">
+                <summary id="taco-supplemental">
+                  <span>
+                    <strong>Supplemental</strong>
+                    <small>Additional UMI and VR demonstrations</small>
+                  </span>
+                  <span class="taco-catalog-toggle" aria-hidden="true"></span>
+                </summary>
+                <table class="taco-table taco-table--datasets" aria-labelledby="taco-supplemental">
+                  <tbody>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/datasets/xiangxin0923/taco_supplemental_umi_current" target="_blank" rel="noreferrer" aria-label="Supplemental Handheld UMI on Hugging Face">Handheld UMI <span aria-hidden="true">↗</span></a></th>
+                      <td>8 tasks</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/datasets/xiangxin0923/taco_supplemental_vr_current" target="_blank" rel="noreferrer" aria-label="Supplemental VR teleoperation on Hugging Face">VR teleoperation <span aria-hidden="true">↗</span></a></th>
+                      <td>5 tasks</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </details>
+            </section>
+
+            <section class="taco-resource-index" id="taco-checkpoints" aria-labelledby="taco-checkpoints-title">
+              <header class="taco-catalog-head">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg>
+                <div>
+                  <h4 id="taco-checkpoints-title">Checkpoints</h4>
+                  <p>Pinned at step <code>29999</code> on Hugging Face.</p>
+                </div>
+              </header>
+              <details class="taco-catalog-group" name="taco-checkpoint-groups">
+                <summary id="taco-checkpoints-sim">
+                  <span>
+                    <strong>Policy evaluation</strong>
+                    <small>Pick and Place</small>
+                  </span>
+                  <span class="taco-catalog-toggle" aria-hidden="true"></span>
+                </summary>
+                <table class="taco-table" aria-labelledby="taco-checkpoints-sim">
+                  <tbody>
+                    <tr><th class="taco-group-label" scope="rowgroup">Sim and Sim-to-Real</th></tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacforce_enc_pick_and_place_sim_replay_4x4/tree/7239c132dd9056beda02b83ce986c5a45cf0d76f/checkpoints/pi0_lora_tacforce_enc_pick_and_place_sim_replay_4x4/pi0_lora_tacforce_enc_pick_and_place_sim_replay_4x4/29999" target="_blank" rel="noreferrer">π₀ force encoder <span aria-hidden="true">↗</span></a></th>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacforce_dec_pick_and_place_sim_replay_4x4/tree/f198f9b05f97b9c342eeb10305918f1d23dcaf2a/checkpoints/pi0_lora_tacforce_dec_pick_and_place_sim_replay_4x4/pi0_lora_tacforce_dec_pick_and_place_sim_replay_4x4/29999" target="_blank" rel="noreferrer">π₀ force decoder <span aria-hidden="true">↗</span></a></th>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacfield_pick_and_place_sim_replay_4x4/tree/524f577e243332b10f7e1d57d6dac14f73dab11d/checkpoints/pi0_lora_tacfield_pick_and_place_sim_replay_4x4/pi0_lora_tacfield_pick_and_place_sim_replay_4x4/29999" target="_blank" rel="noreferrer">π₀ marker field <span aria-hidden="true">↗</span></a></th>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_pick_and_place_sim_replay_4x4/tree/ff5a976fcbfa3777b33509bb35b4e2f12b6919ca/checkpoints/pi05_lora_tacfield_pick_and_place_sim_replay_4x4/pi05_lora_tacfield_pick_and_place_sim_replay_4x4/29999" target="_blank" rel="noreferrer">π₀.₅ marker field (with state) <span aria-hidden="true">↗</span></a></th>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_pick_and_place_sim_replay_4x4_nostate/tree/d0d173d7886216fb35032ff1feb14fddf05dd8c6/checkpoints/pi05_lora_tacfield_pick_and_place_sim_replay_4x4_nostate/pi05_lora_tacfield_pick_and_place_sim_replay_4x4_nostate/29999" target="_blank" rel="noreferrer">π₀.₅ marker field (no state) <span aria-hidden="true">↗</span></a></th>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacimg_pick_and_place_sim_replay_current_nostate/tree/8a86e57fa51df3c3b39abca5609ecc13de594699/checkpoints/pi05_lora_tacimg_pick_and_place_sim_replay_current_nostate/pi05_lora_tacimg_pick_and_place_sim_replay_current_nostate/29999" target="_blank" rel="noreferrer">π₀.₅ tactile image (current, no state) <span aria-hidden="true">↗</span></a></th>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr><th class="taco-group-label" scope="rowgroup">Sim only</th></tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_notac_pick_and_place_sim_replay_4x4/tree/38babccdc1ad6c63f6a7d52f0deb05be48639e35/checkpoints/pi05_lora_notac_pick_and_place_sim_replay_4x4/pi05_lora_notac_pick_and_place_sim_replay_4x4/29999" target="_blank" rel="noreferrer">π₀.₅ no-tactile baseline <span aria-hidden="true">↗</span></a></th>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi0_lora_tacimgwo_pick_and_place_sim_replay_4x4/tree/a22df4370e70bd7ff516d8546d69cf9a955906f8/checkpoints/pi0_lora_tacimgwo_pick_and_place_sim_replay_4x4/pi0_lora_tacimgwo_pick_and_place_sim_replay_4x4/29999" target="_blank" rel="noreferrer">π₀ tactile image (no force supervision) <span aria-hidden="true">↗</span></a></th>
+                    </tr>
+                  </tbody>
+                </table>
+              </details>
+              <details class="taco-catalog-group" name="taco-checkpoint-groups">
+                <summary id="taco-checkpoints-real-plus">
+                  <span>
+                    <strong>Real++</strong>
+                    <small>Controller evaluation</small>
+                  </span>
+                  <span class="taco-catalog-toggle" aria-hidden="true"></span>
+                </summary>
+                <table class="taco-table taco-table--checkpoints" aria-labelledby="taco-checkpoints-real-plus">
+                  <thead>
+                    <tr><th scope="col">Policy</th><th scope="col">Evaluation conditions</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_real_plus_vr_current_nostate/tree/4c41e890977cc0051dc16a6f9706cecb0451f3b8/checkpoints/pi05_lora_tacfield_real_plus_vr_current_nostate/pi05_lora_tacfield_real_plus_vr_current_nostate/29999" target="_blank" rel="noreferrer">π₀.₅ marker field (no state) <span aria-hidden="true">↗</span></a></th>
+                      <td>Controller on and off</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacimg_real_plus_vr_current_nostate/tree/90124ce79d264eae6dcda29770dacbca0d55cd43/checkpoints/pi05_lora_tacimg_real_plus_vr_current_nostate/pi05_lora_tacimg_real_plus_vr_current_nostate/29999" target="_blank" rel="noreferrer">π₀.₅ tactile image (no state) <span aria-hidden="true">↗</span></a></th>
+                      <td>Controller on</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="taco-release-note">Both Real++ checkpoints cover whiteboard wiping, fan-knob turning, and card swiping.</p>
+              </details>
+              <details class="taco-catalog-group" name="taco-checkpoint-groups">
+                <summary id="taco-checkpoints-co-training">
+                  <span>
+                    <strong>Co-training</strong>
+                    <small>Pick and Place data mixtures</small>
+                  </span>
+                  <span class="taco-catalog-toggle" aria-hidden="true"></span>
+                </summary>
+                <table class="taco-table taco-table--checkpoints" aria-labelledby="taco-checkpoints-co-training">
+                  <thead>
+                    <tr><th scope="col">Training mix</th><th scope="col">Dataset composition</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_pick_and_place_vr_current_nostate/tree/08f090fd16542353fc1999bbd26846590ce95545/checkpoints/pi05_lora_tacfield_pick_and_place_vr_current_nostate/pi05_lora_tacfield_pick_and_place_vr_current_nostate/29999" target="_blank" rel="noreferrer">VR only <span aria-hidden="true">↗</span></a></th>
+                      <td>VR</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_pick_and_place_umi_current_nostate/tree/ffcc081969eb1a77ee7f1a3015c17f35928a7e08/checkpoints/pi05_lora_tacfield_pick_and_place_umi_current_nostate/pi05_lora_tacfield_pick_and_place_umi_current_nostate/29999" target="_blank" rel="noreferrer">UMI only <span aria-hidden="true">↗</span></a></th>
+                      <td>UMI</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_pick_and_place_vr_umi_nostate/tree/bb2f4e75b342ef63f09a73ba9db38837789e152c/checkpoints/pi05_lora_tacfield_pick_and_place_vr_umi_nostate/pi05_lora_tacfield_pick_and_place_vr_umi_nostate/29999" target="_blank" rel="noreferrer">VR + UMI <span aria-hidden="true">↗</span></a></th>
+                      <td>VR + UMI</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_pick_and_place_vr_sim_nostate/tree/c5b8baff0cd877a4f5d4c49a5ec3a49fef7269d0/checkpoints/pi05_lora_tacfield_pick_and_place_vr_sim_nostate/pi05_lora_tacfield_pick_and_place_vr_sim_nostate/29999" target="_blank" rel="noreferrer">VR + Sim <span aria-hidden="true">↗</span></a></th>
+                      <td>VR + Sim Replay + ReplayPlus</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_pick_and_place_sim_umi_nostate/tree/6ce285d9e79b4b43ee69a96d2d6c0d8e9cd483e4/checkpoints/pi05_lora_tacfield_pick_and_place_sim_umi_nostate/pi05_lora_tacfield_pick_and_place_sim_umi_nostate/29999" target="_blank" rel="noreferrer">Sim + UMI <span aria-hidden="true">↗</span></a></th>
+                      <td>Sim Replay + ReplayPlus + UMI</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_pick_and_place_vr_sim_umi_nostate/tree/107f28be4f7f5c593b007ba0ae58561e83cee71b/checkpoints/pi05_lora_tacfield_pick_and_place_vr_sim_umi_nostate/pi05_lora_tacfield_pick_and_place_vr_sim_umi_nostate/29999" target="_blank" rel="noreferrer">VR + Sim + UMI <span aria-hidden="true">↗</span></a></th>
+                      <td>VR + Sim Replay + ReplayPlus + UMI</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="taco-release-note">The co-training evaluation randomizes object positions in one setting and both positions and object instances in the other.</p>
+              </details>
+            </section>
+          </div>
+          <nav class="module-pagination" aria-label="VTLA module navigation">
+            <a href="#panel-tabero" rel="prev"><span>Previous module</span><strong>Tabero</strong></a>
+            <a href="#panel-taco" rel="next"><span>Next module</span><strong>Taco</strong></a>
+          </nav>
         </article>
 
         <!-- ---------------------------- TACO ---------------------------- -->
@@ -798,138 +949,195 @@
           </header>
 
           <figure class="video-card video-feature">
-            <video muted loop playsinline preload="none" poster="assets/img/poster-taco-real2sim.webp" data-auto controls aria-label="Real and simulated replay of the Taco task.">
-              <source src="assets/video/taco-real2sim.mp4" type="video/mp4">
+            <video muted loop playsinline preload="none" width="1000" height="528" poster="assets/img/poster-taco-real2sim.webp?v=20261127" data-auto controls aria-label="Firm Vitasoy Pick and Place demonstration on the real robot and its replay in simulation.">
+              <source src="assets/video/taco-real2sim.mp4?v=20261127" type="video/mp4">
             </video>
-            <figcaption><span>REAL ↔ SIM REPLAY</span><span>TACO</span></figcaption>
+            <figcaption><span>REAL ROBOT ↔ SIM REPLAY</span><span>PICK AND PLACE · VITASOY · FIRM</span></figcaption>
           </figure>
 
-          <div class="panel-grid">
-            <div class="panel-copy">
-              <p>Taco aligns the workspace, objects, robot, cameras, and tactile response for paired simulation and real-robot evaluation. It also supports mixed-data policy post-training across teleoperation, simulation, and Tacumi demonstrations.</p>
+          <section class="taco-evaluation" id="taco-evaluation" aria-labelledby="taco-evaluation-title">
+            <header class="sub-head">
+              <h4 id="taco-evaluation-title">Sim-to-real evaluation</h4>
+              <p>Taco aligns the workspace, objects, robot, cameras, and tactile response for Pick and Place evaluations in simulation and on the real robot. It also supports Pick and Place co-training and Real++ controller evaluation.</p>
+            </header>
 
-              <div class="resource-grid">
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--tasks">TASKS</span>
-                  <strong>Paired task data</strong>
-                  <p>Real, replayed, and UMI demonstrations for matched sim-to-real evaluation.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_task820_current" target="_blank" rel="noreferrer">Real ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replayed_task820" target="_blank" rel="noreferrer">Replayed ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/realworld_taskumi" target="_blank" rel="noreferrer">UMI ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--data">TACTILE DATA</span>
-                  <strong>Replay-plus data</strong>
-                  <p>Augmented replay and firm-force variants for mixed-data post-training.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replay_plus" target="_blank" rel="noreferrer">Replay+ ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/realworld_task_umi_plus" target="_blank" rel="noreferrer">UMI+ ↗</a><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replayed_task820_firm_current" target="_blank" rel="noreferrer">Firm ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--code">CODE</span>
-                  <strong>Evaluation code</strong>
-                  <p>Tabero X provides the benchmark and replay pipeline behind Taco.</p>
-                  <span class="resource-links"><a href="https://github.com/xiangixn/Tabero_X" target="_blank" rel="noreferrer">GitHub ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
-                  <strong>Mixed-data policies</strong>
-                  <p>Checkpoints for real, sim, UMI, and three-source mixtures.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_realworld_sim_820_mix_nostate" target="_blank" rel="noreferrer">Real + sim ↗</a><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_realworld_umi_sim_820_mix_nostate" target="_blank" rel="noreferrer">Real + sim + UMI ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--data">DATA</span>
-                  <strong>Replay benchmark</strong>
-                  <p>Simulation replay episodes used to predict real-robot ordering.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/datasets/xiangxin0923/realworld_replayed_task820" target="_blank" rel="noreferrer">Dataset ↗</a></span>
-                </div>
-                <div class="resource-card">
-                  <span class="resource-tag resource-tag--weights">WEIGHTS</span>
-                  <strong>UMI + sim policy</strong>
-                  <p>Checkpoint combining handheld and simulated demonstrations.</p>
-                  <span class="resource-links"><a href="https://huggingface.co/xiangxin0923/pi05_lora_tacfield_realworld_umi_sim_mix_nostate" target="_blank" rel="noreferrer">Checkpoint ↗</a></span>
-                </div>
-
-
+            <dl class="taco-metrics">
+              <div>
+                <dt>Pearson <em>r</em></dt>
+                <dd class="taco-metric-value">0.998</dd>
+                <dd class="taco-metric-note">Sim-to-real success ordering</dd>
               </div>
-
-              <div class="panel-stats panel-stats--four">
-                <div class="stat"><strong>0.998</strong><span>Pearson <em>r</em><br>success ordering</span></div>
-                <div class="stat"><strong>0.010</strong><span>MMRV<br>success ordering</span></div>
-                <div class="stat"><strong>20 → 60%</strong><span>success on position + OOD objects<br>three-source co-training</span></div>
-                <div class="stat"><strong>98%+</strong><span>real-robot success<br>LIBERO-like · sim-only tuning</span></div>
+              <div>
+                <dt>MMRV</dt>
+                <dd class="taco-metric-value">0.010</dd>
+                <dd class="taco-metric-note">Mean maximum rank violation</dd>
               </div>
+              <div>
+                <dt>Co-training success</dt>
+                <dd class="taco-metric-value">20% → 60%</dd>
+                <dd class="taco-metric-note">VR only → VR + Sim + UMI<br>Randomized positions and objects</dd>
+              </div>
+              <div>
+                <dt>Sim-only transfer</dt>
+                <dd class="taco-metric-value">98.3%</dd>
+                <dd class="taco-metric-note">Mean real-robot success<br>Pick and Place · π₀ force decoder</dd>
+              </div>
+            </dl>
 
-              <p class="panel-links">
-                <a href="https://arxiv.org/abs/2611.29240" target="_blank" rel="noreferrer">Evaluation in the paper ↗</a>
-                <span class="link-soon">Tabero benchmark <span class="soon">Coming soon</span></span>
-                <a href="#data-synergy">Explore the data flow ↑</a>
-              </p>
+            <div class="taco-evidence-grid">
+              <figure class="agreement-chart" aria-labelledby="agreement-chart-title">
+                <h5 id="agreement-chart-title">Cross-domain agreement</h5>
+                <div class="agreement-chart__metrics">
+                  <section class="agreement-metric" aria-label="Pearson r, higher is better">
+                    <div class="agreement-metric__head"><strong>Pearson <em>r</em></strong><span>↑ Higher is better</span></div>
+                    <div class="agreement-rows">
+                      <div class="agreement-row agreement-row--tacinf"><span>Tacinf · SR only</span><span class="agreement-row__track"><i style="--bar:99.8%"></i></span><b>0.998</b></div>
+                      <div class="agreement-row"><span>PolaRiS</span><span class="agreement-row__track"><i style="--bar:83%"></i></span><b>0.830</b></div>
+                      <div class="agreement-row"><span>OpenViTac</span><span class="agreement-row__track"><i style="--bar:96.7%"></i></span><b>0.967</b></div>
+                      <div class="agreement-row"><span>SimFoundry</span><span class="agreement-row__track"><i style="--bar:91.1%"></i></span><b>0.911</b></div>
+                      <div class="agreement-row"><span>SceneRig</span><span class="agreement-row__track"><i style="--bar:92%"></i></span><b>0.920</b></div>
+                    </div>
+                  </section>
+                  <section class="agreement-metric" aria-label="MMRV, lower is better">
+                    <div class="agreement-metric__head"><strong>MMRV</strong><span>↓ Lower is better</span></div>
+                    <div class="agreement-rows">
+                      <div class="agreement-row agreement-row--tacinf"><span>Tacinf · SR only</span><span class="agreement-row__track"><i style="--bar:4%"></i></span><b>0.010</b></div>
+                      <div class="agreement-row"><span>Ctrl-World</span><span class="agreement-row__track"><i style="--bar:92%"></i></span><b>0.230</b></div>
+                      <div class="agreement-row"><span>OpenViTac</span><span class="agreement-row__track"><i style="--bar:2.4%"></i></span><b>0.006</b></div>
+                      <div class="agreement-row"><span>SimFoundry</span><span class="agreement-row__track"><i style="--bar:7.2%"></i></span><b>0.018</b></div>
+                      <div class="agreement-row"><span>SceneRig</span><span class="agreement-row__track"><i style="--bar:16%"></i></span><b>0.040</b></div>
+                    </div>
+                  </section>
+                </div>
+                <figcaption>The paper compares mean success rates for eight policy variants across six Pick and Place tasks, and reports measured grip force for four policies separately. Each study uses its own evaluation protocol. <a href="https://arxiv.org/html/2611.29240v1#S4.SS5" target="_blank" rel="noreferrer">Evaluation in the paper <span aria-hidden="true">↗</span></a></figcaption>
+              </figure>
+              <section class="taco-replay-evidence" aria-labelledby="taco-replay-evidence-title">
+                <h5 id="taco-replay-evidence-title">Replay fidelity</h5>
+                <p>Across the three Firm Pick and Place tasks.</p>
+                <dl>
+                  <div><dt>CLIP similarity</dt><dd>&gt; 0.75</dd></div>
+                  <div><dt>Tactile SSIM</dt><dd>&gt; 0.93</dd></div>
+                  <div><dt>Action MAE</dt><dd>&lt; 0.074</dd></div>
+                </dl>
+              </section>
             </div>
 
-            <div class="panel-media">
-              <div class="agreement-evidence">
-                <figure class="agreement-chart" aria-labelledby="agreement-chart-title">
-                  <div class="agreement-chart__head">
-                    <div><p class="agreement-chart__kicker">SIM ↔ REAL · CONTEXTUAL COMPARISON</p><h4 id="agreement-chart-title">Cross-domain agreement</h4></div>
-                    <span class="agreement-chart__mark" aria-hidden="true">TACO</span>
-                  </div>
-                  <div class="agreement-chart__metrics">
-                    <section class="agreement-metric" aria-label="Pearson r, higher is better">
-                      <div class="agreement-metric__head"><strong>Pearson <em>r</em></strong><span>↑ HIGHER IS BETTER</span></div>
-                      <div class="agreement-rows">
-                        <div class="agreement-row agreement-row--tacinf"><span>Tacinf · SR only</span><span class="agreement-row__track"><i style="--bar:99.8%"></i></span><b>0.998</b></div>
-                        <div class="agreement-row"><span>PolaRiS</span><span class="agreement-row__track"><i style="--bar:83%"></i></span><b>0.830</b></div>
-                        <div class="agreement-row"><span>OpenViTac</span><span class="agreement-row__track"><i style="--bar:96.7%"></i></span><b>0.967</b></div>
-                        <div class="agreement-row"><span>SimFoundry</span><span class="agreement-row__track"><i style="--bar:91.1%"></i></span><b>0.911</b></div>
-                        <div class="agreement-row"><span>SceneRig</span><span class="agreement-row__track"><i style="--bar:92%"></i></span><b>0.920</b></div>
-                      </div>
-                    </section>
-                    <section class="agreement-metric" aria-label="MMRV, lower is better">
-                      <div class="agreement-metric__head"><strong>MMRV</strong><span>↓ LOWER IS BETTER</span></div>
-                      <div class="agreement-rows">
-                        <div class="agreement-row agreement-row--tacinf"><span>Tacinf · SR only</span><span class="agreement-row__track"><i style="--bar:4%"></i></span><b>0.010</b></div>
-                        <div class="agreement-row"><span>Ctrl-World</span><span class="agreement-row__track"><i style="--bar:92%"></i></span><b>0.230</b></div>
-                        <div class="agreement-row"><span>OpenViTac</span><span class="agreement-row__track"><i style="--bar:2.4%"></i></span><b>0.006</b></div>
-                        <div class="agreement-row"><span>SimFoundry</span><span class="agreement-row__track"><i style="--bar:7.2%"></i></span><b>0.018</b></div>
-                        <div class="agreement-row"><span>SceneRig</span><span class="agreement-row__track"><i style="--bar:16%"></i></span><b>0.040</b></div>
-                      </div>
-                    </section>
-                  </div>
-                  <figcaption>Across eight policy variants and six tasks, Tacinf reports <strong>r = 0.998</strong> and <strong>MMRV = 0.010</strong>. Other studies are contextual; task suites and scoring protocols differ.</figcaption>
+            <nav class="taco-evaluation-links" id="taco-resources" aria-label="Taco evaluation and assets">
+              <a class="resource-card" href="https://github.com/xiangixn/Taco#policy-evaluation" target="_blank" rel="noreferrer">
+                <span class="resource-tag resource-tag--code">Code</span>
+                <strong>Policy evaluation</strong>
+                <p id="taco-inference">Serve a checkpoint with T2-VLA and connect the Taco client in simulation or on the real robot.</p>
+                <span class="resource-links">Setup guide <span aria-hidden="true">↗</span></span>
+              </a>
+              <a class="resource-card" href="#taco-cotraining">
+                <span class="resource-tag resource-tag--tasks">Results</span>
+                <strong>Co-training results</strong>
+                <p>Compare how different training mixes perform on the real robot.</p>
+                <span class="resource-links">See results <span aria-hidden="true">↓</span></span>
+              </a>
+              <a class="resource-card" href="#taco-datasets" data-jump-tab="vtla">
+                <span class="resource-tag resource-tag--data">Data</span>
+                <strong>Taco datasets</strong>
+                <p>Pick and Place, Real++, and Supplemental demonstrations.</p>
+                <span class="resource-links">Browse datasets <span aria-hidden="true">↓</span></span>
+              </a>
+              <a class="resource-card" href="#taco-checkpoints" data-jump-tab="vtla">
+                <span class="resource-tag resource-tag--weights">Weights</span>
+                <strong>Evaluation checkpoints</strong>
+                <p>Published weights for sim-to-real, Real++, and co-training experiments.</p>
+                <span class="resource-links">Browse checkpoints <span aria-hidden="true">↓</span></span>
+              </a>
+              <a class="resource-card" href="https://huggingface.co/datasets/xiangxin0923/Taco-assets" target="_blank" rel="noreferrer">
+                <span class="resource-tag resource-tag--data">Assets</span>
+                <strong>Simulation &amp; replay assets</strong>
+                <p>USD scenes, robot and object models, and tactile sensor assets.</p>
+                <span class="resource-links">View on Hugging Face <span aria-hidden="true">↗</span></span>
+              </a>
+              <a class="resource-card" href="https://huggingface.co/datasets/xiangxin0923/Taco-assets/tree/main/source/tac_manip/tac_manip/assets/data/Sensors/Xense/calibs" target="_blank" rel="noreferrer">
+                <span class="resource-tag resource-tag--data">Assets</span>
+                <strong>Xense calibration</strong>
+                <p>Calibration files for the Xense tactile sensors in simulation.</p>
+                <span class="resource-links">Browse calibration files <span aria-hidden="true">↗</span></span>
+              </a>
+              <a class="taco-data-flow" href="#data-synergy">Data flow</a>
+            </nav>
+          </section>
+
+          <section class="sub-block" id="taco-cotraining" aria-labelledby="taco-cotraining-title">
+            <header class="sub-head">
+              <h4 id="taco-cotraining-title">Co-training on the real robot</h4>
+              <p>Two Pick and Place tests vary where objects start and which objects the robot encounters. Both use the same basket as the placement goal.</p>
+            </header>
+
+            <div class="taco-cotraining-grid">
+              <div class="taco-test-scenes">
+                <figure class="media">
+                  <button class="zoom" type="button" data-caption="Position randomization with Vitasoy, Coca-Cola, and the cookie.">
+                    <img src="assets/img/taco-test-position.webp" alt="Test scenes with Vitasoy, Coca-Cola, and the cookie at different starting positions beside the basket." width="1600" height="706" loading="lazy">
+                  </button>
+                  <figcaption><strong>Position randomization.</strong> The original objects start in new locations.</figcaption>
                 </figure>
-
-                <div class="evidence-copy">
-                  <p class="panel-kicker">Evidence / paired evaluation</p>
-                  <h4>Simulation predicts success ordering.</h4>
-                  <p>The paper reports this success-only comparison; measured force retains a small sim-to-real gap.</p>
-                  <p>Replay data also align across visual, tactile, and action channels: <strong>CLIP similarity &gt; 0.75</strong>, <strong>tactile SSIM &gt; 0.93</strong>, and <strong>action MAE &lt; 0.074</strong>.</p>
-                </div>
+                <figure class="media">
+                  <button class="zoom" type="button" data-caption="Joint position and object randomization with held-out objects.">
+                    <img src="assets/img/taco-test-position-and-object.webp" alt="Test scenes with different bottles, packages, and cans arranged at varied positions beside the same basket." width="1600" height="323" loading="lazy">
+                  </button>
+                  <figcaption><strong>Position and object randomization.</strong> Held-out objects start in new locations.</figcaption>
+                </figure>
               </div>
+
+              <section class="taco-cotraining-results" aria-labelledby="taco-cotraining-results-title">
+                <h5 id="taco-cotraining-results-title">Mean real-robot success</h5>
+                <p id="taco-cotraining-results-note">Training mixes with results for both Firm and Gentle instructions. Each value averages the two success rates.</p>
+                <table class="taco-table taco-cotraining-table" aria-labelledby="taco-cotraining-results-title" aria-describedby="taco-cotraining-results-note">
+                  <thead>
+                    <tr><th scope="col">Training mix</th><th scope="col">Position only</th><th scope="col">Position + object</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">VR only</th><td>31.7%</td><td>20.0%</td></tr>
+                    <tr><th scope="row">VR + UMI</th><td><strong>76.7%</strong></td><td>10.0%</td></tr>
+                    <tr><th scope="row">VR + Sim</th><td>40.0%</td><td>30.0%</td></tr>
+                    <tr><th scope="row">Sim + UMI</th><td>66.7%</td><td>40.0%</td></tr>
+                    <tr><th scope="row">VR + Sim + UMI</th><td>70.0%</td><td><strong>60.0%</strong></td></tr>
+                  </tbody>
+                </table>
+                <p>VR + UMI performs best when only positions change. The three-source mix leads when the robot also encounters new objects.</p>
+              </section>
             </div>
-          </div>
+          </section>
+          <nav class="module-pagination" aria-label="Taco module navigation">
+            <a href="#panel-vtla" rel="prev"><span>Previous module</span><strong>VTLA</strong></a>
+          </nav>
         </article>
       </div>
     </section>
 
     <!-- ============================ CITE ============================ -->
-    <section class="cite wrap reveal" id="cite">
-      <div class="section-head">
-        <div>
-          <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Citation</p>
-          <h2>Build <em>on it.</em></h2>
-        </div>
-        <p class="section-note">Cite the technical report. The Tabero benchmark has its own repository, paper, dataset, and weights.</p>
-      </div>
-
+    <section class="cite wrap reveal" id="cite" aria-labelledby="citation-title">
       <div class="cite-grid">
         <div class="cite-copy">
+          <header class="cite-heading">
+            <p class="kicker"><span class="kicker-mark" aria-hidden="true"></span>Citation</p>
+            <h2 id="citation-title">Build <em>on it.</em></h2>
+          </header>
           <p>If Tacinf is useful to your work, please cite the technical report.</p>
           <div class="cite-actions">
             <button class="btn btn-ghost" type="button" data-copy-bib>Copy BibTeX</button>
             <a class="btn btn-ghost" href="https://arxiv.org/pdf/2611.29240" target="_blank" rel="noreferrer">Paper PDF <span aria-hidden="true">↗</span></a>
           </div>
-          <div class="cite-links">
-            <span class="link-soon">Tabero GitHub <span class="soon">Coming soon</span></span>
-            <a href="https://arxiv.org/abs/2605.27886" target="_blank" rel="noreferrer">Tabero paper (arXiv) ↗</a>
-            <a href="https://huggingface.co/xiangxin0923" target="_blank" rel="noreferrer">Dataset (Hugging Face) ↗</a>
-          </div>
+          <nav class="cite-links" aria-label="Project resources">
+            <a href="https://github.com/xiangixn/Taco" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 6-6 6 6 6M16 6l6 6-6 6M14 3l-4 18"/></svg>
+              Code
+            </a>
+            <a href="https://arxiv.org/abs/2611.29240" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9ZM14 3v6h6M8 13h8m-8 4h6"/></svg>
+              Paper
+            </a>
+            <a href="#taco-datasets" data-jump-tab="vtla">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13m-16 6.5c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+              Dataset
+            </a>
+          </nav>
         </div>
 
         <div class="bib-card">
@@ -965,11 +1173,11 @@
         <span>Tacinf</span>
       </div>
       <p>© 2026 Tacinf authors · NVIDIA · HKUST (GZ) · University of Cambridge</p>
-      <p class="footer-links">
-        <a href="https://arxiv.org/abs/2611.29240" target="_blank" rel="noreferrer">Paper ↗</a>
-        <a href="https://arxiv.org/abs/2605.27886" target="_blank" rel="noreferrer">Tabero paper ↗</a>
-        <a href="#top">Back to top ↑</a>
-      </p>
+      <nav class="footer-links" aria-label="Footer resources">
+        <a href="https://github.com/xiangixn/Taco" target="_blank" rel="noreferrer">Code</a>
+        <a href="https://arxiv.org/abs/2611.29240" target="_blank" rel="noreferrer">Paper</a>
+        <a href="#taco-datasets" data-jump-tab="vtla">Dataset</a>
+      </nav>
     </div>
   </footer>
 
@@ -986,7 +1194,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/main.js?v=20261022r"></script>
+  <script src="assets/js/main.js?v=20261128"></script>
   <script type="module">
     {
       const stages = document.querySelectorAll(".model-stage");
